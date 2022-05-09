@@ -1,3 +1,22 @@
+# Ignore files for CamDom
+# =================================
+
+# Binary and log files
+bin/
+build/
+target/
+dist/
+*.log
+
+# VsCode
+.vscode
+
+# Temporal/Old files
+*.old
+*.tmp
+*.temp
+
+# Processing
 .DS_Store
 applet
 application.linux-arm64
