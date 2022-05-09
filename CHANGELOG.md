@@ -11,4 +11,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release with basic configuration
 
-[1.0.0]:
+[1.0.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/4d200b08d6a17109b672b9193a49068f4c0a7a96
