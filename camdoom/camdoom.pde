@@ -1,14 +1,17 @@
-CubeCDoomShape cube;
+import java.util.List;
+import java.util.ArrayList;
+
+CDoomGame game;
 
 void setup() {
 	size(800, 800, P3D);
-	cube = new CubeCDoomShape(width / 2, height / 2, 10, 100);
+
+	CDoomMap map = new CDoomMap("e1m1");
+	CDoomHeroe heroe = new CDoomHeroe(10, 10, 10);
+	game = new CDoomGame(map, heroe);
 }
 
 void draw() {
 	background(0);
-
-  	fill(255);
-  	rotate(radians(30));
-	cube.display();
+	game.display();
 }

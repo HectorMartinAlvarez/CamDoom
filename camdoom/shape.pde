@@ -6,6 +6,13 @@
 //
 
 /**
+ * Check collisions between a 3D-points and a shape
+ */
+boolean hasCollisions(PShape shape, float x, float y, float z) {
+	return false;
+}
+
+/**
  * HasCollisions
  *
  * 	Since objects need to be located at a specific position of current map,
@@ -99,6 +106,32 @@ class CubeCDoomShape extends CDoomShape implements HasCollisions {
 	}
 
 	boolean hasCollisions(CDoomCharacter character) {
-		return true;
+		float cx = character.x, cy = character.y, cz = character.z;
+
+		boolean cond = cx >= this.x && cx <= this.x + this.slide;
+		cond = cond & cy >= this.y && cy <= this.y + this.slide;
+		cond = cond & cz >= this.z && cz <= this.z + this.slide;
+		return cond;
+	}
+}
+
+class RectangleCDoomShape extends CDoomShape implements HasCollisions {
+	float width, height, depth;
+
+	RectangleCDoomShape(float x, float y, float z, float width, float height, float depth) {
+		super(x, y, z);
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
+    	this.shape = createShape(RECT, this.width, this.height, this.depth);
+	}
+
+	boolean hasCollisions(CDoomCharacter character) {
+		float cx = character.x, cy = character.y, cz = character.z;
+
+		boolean cond = cx >= this.x && cx <= this.x + this.width;
+		cond = cond & cy >= this.y && cy <= this.y + this.height;
+		cond = cond & cz >= this.z && cz <= this.z + this.depth;
+		return cond;
 	}
 }
