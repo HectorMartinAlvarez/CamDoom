@@ -10,8 +10,8 @@ class CDoomStairs {
 
 	CDoomStairs(String collisionPath) {
 		Table esca = loadTable(collisionPath);
-    escaleras = new ArrayList[13];  
-     for (int i=0, j = 0; i < 13; i++) {
+    escaleras = new ArrayList[15];  
+     for (int i=0, j = 0; i < 15; i++) {
        escaleras[i] = new ArrayList<PVector>();
        while(j < esca.getRowCount()-1 && esca.getFloat(j,1) == esca.getFloat(j+1,1)){
          escaleras[i].add(new PVector(esca.getFloat(j,0), esca.getFloat(j,1), esca.getFloat(j,2)));
