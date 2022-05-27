@@ -6,27 +6,6 @@
 //
 
 /**
- * Check collisions between a 3D-points and a shape
- */
-boolean hasCollisions(PShape shape, float x, float y, float z) {
-	return false;
-}
-
-/**
- * HasCollisions
- *
- * 	Since objects need to be located at a specific position of current map,
- * 	it is important to check that there are no collisions. This operation needs
- *	to be defined at each shape which is material and could no be transpass
- */
-interface HasCollisions {
-	/**
-	 * Check if passed character has collisions with an object.
-	 */
-	boolean hasCollisions(CDoomCharacter character);
-}
-
-/**
  * DoomShape
  *
  *	CamDoom builds a map using shapes that are located at a specific position and has
@@ -91,47 +70,5 @@ abstract class CDoomShape {
 		if (this.shader != null) resetShader();
 
 		popMatrix();
-	}
-}
-
-// _________ Implementation _________
-
-class CubeCDoomShape extends CDoomShape implements HasCollisions {
-	float slide;
-
-	CubeCDoomShape(float x, float y, float z, float slide) {
-		super(x, y, z);
-		this.slide = slide;
-    	this.shape = createShape(BOX, this.slide, this.slide, this.slide);
-	}
-
-	boolean hasCollisions(CDoomCharacter character) {
-		float cx = character.x, cy = character.y, cz = character.z;
-
-		boolean cond = cx >= this.x && cx <= this.x + this.slide;
-		cond = cond & cy >= this.y && cy <= this.y + this.slide;
-		cond = cond & cz >= this.z && cz <= this.z + this.slide;
-		return cond;
-	}
-}
-
-class RectangleCDoomShape extends CDoomShape implements HasCollisions {
-	float width, height, depth;
-
-	RectangleCDoomShape(float x, float y, float z, float width, float height, float depth) {
-		super(x, y, z);
-		this.width = width;
-		this.height = height;
-		this.depth = depth;
-    	this.shape = createShape(RECT, this.width, this.height, this.depth);
-	}
-
-	boolean hasCollisions(CDoomCharacter character) {
-		float cx = character.x, cy = character.y, cz = character.z;
-
-		boolean cond = cx >= this.x && cx <= this.x + this.width;
-		cond = cond & cy >= this.y && cy <= this.y + this.height;
-		cond = cond & cz >= this.z && cz <= this.z + this.depth;
-		return cond;
 	}
 }
