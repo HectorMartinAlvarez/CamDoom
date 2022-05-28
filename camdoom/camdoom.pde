@@ -19,7 +19,7 @@ import processing.sound.*;
 import queasycam.*;
 
 void settings() {
-	size(800, 800, P3D);
+	size(700, 700, P3D);
 	PJOGL.setIcon(CDOOM_ICON);
 	//fullScreen();
 }
@@ -79,17 +79,19 @@ void setup() {
   column6[5] = new PVector(-387.9, 0, 2436.9);
   column6[6] = new PVector(-250.5, 0, 2436.9);
   column6[7] = new PVector(-250.5, 0, 2235.6);
-  CDoomColumns column_1 = new CDoomColumns(column1);
-  CDoomColumns column_2 = new CDoomColumns(column2);
-  CDoomColumns column_3 = new CDoomColumns(column3);
-  CDoomColumns column_4 = new CDoomColumns(column4);
-  CDoomColumns column_5 = new CDoomColumns(column5);
-  CDoomColumns column_6 = new CDoomColumns(column6);
+
+  CDoomColumns[] columns = new CDoomColumns[6];
+  columns[0] = new CDoomColumns(column1);
+  columns[1] = new CDoomColumns(column2);
+  columns[2] = new CDoomColumns(column3);
+  columns[3] = new CDoomColumns(column4);
+  columns[4] = new CDoomColumns(column5);
+  columns[5] = new CDoomColumns(column6);
 
 	CDoomMap map = new CDoomMap(CDOOM_MAP_OBJ, CDOOM_MAP_COLLISIONS);
   CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
-	CDoomSlayer slayer = new CDoomSlayer(113.5, -75, 762.8, new QueasyCam(this));
-	game = new CDoomGame(map, slayer, stairs, column_1, column_2, column_3, column_4, column_5, column_6);
+	CDoomSlayer slayer = new CDoomSlayer(113.5, -100, 762.8, this);
+	game = new CDoomGame(map, slayer, stairs, columns);
 }
 
 void draw() {

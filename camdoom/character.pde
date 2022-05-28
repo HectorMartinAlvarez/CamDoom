@@ -1,3 +1,5 @@
+import peasy.*;
+
 abstract class CDoomCharacter {
 	float x, y, z;
 	boolean isVisible;
@@ -15,160 +17,102 @@ abstract class CDoomCharacter {
 	}
 
 	/**
-	 * Move current character whether there's no collisions
-	 */
-	void move(float incrX, float incrY, float incrZ) {
-		this.x = this.x + incrX;
-		this.y = this.y + incrY;
-		this.z = this.z + incrZ;
-	}
-
-	/**
 	 * Display the character
 	 */
 	abstract void display();
 }
 
 class CDoomSlayer extends CDoomCharacter {
-  QueasyCam cam;
+  PeasyCam camera;
+  float angle;
   float previousX;
   float previousY;
   float previousZ;
-  float previousColumn1X;
-  float previousColumn1Y;
-  float previousColumn1Z;
-  float previousColumn2X;
-  float previousColumn2Y;
-  float previousColumn2Z;
-  float previousColumn3X;
-  float previousColumn3Y;
-  float previousColumn3Z;
-  float previousColumn4X;
-  float previousColumn4Y;
-  float previousColumn4Z;
-  float previousColumn5X;
-  float previousColumn5Y;
-  float previousColumn5Z;
-  float previousColumn6X;
-  float previousColumn6Y;
-  float previousColumn6Z;
+  float[] previousColumnX = new float[6];
+  float[] previousColumnY = new float[6];
+  float[] previousColumnZ = new float[6];
 
-	CDoomSlayer(float x, float y, float z,QueasyCam newCam) {
+	CDoomSlayer(float x, float y, float z,camdoom t) {
 		super(x, y, z);
-		cam = newCam;
-		cam.speed = 0.7;             // default is 3
-		cam.sensitivity = 0.2;      // default is 2
-		previousX = x;
-		previousY = y;
-		previousZ = z;
-		previousColumn1X = x;
-		previousColumn1Y = y;
-		previousColumn1Z = z;
-		previousColumn2X = x;
-		previousColumn2Y = y;
-		previousColumn2Z = z;
-		previousColumn3X = x;
-		previousColumn3Y = y;
-		previousColumn3Z = z;
-		previousColumn4X = x;
-		previousColumn4Y = y;
-		previousColumn4Z = z;
-		previousColumn5X = x;
-		previousColumn5Y = y;
-		previousColumn5Z = z;
-		previousColumn6X = x;
-		previousColumn6Y = y;
-		previousColumn6Z = z;
+		camera = new PeasyCam(t, x, y, z, 50);  
+    camera.setDistance(50);
+    camera.setActive(false);
+    previousX = x;
+    previousY = y;
+    previousZ = z;
+    for(int i = 0; i < previousColumnX.length; i++){
+      previousColumnX[i] = x;
+      previousColumnY[i] = y;
+      previousColumnZ[i] = z;
+    }
+    rotateCamera(180);
 		restorePosition();
-		cam.controllable = false;
 	}
 
 	void display() {
 	}
 
   void restorePosition(){
-    cam.position.x = previousX;
-    cam.position.y = previousY;
-    cam.position.z = previousZ;
+    camera.lookAt(previousX, previousY, previousZ);
   }
 
   void savePosition(){
-    previousX = cam.position.x;
-    previousY = cam.position.y;
-    previousZ = cam.position.z;
+    float[] pos = camera.getLookAt();
+    previousX = pos[0];
+    previousY = pos[1];
+    previousZ = pos[2];
   }
 
-  void restoreColumn1Position(){
-    cam.position.x = previousColumn1X;
-    cam.position.y = previousColumn1Y;
-    cam.position.z = previousColumn1Z;
+  void restoreColumnsPosition(int index){
+    camera.lookAt(previousColumnX[index], previousColumnY[index], previousColumnZ[index]);  
   }
-
-  void saveColumn1Position(){
-    previousColumn1X = cam.position.x;
-    previousColumn1Y = cam.position.y;
-    previousColumn1Z = cam.position.z;
+  
+  void saveColumnsPosition(int index){
+    float[] pos = camera.getLookAt();
+    previousColumnX[index] = pos[0];
+    previousColumnY[index] = pos[1];
+    previousColumnZ[index] = pos[2];
   }
-
-  void restoreColumn2Position(){
-    cam.position.x = previousColumn2X;
-    cam.position.y = previousColumn2Y;
-    cam.position.z = previousColumn2Z;
+  
+  void rotateCamera(float angle){
+    camera.rotateY(radians(angle));
+    this.angle += angle;
+    if(this.angle > 360){
+      this.angle = round(this.angle/360);
+    }
   }
-
-  void saveColumn2Position(){
-    previousColumn2X = cam.position.x;
-    previousColumn2Y = cam.position.y;
-    previousColumn2Z = cam.position.z;
+  
+  void drawHUD(){
+    camera.beginHUD();
+    text("TEST", 50,50);
+    camera.endHUD();
   }
-
-  void restoreColumn3Position(){
-    cam.position.x = previousColumn3X;
-    cam.position.y = previousColumn3Y;
-    cam.position.z = previousColumn3Z;
+  
+  void setYAxis(float y){
+   this.y = y;
   }
-
-  void saveColumn3Position(){
-    previousColumn3X = cam.position.x;
-    previousColumn3Y = cam.position.y;
-    previousColumn3Z = cam.position.z;
+  
+  void moveSlayer(){
+    
+    float c1 = sin(radians(this.angle))*5;
+    float c2 = sqrt((25)-(c1*c1));
+    
+    if(this.angle <= 90){
+      this.x-=c1;
+      this.z-=c2;
+    }else if(this.angle > 90 && this.angle <= 180){
+      this.x-=c1;
+      this.z+=c2;
+    }else if(this.angle > 180 && this.angle <= 270){
+      this.x-=c1;
+      this.z+=c2;
+    }else {
+      this.x-=c1;
+      this.z-=c2;
+    }
+    camera.lookAt(this.x,this.y,this.z);  
   }
-
-  void restoreColumn4Position(){
-    cam.position.x = previousColumn4X;
-    cam.position.y = previousColumn4Y;
-    cam.position.z = previousColumn4Z;
-  }
-
-  void saveColumn4Position(){
-    previousColumn4X = cam.position.x;
-    previousColumn4Y = cam.position.y;
-    previousColumn4Z = cam.position.z;
-  }
-
-  void restoreColumn5Position(){
-    cam.position.x = previousColumn5X;
-    cam.position.y = previousColumn5Y;
-    cam.position.z = previousColumn5Z;
-  }
-
-  void saveColumn5Position(){
-    previousColumn5X = cam.position.x;
-    previousColumn5Y = cam.position.y;
-    previousColumn5Z = cam.position.z;
-  }
-
-  void restoreColumn6Position(){
-    cam.position.x = previousColumn6X;
-    cam.position.y = previousColumn6Y;
-    cam.position.z = previousColumn6Z;
-  }
-
-  void saveColumn6Position(){
-    previousColumn6X = cam.position.x;
-    previousColumn6Y = cam.position.y;
-    previousColumn6Z = cam.position.z;
-  }
+  
 }
 
 class CDoomEnemy extends CDoomCharacter {
