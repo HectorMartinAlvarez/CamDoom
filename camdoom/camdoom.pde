@@ -1,46 +1,27 @@
+// This file is part of CamDoom - https://github.com/HectorMartinAlvarez/CamDoom
+//
+// CamDoom is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// CamDoom is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
+
 import java.util.List;
 import java.util.ArrayList;
 import processing.sound.*;
 import queasycam.*;
 
-// ~ Sounds ~
-SoundFile atDoomsGate;
-
-// ~ GUI ~
-PImage backgroundImage;
-
-// ~ CDoom ~
-CDoomGame game;
-
-// ~ States ~
-int gameState = 1;
-int selectedOption = 0;
-
-// ~ Filepaths ~
-static final String CDOOM_ICON = "data/icon.png";
-static final String CDOOM_MAIN_MENU_BACKGROUND = "data/main_menu.jpg";
-static final String CDOOM_MAP_OBJ = "data/map/doom2_MAP01_mod.obj";
-static final String CDOOM_MAP_COLLISIONS = "data/map/collisions_MAP01.csv";
-static final String CDOOM_MAP_STAIRS = "data/map/stairs.csv";
-static final String CDOOM_FONT_TITLE = "data/fonts/AmazDooMLeft.ttf";
-static final String CDOOM_FONT_TEXT = "data/fonts/Doom2016Text-GOlBq.ttf";
-static final String CDOOM_AT_DOOMS_GATE = "data/sounds/AtDoomsGate.wav";
-
 void settings() {
 	size(800, 800, P3D);
 	PJOGL.setIcon(CDOOM_ICON);
 	//fullScreen();
-}
-
-void loadImages() {
-	backgroundImage = loadImage(CDOOM_MAIN_MENU_BACKGROUND);
-	backgroundImage.resize(width, height);
-	backgroundImage.filter(BLUR, 2);
-}
-
-void loadSounds() {
-	atDoomsGate = new SoundFile(this, CDOOM_AT_DOOMS_GATE);
-	atDoomsGate.loop();
 }
 
 void setup() {
@@ -50,6 +31,7 @@ void setup() {
 	surface.hideCursor();
 	surface.setAlwaysOnTop(true);
 
+	loadFonts();
 	loadImages();
 	loadSounds();
 
@@ -112,10 +94,13 @@ void setup() {
 
 void draw() {
 	background(0);
+	updateSize();
 
 	switch(gameState) {
-		case 0: game.display(); break;
-		case 1: displayMenu();  break;
-		case 2: displayPause(); break;
+		case 0: game.display(); 	 break;
+		case 1: displayMenu();  	 break;
+		case 2: displayPause(); 	 break;
+		case 3: displaySettings(); break;
+		case 4: displaySettings(); break;
 	}
 }

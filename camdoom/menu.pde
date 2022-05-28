@@ -18,12 +18,12 @@ void displayMenu() {
 	pushMatrix(); pushStyle();
 
 	textMode(SHAPE); fill(255, 255, 255); translate(0, 280);
-	textFont(createFont(CDOOM_FONT_TITLE, 200));
+	textFont(titleFont);
 
 	float x = (width - textWidth("CamDoom")) / 2;
 	text("CamDoom", x, 0);
 
-	textFont(createFont(CDOOM_FONT_TEXT, 30));
+	textFont(basicTextFont);
 
 	pushStyle(); translate(0, 80); checkOption(0);
 	x = (width - textWidth("Start Game")) / 2;
@@ -49,12 +49,12 @@ void displayPause() {
 	pushMatrix(); pushStyle();
 
 	textMode(SHAPE); fill(255, 255, 255); translate(0, 280);
-	textFont(createFont(CDOOM_FONT_TITLE, 200));
+	textFont(titleFont);
 
 	float x = (width - textWidth("CamDoom")) / 2;
 	text("CamDoom", x, 0);
 
-	textFont(createFont(CDOOM_FONT_TEXT, 30));
+	textFont(basicTextFont);
 
 	pushStyle(); translate(0, 80); checkOption(0);
 	x = (width - textWidth("Resume Game")) / 2;
@@ -64,6 +64,38 @@ void displayPause() {
 	pushStyle(); translate(0, 60); checkOption(1);
 	x = (width - textWidth("Settings")) / 2;
 	text("Settings", x, 0);
+	popStyle();
+
+	pushStyle(); translate(0, 60); checkOption(2);
+	x = (width - textWidth("Go back")) / 2;
+	text("Go back", x, 0);
+	popStyle();
+
+	popStyle(); popMatrix();
+}
+
+void displaySettings() {
+	if (gameState == 3) background(backgroundImage);
+	else game.map.display();
+
+	pushMatrix(); pushStyle();
+
+	textMode(SHAPE); fill(255, 255, 255); translate(0, 280);
+	textFont(titleFont);
+
+	float x = (width - textWidth("CamDoom")) / 2;
+	text("CamDoom", x, 0);
+
+	textFont(basicTextFont);
+
+	pushStyle(); translate(0, 80); checkOption(0);
+	x = (width - textWidth("Adjust Music: " + int(volumeMusic * 100))) / 2;
+	text("Adjust Music: " + int(volumeMusic * 100), x, 0);
+	popStyle();
+
+	pushStyle(); translate(0, 60); checkOption(1);
+	x = (width - textWidth("Adjust Sounds: " + int(volumeSounds * 100))) / 2;
+	text("Adjust Sounds: " + int(volumeSounds * 100), x, 0);
 	popStyle();
 
 	pushStyle(); translate(0, 60); checkOption(2);
