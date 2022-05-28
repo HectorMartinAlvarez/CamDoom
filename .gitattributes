@@ -39,6 +39,8 @@
 *.tiff     binary
 *.svg      text
 *.eps      binary
+*.obj      binary
+*.mtl      text
 
 # Scripts
 *.bash     text eol=lf

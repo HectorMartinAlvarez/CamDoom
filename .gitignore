@@ -13,8 +13,11 @@ dist/
 
 # Temporal/Old files
 *.old
+*.old.*
 *.tmp
+*.tmp.*
 *.temp
+*.temp.*
 
 # Processing
 .DS_Store

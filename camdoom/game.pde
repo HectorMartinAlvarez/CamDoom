@@ -53,7 +53,7 @@ class CDoomGame {
         if(i == stairs.escaleras.length-1){
          for(int j = 0, k = map.vertices.length-1; j < 5; j++, k--){
            map.vertices[j] = new PVector(188.5,0,835.8);
-           map.vertices[k] = new PVector(-60.8,0,835.9); 
+           map.vertices[k] = new PVector(-60.8,0,835.9);
          }
         }
       }
@@ -70,17 +70,17 @@ class CDoomGame {
       slayer.saveColumn2Position();
     }else {
       slayer.restoreColumn2Position();
-    } 
+    }
     if(!column_3.mapCollisions(slayer.cam.position.x, slayer.cam.position.z)){
       slayer.saveColumn3Position();
     }else {
       slayer.restoreColumn3Position();
-    } 
+    }
     if(!column_4.mapCollisions(slayer.cam.position.x, slayer.cam.position.z)){
       slayer.saveColumn4Position();
     }else {
       slayer.restoreColumn4Position();
-    } 
+    }
     if(!column_5.mapCollisions(slayer.cam.position.x, slayer.cam.position.z)){
       slayer.saveColumn5Position();
     }else {
@@ -97,10 +97,12 @@ class CDoomGame {
 	 * Display all elements of game
 	 */
 	void display() {
-		map.display();
-		//slayer.display();
-println(slayer.cam.position.x + "|" + slayer.cam.position.z);
-		this.update();
-    this.updatedColumn();
+		if (slayer.cam.controllable) {
+			map.display();
+			//slayer.display();
+			//println(slayer.cam.position.x + "|" + slayer.cam.position.z);
+			this.update();
+    	this.updatedColumn();
+		}
 	}
 }

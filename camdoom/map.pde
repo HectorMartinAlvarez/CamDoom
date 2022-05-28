@@ -10,7 +10,7 @@ class CDoomStairs {
 
 	CDoomStairs(String collisionPath) {
 		Table esca = loadTable(collisionPath);
-    escaleras = new ArrayList[15];  
+    escaleras = new ArrayList[15];
      for (int i=0, j = 0; i < 15; i++) {
        escaleras[i] = new ArrayList<PVector>();
        while(j < esca.getRowCount()-1 && esca.getFloat(j,1) == esca.getFloat(j+1,1)){
@@ -25,15 +25,15 @@ class CDoomStairs {
 
   boolean stairsCollisions(ArrayList<PVector> vertexes, float px, float py) {
     boolean collision = false;
-  
+
     int next = 0;
     for (int current=0; current<vertexes.size(); current++) {
       next = current+1;
       if (next == vertexes.size()) next = 0;
-  
-      PVector vc = vertexes.get(current);   
-      PVector vn = vertexes.get(next);       
-  
+
+      PVector vc = vertexes.get(current);
+      PVector vn = vertexes.get(next);
+
       if (((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py)) &&
            (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x)) {
              collision = !collision;
@@ -50,19 +50,19 @@ class CDoomColumns {
   CDoomColumns(PVector[] columns) {
     vertices = columns.clone();
   }
-  
+
   boolean mapCollisions(float px, float pz) {
     boolean collision = false;
-  
+
     int next = 0;
     for (int current=0; current<vertices.length; current++) {
-  
+
       next = current+1;
       if (next == vertices.length) next = 0;
-  
-      PVector vc = vertices[current];   
-      PVector vn = vertices[next];       
-  
+
+      PVector vc = vertices[current];
+      PVector vn = vertices[next];
+
       if (((vc.z >= pz && vn.z < pz) || (vc.z < pz && vn.z >= pz)) &&
            (px < (vn.x-vc.x)*(pz-vc.z) / (vn.z-vc.z)+vc.x)) {
              collision = !collision;
@@ -113,19 +113,19 @@ class CDoomMap {
   void addEnemy(CDoomCharacter enemy) {
     this.enemies.add(enemy);
   }
-  
+
   boolean mapCollisions(float px, float py) {
     boolean collision = false;
-  
+
     int next = 0;
     for (int current=0; current<vertices.length; current++) {
-  
+
       next = current+1;
       if (next == vertices.length) next = 0;
-  
-      PVector vc = vertices[current];   
-      PVector vn = vertices[next];       
-  
+
+      PVector vc = vertices[current];
+      PVector vn = vertices[next];
+
       if (((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py)) &&
            (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x)) {
              collision = !collision;
