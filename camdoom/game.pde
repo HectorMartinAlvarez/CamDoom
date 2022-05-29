@@ -36,11 +36,11 @@ class CDoomGame {
 		//checkSlayerDamage();
     slayer.setYAxis(slayer.previousY);
 
-    if(!map.mapCollisions(slayer.camera.getLookAt()[0], slayer.camera.getLookAt()[2])) slayer.restorePosition();
+    if(!map.mapCollisions(slayer.x, slayer.z)) slayer.restorePosition();
     else slayer.savePosition();
 
     for(int i = 0; i < stairs.stairs.length;i++) {
-      if(stairs.stairsCollisions(stairs.stairs[i], slayer.camera.getLookAt()[0], slayer.camera.getLookAt()[2])) {
+      if(stairs.stairsCollisions(stairs.stairs[i], slayer.x,slayer.z)) {
         slayer.previousY = stairs.stairs[i].get(0).y;
 
         if(slayer.z > 835 && reDoCollision) {
@@ -57,7 +57,7 @@ class CDoomGame {
 
   void updatedColumn() {
     for(int i = 0; i < columns.length; i++) {
-			boolean cond = columns[i].mapCollisions(slayer.camera.getLookAt()[0], slayer.camera.getLookAt()[2]);
+			boolean cond = columns[i].mapCollisions(slayer.x, slayer.z);
       if(!cond) slayer.saveColumnsPosition(i);
       else slayer.restoreColumnsPosition(i);
     }
