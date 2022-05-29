@@ -60,6 +60,21 @@ class CDoomGame {
       }
     }
   }
+	
+	/*
+  *  Check if any enemy should do damage to the Slayer
+  */
+  void checkSlayerDamage(){
+    if(this.enemy1.shoot){
+        if(this.enemy1.inRange(slayer.x, slayer.z)){
+        this.slayer.doDamage();
+        this.enemy1.shoot = false;
+        this.enemy1.time = millis() + 4000;
+      }
+    }else {
+      if((this.enemy1.time - millis()) < 0) this.enemy1.shoot = true;
+    }
+  }
 
 	/**
 	 * Display all elements of game
