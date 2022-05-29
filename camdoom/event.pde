@@ -50,7 +50,6 @@ void checkMenu() {
 				switch (selectedOption) {
 					case 0:	// Start game
 						confirmSound.play(); gameState = 0;
-						game.slayer.camera.setActive(false);
 					break;
 
 					case 1: // Settings
@@ -96,7 +95,6 @@ void checkSettingsFromMenu() {
 
 					case 2:	// Go back
 						confirmSound.play();
-						game.slayer.camera.setActive(false);
 						gameState = 1; selectedOption = 0;
 					break;
 				}
@@ -131,7 +129,6 @@ void checkPause() {
 				switch (selectedOption) {
 					case 0:	// Start game
 						confirmSound.play(); gameState = 0;
-						game.slayer.camera.setActive(false);
 					break;
 
 					case 1: // Settings
@@ -141,7 +138,7 @@ void checkPause() {
 
 					case 2:	// Go back
 						confirmSound.play();
-						game.slayer.camera.setActive(false);
+						game.reset();
 						gameState = 1; selectedOption = 0;
 					break;
 				}
@@ -177,7 +174,6 @@ void checkSettingsFromPause() {
 
 					case 2:	// Go back
 						confirmSound.play();
-						game.slayer.camera.setActive(false);
 						gameState = 2; selectedOption = 0;
 					break;
 				}
@@ -203,12 +199,10 @@ void checkDeath() {
 				switch (selectedOption) {
 					case 0:	// Start game
 						confirmSound.play(); gameState = 0;
-						game.slayer.camera.setActive(false);
 					break;
 
 					case 1:	// Go back
 						confirmSound.play();
-						game.slayer.camera.setActive(false);
 						gameState = 1; selectedOption = 0;
 					break;
 				}

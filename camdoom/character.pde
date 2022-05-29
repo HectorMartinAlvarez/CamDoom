@@ -51,13 +51,13 @@ class CDoomSlayer extends CDoomCharacter {
 	CDoomSlayer(float x, float y, float z, camdoom t) {
 		super(x, y, z);
 
+		this.papplet = t;
 		this.health = 100; this.shield = 0;
 		this.status = CDoomSlayerStatus.SLAYER_NORMAL;
 		this.spriteFinished = true;
 
 		previousX = x; previousY = y; previousZ = z;
-		this.papplet = t;
-		camera = new PeasyCam(t, x, y, z, 50);
+		camera = new PeasyCam(this.papplet, x, y, z, 50);
     camera.setDistance(50);
     camera.setActive(false);
 		camera.setWheelHandler(null);
@@ -79,6 +79,10 @@ class CDoomSlayer extends CDoomCharacter {
 		this.spriteFinished = true;
 
 		previousX = x; previousY = y; previousZ = z;
+		camera = new PeasyCam(this.papplet, x, y, z, 50);
+    camera.setDistance(50);
+    camera.setActive(false);
+		camera.setWheelHandler(null);
 
     for(int i = 0; i < previousColumnX.length; i++) {
       previousColumnX[i] = x;
@@ -86,7 +90,16 @@ class CDoomSlayer extends CDoomCharacter {
       previousColumnZ[i] = z;
     }
 
+    rotateCamera(180);
 		restorePosition();
+	}
+
+	void setShield(int shield) {
+		if (shield >= 0 && shield <= 100) {
+			if (this.shield < shield) itemTakenSound.play();
+			else this.status = CDoomSlayerStatus.SLAYER_PAIN;
+			this.shield = shield;
+		}
 	}
 
 	void doDamage() {
@@ -101,8 +114,6 @@ class CDoomSlayer extends CDoomCharacter {
 		switch(this.status) {
 			case SLAYER_NORMAL:
 				image(shotgun, (width - w) / 2 - 40, height - h, w, h);
-
-				// Blood effects ....
 			break;
 
 			case SLAYER_ATTACK:
@@ -117,7 +128,7 @@ class CDoomSlayer extends CDoomCharacter {
 				else if (shotgunShoot.isPlaying) {
 					shotgunShoot.play();
 
-					if (shotgunShoot.numSprite == 3) {
+					if (shotgunShoot.numFrame == 3) {
 						if (!prepareAmmoSound.isPlaying()) {
 							prepareAmmoSound.play();
 						}
@@ -147,6 +158,7 @@ class CDoomSlayer extends CDoomCharacter {
 			break;
 		}
 
+		displayBloodEffects();
 		camera.endHUD();
 	}
 

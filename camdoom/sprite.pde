@@ -15,52 +15,21 @@
 
 class CDoomSprite {
 	final PImage[] images;
-	CDoomTimer delayTimer;
-	int numSprite, delayValue;
 	PVector pos, dim;
-	boolean isPlaying;
+	int numSprite;
 
-	CDoomSprite(String spriteDir, float w, float h, int delayValue) {
-		this.images = imagesFromDirectory(sketchPath() + "/" + spriteDir);
+	CDoomSprite(String dir, float w, float h) {
+		this.images = imagesFromDirectory(sketchPath() + "/" + dir);
 		this.pos = new PVector(0, 0);
 		this.dim = new PVector(w, h);
-		this.isPlaying = false;
 		this.numSprite = 0;
-
-		this.delayValue = delayValue;
-		this.delayTimer = new CDoomTimer();
-		this.delayTimer.setTime(this.delayValue);
 	}
 
-	void setPlaying(boolean isPlaying, float x, float y) {
-		if (isPlaying == false) {
-			this.numSprite = 0;
-			this.pos = new PVector(0, 0);
-		} else {
-			this.isPlaying = isPlaying;
-			this.pos = new PVector(x, y);
-			this.delayTimer.setTime(this.delayValue);
-		}
-	}
-
-	void play() {
-		if (this.isPlaying == true) {
+	void display() {
+		if (this.numSprite >= 0 && this.numSprite < this.images.length) {
 			PImage img = this.images[this.numSprite];
 			image(img, this.pos.x, this.pos.y, this.dim.x, this.dim.y);
-			this.delayTimer.run();
-
-			if (this.delayTimer.hasFinished) {
-				this.numSprite = this.numSprite + 1;
-				this.delayTimer.setTime(this.delayValue);
-			}
-
-			if (this.numSprite >= this.images.length) {
-				this.delayTimer.stop();
-				this.isPlaying = false;
-				this.pos = new PVector(0, 0);
-				this.numSprite = 0;
-			}
-		}
+		} else this.numSprite = 0;
 	}
 }
 

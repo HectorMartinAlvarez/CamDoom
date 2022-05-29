@@ -16,14 +16,12 @@
 void increaseVolumeForMusic() {
 	volumeMusic = volumeMusic < 1? volumeMusic + 0.2 : 0;
 	if (volumeMusic > 1) volumeMusic = 1;
-
 	adjustVolumeForMusic();
 }
 
 void increaseVolumeForEffects() {
 	volumeEffects = volumeEffects < 1? volumeEffects + 0.2 : 0;
 	if (volumeEffects > 1) volumeEffects = 1;
-
 	adjustVolumeForEffects();
 }
 
@@ -42,5 +40,6 @@ void adjustVolumeForEffects() {
 		prepareAmmoSound.amp(volumeEffects);
 		painSound.amp(volumeEffects);
 		deathSound.amp(volumeEffects);
+		itemTakenSound.amp(volumeEffects);
 	}
 }

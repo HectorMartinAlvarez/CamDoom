@@ -39,16 +39,13 @@ static final String CDOOM_SHOT = "data/sounds/shotgn.wav";
 static final String CDOOM_PREPARE_AMMO = "data/sounds/sgcock.wav";
 static final String CDOOM_PAIN = "data/sounds/plpain.wav";
 static final String CDOOM_DEATH = "data/sounds/pldeth.wav";
+static final String CDOOM_ITEM_TAKEN = "data/sounds/itemup.wav";
 
-// ~ Sprites files ~
-static final String CDOOM_SHOTGUN_PREPARING = "data/sprites/shotgun";
-static final String CDOOM_BLOOD_DROPS = "data/images/blood_drops.png";
+// ~ Sprites and Animation files ~
+static final String CDOOM_BLOOD_EFFECT = "data/animation/blood_effect";
+static final String CDOOM_SHOTGUN_PREPARING = "data/animation/shotgun";
 static final String CDOOM_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
-
-// ~ Sprites ~
-static final int CROP_SEP_W = 10;
-static final int CROP_SEP_H = 10;
 
 // -----------------------------------------------
 // Variables
@@ -63,6 +60,7 @@ SoundFile e1m1Music;
 SoundFile confirmSound, exitSound, selectSound;
 SoundFile shootSound, prepareAmmoSound;
 SoundFile painSound, deathSound;
+SoundFile itemTakenSound;
 
 float volumeEffects = 1.0;		// 0 - mute, 1 - max volume
 float volumeMusic = 0.2;			// 0 - mute, 1 - max volume
@@ -71,9 +69,10 @@ float volumeMusic = 0.2;			// 0 - mute, 1 - max volume
 PImage backgroundImage;
 PFont titleFont, basicTextFont;
 
-// ~ Sprites ~
-CDoomSprite shotgunShoot;
-PImage shotgun, bloodDropsImage;
+// ~ Sprites and Animation ~
+CDoomAnimation shotgunShoot;
+CDoomSprite bloodEffect;
+PImage shotgun;
 
 // ~ CDoom ~
 CDoomGame game;
@@ -100,7 +99,7 @@ void updateSize() {
 	if (current_width != width || current_height != height) {
 		current_width = width; current_height = height;
 		backgroundImage.resize(width, height);
-		bloodDropsImage.resize(width, height);
+		bloodEffect.dim = new PVector(width, height);
 	}
 }
 
@@ -113,6 +112,7 @@ void loadSounds() {
 	prepareAmmoSound = new SoundFile(this, CDOOM_PREPARE_AMMO);
 	painSound = new SoundFile(this, CDOOM_PAIN);
 	deathSound = new SoundFile(this, CDOOM_DEATH);
+	itemTakenSound = new SoundFile(this, CDOOM_ITEM_TAKEN);
 
 	adjustVolumeForMusic();
 	adjustVolumeForEffects();
@@ -132,13 +132,15 @@ void loadImages() {
 	shotgun = loadImage(CDOOM_SHOTGUN);
 	shotgun.resize(shotgun.width * 3, shotgun.height * 3);
 
-	shotgunShoot = new CDoomSprite(
+	shotgunShoot = new CDoomAnimation(
 		CDOOM_SHOTGUN_PREPARING,
-		shotgun.width, shotgun.height, 2
+		shotgun.width, shotgun.height, 3
 	);
 
-	bloodDropsImage = loadImage(CDOOM_BLOOD_DROPS);
-	bloodDropsImage.resize(width, height);
+	bloodEffect = new CDoomSprite(
+		CDOOM_BLOOD_EFFECT,
+		width, height
+	);
 }
 
 CDoomColumns[] loadColumns() {

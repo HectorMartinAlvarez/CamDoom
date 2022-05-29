@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.3] - 2022-05-29
+
+### Added
+
+- Provide blood effect for slayer pain
+
+### Fixed
+
+- Fix text aligment at Death screen
+- Fix slayer's position when user has exited but played again
+
 ## [1.5.2] - 2022-05-29
 
 ### Added
@@ -105,4 +116,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.4.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/8cb7d98fd43348409c011feb82e9eb1fdb8f16ac
 [1.5.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/27321b556e7985b3daa6f591324c5a7df2ab9cd4
 [1.5.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/158f5198d4f9cbf17492cd1c89e7a42d88929ce1
-[1.5.2]:
+[1.5.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/1f8025eed5b6e7f5ba0fad9fd6e5cd768d82417b
+[1.5.3]:
