@@ -77,8 +77,8 @@ class CDoomSlayer extends CDoomCharacter {
   void rotateCamera(float angle){
     camera.rotateY(radians(angle));
     this.angle += angle;
-    if(this.angle > 360){
-      this.angle = round(this.angle/360);
+    if(this.angle > 360 || this.angle < -360){
+      this.angle = round(this.angle/360)+(this.angle<0 ? 1 : -1);
     }
   }
   
@@ -97,19 +97,20 @@ class CDoomSlayer extends CDoomCharacter {
     float c1 = sin(radians(this.angle))*5;
     float c2 = sqrt((25)-(c1*c1));
     
-    if(this.angle <= 90){
+    if(abs(this.angle) <= 90){
       this.x-=c1;
       this.z-=c2;
-    }else if(this.angle > 90 && this.angle <= 180){
+    }else if(abs(this.angle) > 90 && abs(this.angle) <= 180){
       this.x-=c1;
       this.z+=c2;
-    }else if(this.angle > 180 && this.angle <= 270){
+    }else if(abs(this.angle) > 180 && abs(this.angle) <= 270){
       this.x-=c1;
       this.z+=c2;
     }else {
       this.x-=c1;
       this.z-=c2;
     }
+		
     camera.lookAt(this.x,this.y,this.z);  
   }
   
