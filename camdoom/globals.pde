@@ -18,13 +18,13 @@
 // -----------------------------------------------
 
 // ~ Image paths ~
-static final String CDOOM_ICON = "data/icon.png";
-static final String CDOOM_MAIN_MENU_BACKGROUND = "data/main_menu.jpg";
+static final String CDOOM_ICON = "data/images/icon.png";
+static final String CDOOM_MAIN_MENU_BACKGROUND = "data/images/main_menu.jpg";
 
 // ~ Map paths ~
-static final String CDOOM_MAP_OBJ = "data/map/doom2_MAP01_mod.obj";
-static final String CDOOM_MAP_COLLISIONS = "data/map/collisions_MAP01.csv";
-static final String CDOOM_MAP_STAIRS = "data/map/stairs.csv";
+static final String CDOOM_MAP_OBJ = "data/map/e1m1/doom2_e1m1.obj";
+static final String CDOOM_MAP_COLLISIONS = "data/map/e1m1/doom2_e1m1_collisions.csv";
+static final String CDOOM_MAP_STAIRS = "data/map/e1m1/doom2_e1m1_stairs.csv";
 
 // ~ Font paths ~
 static final String CDOOM_FONT_TITLE = "data/fonts/amazdoomleft.ttf";
@@ -35,6 +35,20 @@ static final String CDOOM_E1M1 = "data/sounds/e1m1.wav";
 static final String CDOOM_CONFIRM = "data/sounds/pistol.wav";
 static final String CDOOM_SELECT = "data/sounds/pstop.wav";
 static final String CDOOM_EXIT = "data/sounds/posit1.wav";
+static final String CDOOM_SHOT = "data/sounds/shotgn.wav";
+static final String CDOOM_PREPARE_AMMO = "data/sounds/sgcock.wav";
+static final String CDOOM_PAIN = "data/sounds/plpain.wav";
+static final String CDOOM_DEATH = "data/sounds/pldeth.wav";
+
+// ~ Sprites files ~
+static final String CDOOM_SHOTGUN_PREPARING = "data/sprites/shotgun";
+static final String CDOOM_BLOOD_DROPS = "data/images/blood_drops.png";
+static final String CDOOM_SHOTGUN = "data/images/shotgun.png";
+static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
+
+// ~ Sprites ~
+static final int CROP_SEP_W = 10;
+static final int CROP_SEP_H = 10;
 
 // -----------------------------------------------
 // Variables
@@ -45,28 +59,38 @@ int current_width = width;
 int current_height = height;
 
 // ~ Sounds ~
-SoundFile e1m1;
-SoundFile confirm, exit, select;
-float volumeSounds = 1.0;		// 0 - mute, 1 - max volume
-float volumeMusic = 0.5;		// 0 - mute, 1 - max volume
+SoundFile e1m1Music;
+SoundFile confirmSound, exitSound, selectSound;
+SoundFile shootSound, prepareAmmoSound;
+SoundFile painSound, deathSound;
+
+float volumeEffects = 1.0;		// 0 - mute, 1 - max volume
+float volumeMusic = 0.2;			// 0 - mute, 1 - max volume
 
 // ~ GUI ~
 PImage backgroundImage;
 PFont titleFont, basicTextFont;
 
+// ~ Sprites ~
+CDoomSprite shotgunShoot;
+PImage shotgun, bloodDropsImage;
+
 // ~ CDoom ~
 CDoomGame game;
+CDoomSlayer slayer;
+CDoomMap map;
 
 // ~ States ~
+int selectedOption = 0;		// 0..n options
 int gameState = 1;				// 0 - start game
 													// 1 - main menu
 													// 2 - pause menu
 													// 3 - settings from main menu
 													// 4 - settings from pause menu
+													// 5 - death message
 
-int selectedOption = 0;		// 0 - start game
-													// 1 - settings
-													// 2 - go back or exit
+// ~ Controls ~
+Map<Character, Boolean> actions;
 
 // -----------------------------------------------
 // Loaders
@@ -74,21 +98,25 @@ int selectedOption = 0;		// 0 - start game
 
 void updateSize() {
 	if (current_width != width || current_height != height) {
-		current_width = width;
-		current_height = height;
+		current_width = width; current_height = height;
 		backgroundImage.resize(width, height);
+		bloodDropsImage.resize(width, height);
 	}
 }
 
 void loadSounds() {
-	e1m1 = new SoundFile(this, CDOOM_E1M1);
-	confirm = new SoundFile(this, CDOOM_CONFIRM);
-	select = new SoundFile(this, CDOOM_SELECT);
-	exit = new SoundFile(this, CDOOM_EXIT);
+	e1m1Music = new SoundFile(this, CDOOM_E1M1);
+	confirmSound = new SoundFile(this, CDOOM_CONFIRM);
+	selectSound = new SoundFile(this, CDOOM_SELECT);
+	exitSound = new SoundFile(this, CDOOM_EXIT);
+	shootSound = new SoundFile(this, CDOOM_SHOT);
+	prepareAmmoSound = new SoundFile(this, CDOOM_PREPARE_AMMO);
+	painSound = new SoundFile(this, CDOOM_PAIN);
+	deathSound = new SoundFile(this, CDOOM_DEATH);
 
-	adjustVolumeMusic();
-	adjustVolumeSounds();
-	e1m1.loop();
+	adjustVolumeForMusic();
+	adjustVolumeForEffects();
+	e1m1Music.loop();
 }
 
 void loadFonts() {
@@ -100,4 +128,79 @@ void loadImages() {
 	backgroundImage = loadImage(CDOOM_MAIN_MENU_BACKGROUND);
 	backgroundImage.resize(width, height);
 	backgroundImage.filter(BLUR, 2);
+
+	shotgun = loadImage(CDOOM_SHOTGUN);
+	shotgun.resize(shotgun.width * 3, shotgun.height * 3);
+
+	shotgunShoot = new CDoomSprite(
+		CDOOM_SHOTGUN_PREPARING,
+		shotgun.width, shotgun.height, 2
+	);
+
+	bloodDropsImage = loadImage(CDOOM_BLOOD_DROPS);
+	bloodDropsImage.resize(width, height);
+}
+
+CDoomColumns[] loadColumns() {
+	PVector[] column1 = new PVector[4];
+  PVector[] column2 = new PVector[4];
+  PVector[] column3 = new PVector[4];
+  PVector[] column4 = new PVector[4];
+  PVector[] column5 = new PVector[8];
+  PVector[] column6 = new PVector[8];
+
+  column1[0] = new PVector(189.7, 0, 957.7);
+  column1[1] = new PVector(255.3, 0, 957.7);
+  column1[2] = new PVector(255.3, 0, 1025.5);
+  column1[3] = new PVector(189.7, 0, 1025.5);
+
+  column2[0] = new PVector(-131.2, 0, 956.7);
+  column2[1] = new PVector(-61.2, 0, 956.7);
+  column2[2] = new PVector(-61.2, 0, 1025.5);
+  column2[3] = new PVector(-131.2, 0, 1025.5);
+
+  column3[0] = new PVector(-448.6, 0, 706.9);
+  column3[1] = new PVector(-448.6, 0, 637.5);
+  column3[2] = new PVector(-383.7, 0, 637.5);
+  column3[3] = new PVector(-383.7, 0, 706.9);
+
+  column4[0] = new PVector(-895.9, 0, 775.2);
+  column4[1] = new PVector(-895.9, 0, 705.2);
+  column4[2] = new PVector(-960.3, 0, 705.2);
+  column4[3] = new PVector(-960.3, 0, 775.2);
+
+  column5[0] = new PVector(-128.7, 0, 2235.6);
+  column5[1] = new PVector(3.5, 0, 2235.6);
+  column5[2] = new PVector(3.5, 0, 2309.1);
+  column5[3] = new PVector(-58.5, 0, 2312.5);
+  column5[4] = new PVector(-58.5, 0, 2361);
+  column5[5] = new PVector(3.5, 0, 2363.9);
+  column5[6] = new PVector(3.5, 0, 2435.8);
+  column5[7] = new PVector(-128.7, 0, 2435.8);
+
+  column6[0] = new PVector(-387.9, 0, 2235.6);
+  column6[1] = new PVector(-387.9, 0, 2309.1);
+  column6[2] = new PVector(-326.6, 0, 2309.1);
+  column6[3] = new PVector(-326.6, 0, 2362.4);
+  column6[4] = new PVector(-387.9, 0, 2362.5);
+  column6[5] = new PVector(-387.9, 0, 2436.9);
+  column6[6] = new PVector(-250.5, 0, 2436.9);
+  column6[7] = new PVector(-250.5, 0, 2235.6);
+
+  CDoomColumns[] columns = new CDoomColumns[6];
+  columns[0] = new CDoomColumns(column1);
+  columns[1] = new CDoomColumns(column2);
+  columns[2] = new CDoomColumns(column3);
+  columns[3] = new CDoomColumns(column4);
+  columns[4] = new CDoomColumns(column5);
+  columns[5] = new CDoomColumns(column6);
+
+	return columns;
+}
+
+void loadActions() {
+	actions = new HashMap<Character, Boolean>();
+	actions.put('W', false); actions.put('w', false);
+	actions.put('A', false); actions.put('a', false);
+	actions.put('D', false); actions.put('d', false);
 }

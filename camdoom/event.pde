@@ -13,12 +13,32 @@
 // You should have received a copy of the GNU General Public License
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
+void updateActions() {
+	for (Character keyValue : actions.keySet()) {
+		if ((Boolean)actions.get(keyValue)) {
+			switch(keyValue) {
+				case 'W': case 'w':
+					game.slayer.moveSlayer();
+				break;
+
+				case 'A': case 'a':
+					game.slayer.rotateCamera(2);
+				break;
+
+				case 'D': case 'd':
+					game.slayer.rotateCamera(-2);
+				break;
+			}
+		}
+	}
+}
+
 void checkMenu() {
 	// Choose an option
 	if (key == CODED) {
 		switch (keyCode) {
-			case DOWN: if (selectedOption < 2) { select.play(); selectedOption++; } break;
-			case UP: if (selectedOption > 0) { select.play(); selectedOption--; } break;
+			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
 		}
 	}
 
@@ -29,17 +49,17 @@ void checkMenu() {
 			case ENTER:
 				switch (selectedOption) {
 					case 0:	// Start game
-						confirm.play(); gameState = 0;
-						game.slayer.cam.controllable = true;
+						confirmSound.play(); gameState = 0;
+						game.slayer.camera.setActive(false);
 					break;
 
 					case 1: // Settings
-						confirm.play();
+						confirmSound.play();
 						gameState = 3;
 					break;
 
 					case 2:	// Exit
-						exit.play();
+						exitSound.play();
 						delay(1500);
 						exit();
 					break;
@@ -53,8 +73,8 @@ void checkSettingsFromMenu() {
 	// Choose an option
 	if (key == CODED) {
 		switch (keyCode) {
-			case DOWN: if (selectedOption < 2) { select.play(); selectedOption++; } break;
-			case UP: if (selectedOption > 0) { select.play(); selectedOption--; } break;
+			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
 		}
 	}
 
@@ -65,22 +85,18 @@ void checkSettingsFromMenu() {
 			case ENTER:
 				switch (selectedOption) {
 					case 0:	// Increase music
-						confirm.play();
-						volumeMusic = volumeMusic < 1? volumeMusic + 0.2 : 0;
-						if (volumeMusic > 1) volumeMusic = 1;
-						adjustVolumeMusic();
+						confirmSound.play();
+						increaseVolumeForMusic();
 					break;
 
 					case 1: // Increase sound
-						confirm.play();
-						volumeSounds = volumeSounds < 1? volumeSounds + 0.2 : 0;
-						if (volumeSounds > 1) volumeSounds = 1;
-						adjustVolumeSounds();
+						confirmSound.play();
+						increaseVolumeForEffects();
 					break;
 
 					case 2:	// Go back
-						confirm.play();
-						game.slayer.cam.controllable = false;
+						confirmSound.play();
+						game.slayer.camera.setActive(false);
 						gameState = 1; selectedOption = 0;
 					break;
 				}
@@ -89,10 +105,11 @@ void checkSettingsFromMenu() {
 	}
 }
 
-void checkStartPause() {
+void checkSlayerControls() {
+	// Pause menu
 	if (key != CODED && key == ESC) {
-		key = 0; confirm.play();
-		game.slayer.cam.controllable = false;
+		key = 0; confirmSound.play();
+		game.slayer.camera.setActive(false);
 		gameState = 2; selectedOption = 0;
 	}
 }
@@ -101,8 +118,8 @@ void checkPause() {
 	// Choose an option
 	if (key == CODED) {
 		switch (keyCode) {
-			case DOWN: if (selectedOption < 2) { select.play(); selectedOption++; } break;
-			case UP: if (selectedOption > 0) { select.play(); selectedOption--; } break;
+			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
 		}
 	}
 
@@ -113,18 +130,18 @@ void checkPause() {
 			case ENTER:
 				switch (selectedOption) {
 					case 0:	// Start game
-						confirm.play(); gameState = 0;
-						game.slayer.cam.controllable = true;
+						confirmSound.play(); gameState = 0;
+						game.slayer.camera.setActive(false);
 					break;
 
 					case 1: // Settings
-						confirm.play();
+						confirmSound.play();
 						gameState = 4;
 					break;
 
 					case 2:	// Go back
-						confirm.play();
-						game.slayer.cam.controllable = false;
+						confirmSound.play();
+						game.slayer.camera.setActive(false);
 						gameState = 1; selectedOption = 0;
 					break;
 				}
@@ -137,8 +154,8 @@ void checkSettingsFromPause() {
 	// Choose an option
 	if (key == CODED) {
 		switch (keyCode) {
-			case DOWN: if (selectedOption < 2) { select.play(); selectedOption++; } break;
-			case UP: if (selectedOption > 0) { select.play(); selectedOption--; } break;
+			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
 		}
 	}
 
@@ -149,22 +166,18 @@ void checkSettingsFromPause() {
 			case ENTER:
 				switch (selectedOption) {
 					case 0:	// Increase music
-						confirm.play();
-						volumeMusic = volumeMusic < 1? volumeMusic + 0.2 : 0;
-						if (volumeMusic > 1) volumeMusic = 1;
-						adjustVolumeMusic();
+						confirmSound.play();
+						increaseVolumeForMusic();
 					break;
 
 					case 1: // Increase sound
-						confirm.play();
-						volumeSounds = volumeSounds < 1? volumeSounds + 0.2 : 0;
-						if (volumeSounds > 1) volumeSounds = 1;
-						adjustVolumeSounds();
+						confirmSound.play();
+						increaseVolumeForEffects();
 					break;
 
 					case 2:	// Go back
-						confirm.play();
-						game.slayer.cam.controllable = false;
+						confirmSound.play();
+						game.slayer.camera.setActive(false);
 						gameState = 2; selectedOption = 0;
 					break;
 				}
@@ -173,13 +186,82 @@ void checkSettingsFromPause() {
 	}
 }
 
-void keyPressed() {
-	// Main menu
+void checkDeath() {
+	// Choose an option
+	if (key == CODED) {
+		switch (keyCode) {
+			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
+		}
+	}
+
+	// Execute an option
+	else {
+		switch (key) {
+			case ESC: key = 0; break;
+			case ENTER:
+				switch (selectedOption) {
+					case 0:	// Start game
+						confirmSound.play(); gameState = 0;
+						game.slayer.camera.setActive(false);
+					break;
+
+					case 1:	// Go back
+						confirmSound.play();
+						game.slayer.camera.setActive(false);
+						gameState = 1; selectedOption = 0;
+					break;
+				}
+			break;
+		}
+	}
+}
+
+void keyTyped() {
+	if (actions.keySet().contains(key))
+		actions.put(key, true);
+
 	switch(gameState) {
-		case 0: checkStartPause(); 			  break;
+		case 0: checkSlayerControls(); 		break;
 		case 1: checkMenu(); 			 			  break;
 		case 2: checkPause(); 		 			  break;
 		case 3: checkSettingsFromMenu();  break;
 		case 4: checkSettingsFromPause(); break;
+		case 5: checkDeath(); 						break;
+	}
+}
+
+void keyPressed() {
+	if (actions.keySet().contains(key))
+		actions.put(key, true);
+
+	switch(gameState) {
+		case 0: checkSlayerControls(); 		break;
+		case 1: checkMenu(); 			 			  break;
+		case 2: checkPause(); 		 			  break;
+		case 3: checkSettingsFromMenu();  break;
+		case 4: checkSettingsFromPause(); break;
+		case 5: checkDeath(); 						break;
+	}
+}
+
+void keyReleased() {
+	if (actions.keySet().contains(key))
+		actions.put(key, false);
+}
+
+void mousePressed() {
+	if (gameState == 0) {
+		if (game.slayer.health > 0) {
+			// Shoot action
+			if (mouseButton == LEFT) {
+				game.slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+			}
+
+			// Just for testing (temporal)
+			if (mouseButton == RIGHT) {
+				slayer.doDamage();
+			}
+		}
 	}
 }

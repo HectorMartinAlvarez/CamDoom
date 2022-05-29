@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd ASHWALL3.PNG
+map_Kd ../textures/ASHWALL3.PNG
 
 newmtl BRNSMAL1
 Ns 0.000000
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BRNSMAL1.PNG
+map_Kd ../textures/BRNSMAL1.PNG
 
 newmtl BRONZE1
 Ns 0.000000
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BRONZE1.PNG
+map_Kd ../textures/BRONZE1.PNG
 
 newmtl BRONZE2
 Ns 0.000000
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BRONZE2.PNG
+map_Kd ../textures/BRONZE2.PNG
 
 newmtl BROVINE2
 Ns 0.000000
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BROVINE2.PNG
+map_Kd ../textures/BROVINE2.PNG
 
 newmtl BROWN1
 Ns 0.000000
@@ -65,7 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BROWN1.PNG
+map_Kd ../textures/BROWN1.PNG
 
 newmtl BROWN96
 Ns 0.000000
@@ -76,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BROWN96.PNG
+map_Kd ../textures/BROWN96.PNG
 
 newmtl BROWNGRN
 Ns 0.000000
@@ -87,7 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BROWNGRN.PNG
+map_Kd ../textures/BROWNGRN.PNG
 
 newmtl BROWNHUG
 Ns 0.000000
@@ -98,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd BROWNHUG.PNG
+map_Kd ../textures/BROWNHUG.PNG
 
 newmtl CEIL1_2
 Ns 0.000000
@@ -109,7 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL1_2.PNG
+map_Kd ../textures/CEIL1_2.PNG
 
 newmtl CEIL1_3
 Ns 0.000000
@@ -120,7 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL1_3.PNG
+map_Kd ../textures/CEIL1_3.PNG
 
 newmtl CEIL3_1
 Ns 0.000000
@@ -131,7 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL3_1.PNG
+map_Kd ../textures/CEIL3_1.PNG
 
 newmtl CEIL3_3
 Ns 0.000000
@@ -142,7 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL3_3.PNG
+map_Kd ../textures/CEIL3_3.PNG
 
 newmtl CEIL5_1
 Ns 0.000000
@@ -153,7 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL5_1.PNG
+map_Kd ../textures/CEIL5_1.PNG
 
 newmtl CEIL5_2
 Ns 0.000000
@@ -164,7 +164,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEIL5_2.PNG
+map_Kd ../textures/CEIL5_2.PNG
 
 newmtl CEMENT9
 Ns 0.000000
@@ -175,7 +175,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd CEMENT9.PNG
+map_Kd ../textures/CEMENT9.PNG
 
 newmtl COMPSPAN
 Ns 0.000000
@@ -186,7 +186,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd COMPSPAN.PNG
+map_Kd ../textures/COMPSPAN.PNG
 
 newmtl Default
 Ns 225.000000
@@ -207,7 +207,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd EXITDOOR.PNG
+map_Kd ../textures/EXITDOOR.PNG
 
 newmtl EXITSIGN
 Ns 0.000000
@@ -218,7 +218,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd EXITSIGN.PNG
+map_Kd ../textures/EXITSIGN.PNG
 
 newmtl FLAT10
 Ns 0.000000
@@ -229,7 +229,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT10.PNG
+map_Kd ../textures/FLAT10.PNG
 
 newmtl FLAT18
 Ns 0.000000
@@ -240,7 +240,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT18.PNG
+map_Kd ../textures/FLAT18.PNG
 
 newmtl FLAT1_1
 Ns 0.000000
@@ -251,7 +251,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT1_1.PNG
+map_Kd ../textures/FLAT1_1.PNG
 
 newmtl FLAT1_2
 Ns 0.000000
@@ -262,7 +262,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT1_2.PNG
+map_Kd ../textures/FLAT1_2.PNG
 
 newmtl FLAT2
 Ns 0.000000
@@ -273,7 +273,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT2.PNG
+map_Kd ../textures/FLAT2.PNG
 
 newmtl FLAT20
 Ns 0.000000
@@ -284,7 +284,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT20.PNG
+map_Kd ../textures/FLAT20.PNG
 
 newmtl FLAT23
 Ns 0.000000
@@ -295,7 +295,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT23.PNG
+map_Kd ../textures/FLAT23.PNG
 
 newmtl FLAT4
 Ns 0.000000
@@ -306,7 +306,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT4.PNG
+map_Kd ../textures/FLAT4.PNG
 
 newmtl FLAT5
 Ns 0.000000
@@ -317,7 +317,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT5.PNG
+map_Kd ../textures/FLAT5.PNG
 
 newmtl FLAT5_5
 Ns 0.000000
@@ -328,7 +328,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLAT5_5.PNG
+map_Kd ../textures/FLAT5_5.PNG
 
 newmtl FLOOR0_1
 Ns 0.000000
@@ -339,7 +339,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR0_1.PNG
+map_Kd ../textures/FLOOR0_1.PNG
 
 newmtl FLOOR0_2
 Ns 0.000000
@@ -350,7 +350,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR0_2.PNG
+map_Kd ../textures/FLOOR0_2.PNG
 
 newmtl FLOOR1_1
 Ns 0.000000
@@ -361,7 +361,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR1_1.PNG
+map_Kd ../textures/FLOOR1_1.PNG
 
 newmtl FLOOR3_3
 Ns 0.000000
@@ -372,7 +372,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR3_3.PNG
+map_Kd ../textures/FLOOR3_3.PNG
 
 newmtl FLOOR4_1
 Ns 0.000000
@@ -383,7 +383,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR4_1.PNG
+map_Kd ../textures/FLOOR4_1.PNG
 
 newmtl FLOOR5_3
 Ns 0.000000
@@ -394,7 +394,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR5_3.PNG
+map_Kd ../textures/FLOOR5_3.PNG
 
 newmtl FLOOR5_4
 Ns 0.000000
@@ -405,7 +405,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR5_4.PNG
+map_Kd ../textures/FLOOR5_4.PNG
 
 newmtl FLOOR7_1
 Ns 0.000000
@@ -416,7 +416,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FLOOR7_1.PNG
+map_Kd ../textures/FLOOR7_1.PNG
 
 newmtl FWATER4
 Ns 0.000000
@@ -427,7 +427,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd FWATER4.PNG
+map_Kd ../textures/FWATER4.PNG
 
 newmtl F_SKY1
 Ns 0.000000
@@ -438,7 +438,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd F_SKY1.PNG
+map_Kd ../textures/F_SKY1.PNG
 
 newmtl GRASS1
 Ns 0.000000
@@ -449,7 +449,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd GRASS1.PNG
+map_Kd ../textures/GRASS1.PNG
 
 newmtl GRNLITE1
 Ns 0.000000
@@ -460,7 +460,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd GRNLITE1.PNG
+map_Kd ../textures/GRNLITE1.PNG
 
 newmtl LITE5
 Ns 0.000000
@@ -471,7 +471,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd LITE5.PNG
+map_Kd ../textures/LITE5.PNG
 
 newmtl MFLR8_3
 Ns 0.000000
@@ -482,7 +482,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd MFLR8_3.PNG
+map_Kd ../textures/MFLR8_3.PNG
 
 newmtl MIDBARS3
 Ns 0.000000
@@ -493,7 +493,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd MIDBARS3.PNG
+map_Kd ../textures/MIDBARS3.PNG
 
 newmtl MODWALL2
 Ns 0.000000
@@ -504,7 +504,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd MODWALL2.PNG
+map_Kd ../textures/MODWALL2.PNG
 
 newmtl MODWALL3
 Ns 0.000000
@@ -515,7 +515,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd MODWALL3.PNG
+map_Kd ../textures/MODWALL3.PNG
 
 newmtl PIPE2
 Ns 0.000000
@@ -526,7 +526,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd PIPE2.PNG
+map_Kd ../textures/PIPE2.PNG
 
 newmtl PIPE4
 Ns 0.000000
@@ -537,7 +537,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd PIPE4.PNG
+map_Kd ../textures/PIPE4.PNG
 
 newmtl RROCK09
 Ns 0.000000
@@ -548,7 +548,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd RROCK09.PNG
+map_Kd ../textures/RROCK09.PNG
 
 newmtl SPACEW3
 Ns 0.000000
@@ -559,7 +559,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SPACEW3.PNG
+map_Kd ../textures/SPACEW3.PNG
 
 newmtl SPACEW4
 Ns 0.000000
@@ -570,7 +570,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SPACEW4.PNG
+map_Kd ../textures/SPACEW4.PNG
 
 newmtl STEP2
 Ns 0.000000
@@ -581,7 +581,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd STEP2.PNG
+map_Kd ../textures/STEP2.PNG
 
 newmtl STEP6
 Ns 0.000000
@@ -592,7 +592,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd STEP6.PNG
+map_Kd ../textures/STEP6.PNG
 
 newmtl SUPPORT2
 Ns 0.000000
@@ -603,7 +603,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SUPPORT2.PNG
+map_Kd ../textures/SUPPORT2.PNG
 
 newmtl SW1BRCOM
 Ns 0.000000
@@ -614,7 +614,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SW1BRCOM.PNG
+map_Kd ../textures/SW1BRCOM.PNG
 
 newmtl SW1BRNGN
 Ns 0.000000
@@ -625,7 +625,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SW1BRNGN.PNG
+map_Kd ../textures/SW1BRNGN.PNG
 
 newmtl SW1COMP
 Ns 0.000000
@@ -636,7 +636,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SW1COMP.PNG
+map_Kd ../textures/SW1COMP.PNG
 
 newmtl SW2BRCOM
 Ns 0.000000
@@ -647,7 +647,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd SW2BRCOM.PNG
+map_Kd ../textures/SW2BRCOM.PNG
 
 newmtl TEKGREN2
 Ns 0.000000
@@ -658,7 +658,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TEKGREN2.PNG
+map_Kd ../textures/TEKGREN2.PNG
 
 newmtl TEKGREN3
 Ns 0.000000
@@ -669,7 +669,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TEKGREN3.PNG
+map_Kd ../textures/TEKGREN3.PNG
 
 newmtl TEKGREN4
 Ns 0.000000
@@ -680,7 +680,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TEKGREN4.PNG
+map_Kd ../textures/TEKGREN4.PNG
 
 newmtl TEKGREN5
 Ns 0.000000
@@ -691,7 +691,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TEKGREN5.PNG
+map_Kd ../textures/TEKGREN5.PNG
 
 newmtl TEKWALL6
 Ns 0.000000
@@ -702,7 +702,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TEKWALL6.PNG
+map_Kd ../textures/TEKWALL6.PNG
 
 newmtl TLITE6_4
 Ns 0.000000
@@ -713,4 +713,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd TLITE6_4.PNG
+map_Kd ../textures/TLITE6_4.PNG

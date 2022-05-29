@@ -14,6 +14,7 @@
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
 void displayMenu() {
+	game.slayer.camera.beginHUD();
 	background(backgroundImage);
 	pushMatrix(); pushStyle();
 
@@ -25,26 +26,28 @@ void displayMenu() {
 
 	textFont(basicTextFont);
 
-	pushStyle(); translate(0, 80); checkOption(0);
+	pushStyle(); translate(0, 80); if (0 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Start Game")) / 2;
 	text("Start Game", x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(1);
+	pushStyle(); translate(0, 60); if (1 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Settings")) / 2;
 	text("Settings", x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(2);
+	pushStyle(); translate(0, 60); if (2 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Exit Game")) / 2;
 	text("Exit Game", x, 0);
 	popStyle();
 
 	popStyle(); popMatrix();
+	game.slayer.camera.endHUD();
 }
 
 void displayPause() {
 	game.map.display();
+	game.slayer.camera.beginHUD();
 
 	pushMatrix(); pushStyle();
 
@@ -56,27 +59,33 @@ void displayPause() {
 
 	textFont(basicTextFont);
 
-	pushStyle(); translate(0, 80); checkOption(0);
+	pushStyle(); translate(0, 80); if (0 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Resume Game")) / 2;
 	text("Resume Game", x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(1);
+	pushStyle(); translate(0, 60); if (1 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Settings")) / 2;
 	text("Settings", x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(2);
+	pushStyle(); translate(0, 60); if (2 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Go back")) / 2;
 	text("Go back", x, 0);
 	popStyle();
 
 	popStyle(); popMatrix();
+	game.slayer.camera.endHUD();
 }
 
 void displaySettings() {
-	if (gameState == 3) background(backgroundImage);
-	else game.map.display();
+	if (gameState == 3) {
+		game.slayer.camera.beginHUD();
+		background(backgroundImage);
+	} else {
+		game.map.display();
+		game.slayer.camera.beginHUD();
+	}
 
 	pushMatrix(); pushStyle();
 
@@ -88,26 +97,69 @@ void displaySettings() {
 
 	textFont(basicTextFont);
 
-	pushStyle(); translate(0, 80); checkOption(0);
+	pushStyle(); translate(0, 80); if (0 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Adjust Music: " + int(volumeMusic * 100))) / 2;
 	text("Adjust Music: " + int(volumeMusic * 100), x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(1);
-	x = (width - textWidth("Adjust Sounds: " + int(volumeSounds * 100))) / 2;
-	text("Adjust Sounds: " + int(volumeSounds * 100), x, 0);
+	pushStyle(); translate(0, 60); if (1 == selectedOption) fill(0, 0, 0);
+	x = (width - textWidth("Adjust Sounds: " + int(volumeEffects * 100))) / 2;
+	text("Adjust Sounds: " + int(volumeEffects * 100), x, 0);
 	popStyle();
 
-	pushStyle(); translate(0, 60); checkOption(2);
+	pushStyle(); translate(0, 60); if (2 == selectedOption) fill(0, 0, 0);
 	x = (width - textWidth("Go back")) / 2;
 	text("Go back", x, 0);
 	popStyle();
 
 	popStyle(); popMatrix();
+	game.slayer.camera.endHUD();
 }
 
-void checkOption(int numOption) {
-	if (numOption == selectedOption) {
-		fill(0, 0, 0);
-	}
+void displaySlayerGU() {
+	game.slayer.camera.beginHUD();
+
+	pushStyle();
+	textFont(basicTextFont);
+	fill(255, 255, 255);
+
+	text("Health: " + game.slayer.health, 20, height - 40);
+	text("Shield: " + game.slayer.shield, 20, height - 20);
+	popStyle();
+
+	pushStyle();
+	stroke(255, 255, 255);
+	line(width / 2 - 10, height / 2, width / 2 + 10, height / 2);
+	line(width / 2, height / 2 - 10, width / 2, height / 2 + 10);
+	popStyle();
+
+	game.slayer.camera.endHUD();
+}
+
+void displayDeath() {
+	game.map.display();
+	game.slayer.camera.beginHUD();
+
+	pushMatrix(); pushStyle();
+
+	textMode(SHAPE); fill(255, 255, 255); translate(0, 280);
+	textFont(titleFont);
+
+	float x = (width - textWidth("Defeat")) / 2;
+	text("Defeat", x, 0);
+
+	textFont(basicTextFont);
+
+	pushStyle(); translate(0, 80); if (0 == selectedOption) fill(0, 0, 0);
+	x = (width - textWidth("Resume Game")) / 2;
+	text("Retry", x, 0);
+	popStyle();
+
+	pushStyle(); translate(0, 60); if (1 == selectedOption) fill(0, 0, 0);
+	x = (width - textWidth("Go back")) / 2;
+	text("Go back", x, 0);
+	popStyle();
+
+	popStyle(); popMatrix();
+	game.slayer.camera.endHUD();
 }

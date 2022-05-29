@@ -1,142 +1,138 @@
-// map.pde
+// This file is part of CamDoom - https://github.com/HectorMartinAlvarez/CamDoom
 //
-// This file includes the implementation to build
-// a CamDoom map with shapes and shaders.
+// CamDoom is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-
+// CamDoom is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
 class CDoomStairs {
-	final ArrayList<PVector>[] escaleras;
+	final ArrayList<PVector>[] stairs;
 
 	CDoomStairs(String collisionPath) {
-		Table esca = loadTable(collisionPath);
-    escaleras = new ArrayList[15];
-     for (int i=0, j = 0; i < 15; i++) {
-       escaleras[i] = new ArrayList<PVector>();
-       while(j < esca.getRowCount()-1 && esca.getFloat(j,1) == esca.getFloat(j+1,1)){
-         escaleras[i].add(new PVector(esca.getFloat(j,0), esca.getFloat(j,1), esca.getFloat(j,2)));
-         j++;
-       }
-       escaleras[i].add(new PVector(esca.getFloat(j,0), esca.getFloat(j,1), esca.getFloat(j,2)));
-       j++;
-     }
-	}
+		this.stairs = new ArrayList[15];
+		Table tabStairs = loadTable(collisionPath);
 
+		for (int i=0, j = 0; i < 15; i++) {
+			stairs[i] = new ArrayList<PVector>();
+			float x, y, z;
+
+      while(j < tabStairs.getRowCount() - 1 && tabStairs.getFloat(j, 1) == tabStairs.getFloat(j + 1, 1)) {
+				x = tabStairs.getFloat(j, 0);
+				y = tabStairs.getFloat(j, 1);
+				z = tabStairs.getFloat(j++, 2);
+				stairs[i].add(new PVector(x, y, z));
+      }
+
+			x = tabStairs.getFloat(j, 0);
+			y = tabStairs.getFloat(j, 1);
+			z = tabStairs.getFloat(j++, 2);
+      stairs[i].add(new PVector(x, y, z));
+    }
+	}
 
   boolean stairsCollisions(ArrayList<PVector> vertexes, float px, float py) {
     boolean collision = false;
-
     int next = 0;
-    for (int current=0; current<vertexes.size(); current++) {
-      next = current+1;
+
+    for (int current = 0; current < vertexes.size(); current++) {
+      next = current + 1;
       if (next == vertexes.size()) next = 0;
 
       PVector vc = vertexes.get(current);
       PVector vn = vertexes.get(next);
 
-      if (((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py)) &&
-           (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x)) {
-             collision = !collision;
-      }
+			boolean cond1 = ((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py));
+			boolean cond2 = (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x);
+      if (cond1 && cond2) collision = !collision;
     }
+
     return collision;
   }
-
 }
 
 class CDoomColumns {
-  final PVector[] vertices;
+  final PVector[] vertexes;
 
   CDoomColumns(PVector[] columns) {
-    vertices = columns.clone();
+		this.vertexes = columns.clone();
   }
 
   boolean mapCollisions(float px, float pz) {
     boolean collision = false;
-
     int next = 0;
-    for (int current=0; current<vertices.length; current++) {
 
-      next = current+1;
-      if (next == vertices.length) next = 0;
+    for (int current = 0; current < vertexes.length; current++) {
+			next = current + 1;
+      if (next == vertexes.length) next = 0;
 
-      PVector vc = vertices[current];
-      PVector vn = vertices[next];
+      PVector vc = vertexes[current];
+      PVector vn = vertexes[next];
 
-      if (((vc.z >= pz && vn.z < pz) || (vc.z < pz && vn.z >= pz)) &&
-           (px < (vn.x-vc.x)*(pz-vc.z) / (vn.z-vc.z)+vc.x)) {
-             collision = !collision;
-      }
+			boolean cond1 = ((vc.z >= pz && vn.z < pz) || (vc.z < pz && vn.z >= pz));
+			boolean cond2 = (px < (vn.x-vc.x)*(pz-vc.z) / (vn.z-vc.z)+vc.x);
+      if (cond1 && cond2) collision = !collision;
     }
+
     return collision;
   }
-
 }
 
-/**
- * CDoomMap
- *
- * A CamDoom map is defined as a list of rooms which are all invisible
- * for current player except one of them. The position of the heroe would
- * be the main factor that affects the room that will be visible.
- */
 class CDoomMap {
 	final PShape model;
-  PVector[] vertices;
+  PVector[] vertexes;
   List<CDoomShape> items;
   List<CDoomCharacter> enemies;
 
-	/**
-	 * Create a new map with a name
-	 */
 	CDoomMap(String mapPath, String collisionPath) {
     this.items = new ArrayList<CDoomShape>();
     this.enemies = new ArrayList<CDoomCharacter>();
-		model = loadShape(mapPath);
-    Table tabla = loadTable(collisionPath);
-    vertices = new PVector[tabla.getRowCount()];
-    for (int i=0; i < tabla.getRowCount(); i++) {
-      vertices[i] = new PVector(tabla.getFloat(i,0),0,tabla.getFloat(i,1));
-    }
+		this.model = loadShape(mapPath);
+
+    Table tableValue = loadTable(collisionPath);
+    vertexes = new PVector[tableValue.getRowCount()];
+
+    for (int i=0; i < tableValue.getRowCount(); i++) {
+			float x = tableValue.getFloat(i,0), y = 0;
+			float z = tableValue.getFloat(i,1);
+      vertexes[i] = new PVector(x, y, z);
+		}
 	}
 
-  /**
-   * Add a new item
-   */
   void addItem(CDoomShape item) {
-    this.items.add(item);
+		this.items.add(item);
   }
 
-  /**
-   * Add a new enemy
-   */
   void addEnemy(CDoomCharacter enemy) {
     this.enemies.add(enemy);
   }
 
   boolean mapCollisions(float px, float py) {
     boolean collision = false;
-
     int next = 0;
-    for (int current=0; current<vertices.length; current++) {
 
-      next = current+1;
-      if (next == vertices.length) next = 0;
+    for (int current = 0; current < vertexes.length; current++) {
+      next = current + 1;
+      if (next == vertexes.length) next = 0;
 
-      PVector vc = vertices[current];
-      PVector vn = vertices[next];
+      PVector vc = vertexes[current];
+      PVector vn = vertexes[next];
 
-      if (((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py)) &&
-           (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x)) {
-             collision = !collision;
-      }
+			boolean cond1 = ((vc.z >= py && vn.z < py) || (vc.z < py && vn.z >= py));
+			boolean cond2 = (px < (vn.x-vc.x)*(py-vc.z) / (vn.z-vc.z)+vc.x);
+      if (cond1 && cond2) collision = !collision;
     }
+
     return collision;
   }
 
-	/**
-	 * Display current map
-	 */
 	void display() {
 		shape(model, 0, 0);
 	}

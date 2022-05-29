@@ -13,18 +13,41 @@
 // You should have received a copy of the GNU General Public License
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
-interface ApplyShader {
-	void apply(PShader shader);
-}
+class CDoomTimer {
+	float duration;
+	boolean hasFinished;
 
-class TimeApplyShader implements ApplyShader {
-  	float duration;
-
-	TimeApplyShader(float duration) {
-		this.duration = duration;
+	CDoomTimer() {
+		this.duration = 0;
+		this.hasFinished = false;
 	}
 
-	void apply(PShader shader) {
-		shader.set("u_time", this.duration);
+	void setTime(float seconds) {
+		this.duration = seconds;
+		this.hasFinished = false;
+	}
+
+	void resume() {
+		this.hasFinished = false;
+	}
+
+	void pause() {
+		this.hasFinished = true;
+	}
+
+	void run() {
+		if (!this.hasFinished) {
+			this.hasFinished = !(this.duration > 0);
+
+			if (!this.hasFinished) {
+				this.duration = this.duration - 0.5;
+				this.hasFinished = false;
+			}
+		}
+	}
+
+	void stop() {
+		this.duration = 0;
+		this.hasFinished = true;
 	}
 }
