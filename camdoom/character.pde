@@ -163,6 +163,9 @@ class CDoomSlayer extends CDoomCharacter {
 	}
 
   void restorePosition() {
+    this.x = previousX;
+    this.y = previousY;
+    this.z = previousZ;
     camera.lookAt(previousX, previousY, previousZ);
   }
 
@@ -174,6 +177,9 @@ class CDoomSlayer extends CDoomCharacter {
   }
 
   void restoreColumnsPosition(int index) {
+		this.x = previousX;
+    this.y = previousY;
+    this.z = previousZ;
     camera.lookAt(previousColumnX[index], previousColumnY[index], previousColumnZ[index]);
   }
 
