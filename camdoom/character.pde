@@ -117,17 +117,31 @@ class CDoomSlayer extends CDoomCharacter {
 }
 
 class CDoomEnemy extends CDoomCharacter {
+  
+  float time = 0;
+  boolean shoot = true;
+  
 	CDoomEnemy(float x, float y, float z) {
 		super(x, y, z);
-
-		// More stuff here ...
-		// but not for now
 	}
+
+  boolean inRange(float px, float pz) {
+    float distX = px - this.x;
+    float distZ = pz - this.z;
+    float distance = sqrt( (distX*distX) + (distZ*distZ) );
+  
+    if (distance <= 250) {
+      return true;
+    }
+    return false;
+  }
 
 	void display() {
 		if (this.isVisible) {
-			// ...
-			// not for now
 		}
 	}
+  
+  void move(float x, float y, float z){
+  }
+
 }
