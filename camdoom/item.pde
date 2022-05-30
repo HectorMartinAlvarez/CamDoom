@@ -36,17 +36,20 @@ abstract class CDoomItem {
 
 class MedicalKitCDoomItem extends CDoomItem {
 	CDoomSlayer slayer;
+	ImageCDoomShape model;
 
 	MedicalKitCDoomItem(float x, float y, float z, CDoomSlayer slayer) {
 		super(x, y, z);
 		this.slayer = slayer;
+		this.model = new ImageCDoomShape(x, y, z, 10.0, 10.0);
+		this.model.setTexture(CDOOM_MEDICINE_KIT);
 	}
 
 	void apply() {
 		if ((this.slayer.stats.health.y - this.slayer.stats.health.z) >= CDOOM_HEALTH_ITEM) {
 			this.slayer.stats.health.z += CDOOM_HEALTH_ITEM;
-			this.setVisible(false);
 			itemTakenSound.play();
+			this.setVisible(false);
 
 			if (this.slayer.stats.health.z > this.slayer.stats.health.y) {
 				this.slayer.stats.health.z = this.slayer.stats.health.y;
@@ -56,17 +59,20 @@ class MedicalKitCDoomItem extends CDoomItem {
 
 	void display() {
 		if (this.isVisible) {
-			image(medicineKit, this.pos.x, this.pos.y);
+			model.display();
 		}
 	}
 }
 
 class BulletproofVestCDoomItem extends CDoomItem {
 	CDoomSlayer slayer;
+	ImageCDoomShape model;
 
 	BulletproofVestCDoomItem(float x, float y, float z, CDoomSlayer slayer) {
 		super(x, y, z);
 		this.slayer = slayer;
+		this.model = new ImageCDoomShape(x, y, z, 10.0, 10.0);
+		this.model.setTexture(CDOOM_BULLETPROOF_VEST);
 	}
 
 	void apply() {
@@ -83,7 +89,7 @@ class BulletproofVestCDoomItem extends CDoomItem {
 
 	void display() {
 		if (this.isVisible) {
-			image(bulletproofVest, this.pos.x, this.pos.y);
+			model.display();
 		}
 	}
 }

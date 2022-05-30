@@ -43,20 +43,29 @@ class CDoomGame {
     if(!map.mapCollisions(slayer.x(), slayer.z())) slayer.restorePosition();
     else slayer.savePosition();
 
-    for(int i = 0; i < stairs.stairs.length;i++) {
-      if(stairs.stairsCollisions(stairs.stairs[i], slayer.x(), slayer.z())) {
+    for (int i = 0; i < stairs.stairs.length;i++) {
+      if (stairs.stairsCollisions(stairs.stairs[i], slayer.x(), slayer.z())) {
         slayer.prevPos.y = stairs.stairs[i].get(0).y;
 
-        if(slayer.z() > 835 && reDoCollision) {
+        if (slayer.z() > 835 && reDoCollision) {
 					reDoCollision = false;
 
-					for(int j = 0, k = map.vertexes.length - 1; j < 5; j++, k--) {
+					for (int j = 0, k = map.vertexes.length - 1; j < 5; j++, k--) {
           	map.vertexes[j] = new PVector(188.5, 0, 835.8);
           	map.vertexes[k] = new PVector(-60.8, 0, 835.9);
          	}
         }
       }
     }
+
+		// Check items
+		for (CDoomItem item : map.items) {
+			if (item.isVisible == true) {
+				/*if (round(slayer.x()) == round(item.x()) && round(slayer.z()) == round(item.z())) {
+					item.apply();
+				}*/
+			}
+		}
   }
 
   void updatedColumn() {
@@ -82,16 +91,16 @@ class CDoomGame {
 			}
 		}
   }
-  
+
   void slayerActions(){
     if(this.face.posePosition.x > 0 && this.face.posePosition.x < 200){
-      slayer.rotate(2);
+			slayer.rotate(2);
     }
     if(this.face.posePosition.x > 500){
       slayer.rotate(-2);
     }
     if(this.face.jaw > 21){
-      slayer.move();
+      slayer.move(true);
     }
     if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8){
       // metodo de disparar

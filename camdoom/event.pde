@@ -18,7 +18,12 @@ void updateActions() {
 		if ((Boolean)actions.get(keyValue)) {
 			switch(keyValue) {
 				case 'W': case 'w':
-					slayer.move();
+					slayer.move(true);
+					slayer.isMoving = true;
+				break;
+
+				case 'S': case 's':
+					slayer.move(false);
 					slayer.isMoving = true;
 				break;
 

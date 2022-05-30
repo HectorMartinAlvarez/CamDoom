@@ -180,11 +180,11 @@ class CDoomSlayer extends CDoomCharacter {
 			return;
 		}
 
-		bounce.x += bounceDirection[0]? 0.1 : -0.1;
-		if (bounce.x > 8 || bounce.x < 0)
+		bounce.x += bounceDirection[0]? 0.3 : -0.3;
+		if (bounce.x > 10 || bounce.x < 0)
 			bounceDirection[0] = !bounceDirection[0];
 
-		bounce.y += bounceDirection[1]? 0.1 : -0.1;
+		bounce.y += bounceDirection[1]? 0.3 : -0.3;
 		if (bounce.y > 4 || bounce.y < 0)
 			bounceDirection[1] = !bounceDirection[1];
 	}
@@ -196,6 +196,10 @@ class CDoomSlayer extends CDoomCharacter {
 
 	void display() {
 		if (this.isVisible) {
+			if (DEV_MODE == true) {
+				println(this.prevPos.x + " | " + this.prevPos.y + " | " + this.prevPos.z);
+			}
+
 			displaySlayerGU(); camera.beginHUD();
 			float w = shotgun.width, h = shotgun.height;
 
@@ -294,8 +298,9 @@ class CDoomSlayer extends CDoomCharacter {
     }
   }
 
-  void move() {
-    this.camera.forward(2);
+  void move(boolean direction) {
+		if (direction == true) this.camera.forward(2);
+		else this.camera.backward(2);
 		this.savePosition();
   }
 }
@@ -307,6 +312,7 @@ class CDoomSlayer extends CDoomCharacter {
 class CDoomEnemy extends CDoomCharacter {
 	float time;
   boolean shoot;
+	CDoomTimer timer;
 
 	CDoomEnemy(float x, float y, float z) {
 		super(x, y, z);
@@ -317,6 +323,7 @@ class CDoomEnemy extends CDoomCharacter {
 		super.reset();
 		this.time = 0;
 		this.shoot = true;
+		this.timer = new CDoomTimer();
 
 		this.setStats(new CDoomStadistics(
 			CDOOM_MIN_HEALTH, CDOOM_MAX_HEALTH_ENEMY,
@@ -348,7 +355,12 @@ class CDoomEnemy extends CDoomCharacter {
 
 	void display() {
 		if (this.isVisible) {
-			enemyNormalSound.play();
+			this.timer.run();
+
+			if (this.timer.hasFinished) {
+				enemyNormalSound.play();
+				this.timer.setTime(55);
+			}
 		}
 	}
 

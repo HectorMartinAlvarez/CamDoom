@@ -45,13 +45,48 @@ abstract class CDoomShape {
 	}
 
 	void display() {
-		pushMatrix();
+		pushMatrix(); pushStyle();
 		translate(this.x, this.y, this.z);
+		noStroke(); noFill();
 
 		if (this.shader != null) shader(this.shader);
 		shape(this.shape);
 		if (this.shader != null) resetShader();
 
-		popMatrix();
+		popStyle(); popMatrix();
+	}
+}
+
+class ImageCDoomShape extends CDoomShape {
+	float width, height;
+
+	ImageCDoomShape(float x, float y, float z, float width, float height) {
+		super(x, y, z);
+		this.width = width;
+		this.height = height;
+    this.shape = createShape(RECT, this.width, this.height, 10, 10);
+	}
+}
+
+class CubeCDoomShape extends CDoomShape {
+	float slide;
+
+	CubeCDoomShape(float x, float y, float z, float slide) {
+		super(x, y, z);
+		this.slide = slide;
+    this.shape = createShape(BOX, this.slide, this.slide, this.slide);
+	}
+}
+
+class RectangleCDoomShape extends CDoomShape {
+	float width, height, depthWidth, depthHeight;
+
+	RectangleCDoomShape(float x, float y, float z, float width, float height, float depthWidth, float depthHeight) {
+		super(x, y, z);
+		this.width = width;
+		this.height = height;
+		this.depthWidth = depthWidth;
+		this.depthHeight = depthHeight;
+    this.shape = createShape(RECT, this.width, this.height, this.depthWidth, this.depthHeight);
 	}
 }

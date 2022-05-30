@@ -48,6 +48,7 @@ void setup() {
 		CDoomColumns[] columns = loadColumns();
 		CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
 		game = new CDoomGame(map, slayer, stairs, columns, face);
+		loadItems(); loadEnemies();
 	} else {
 		cam = new QueasyCam(this);
 		cam.speed = 5;              // default is 3

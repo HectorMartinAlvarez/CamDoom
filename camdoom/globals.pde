@@ -80,6 +80,10 @@ static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_MEDICINE_KIT = "data/images/medicine_kit.png";
 static final String CDOOM_BULLETPROOF_VEST = "data/images/bulletproof_vest.png";
 
+// ~ List of items and enemies ~
+static final String CDOOM_ITEM_LIST = "data/map/e1m1/doom2_e1m1_items.csv";
+static final String CDOOM_ENEMY_LIST = "data/map/e1m1/doom2_e1m1_enemies.csv";
+
 // -----------------------------------------------
 // Variables
 // -----------------------------------------------
@@ -248,6 +252,37 @@ CDoomColumns[] loadColumns() {
 void loadActions() {
 	actions = new HashMap<Character, Boolean>();
 	actions.put('W', false); actions.put('w', false);
+	actions.put('S', false); actions.put('s', false);
 	actions.put('A', false); actions.put('a', false);
 	actions.put('D', false); actions.put('d', false);
+}
+
+void loadItems() {
+	Table tableValue = loadTable(CDOOM_ITEM_LIST);
+
+	for (int i=0; i < tableValue.getRowCount(); i++) {
+		String type = tableValue.getString(i, 0);
+		float x = tableValue.getFloat(i, 1);
+		float y = tableValue.getFloat(i, 2);
+		float z = tableValue.getFloat(i, 3);
+
+		if (type.equals("medkit")) {
+			map.addItem(new MedicalKitCDoomItem(x, y, z, slayer));
+		} else if (type.equals("shield_vest")) {
+			map.addItem(new BulletproofVestCDoomItem(x, y, z, slayer));
+		}
+	}
+}
+
+void loadEnemies() {
+	Table tableValue = loadTable(CDOOM_ITEM_LIST);
+
+	for (int i=0; i < tableValue.getRowCount(); i++) {
+		String type = tableValue.getString(i, 0);
+		float x = tableValue.getFloat(i, 1);
+		float y = tableValue.getFloat(i, 2);
+		float z = tableValue.getFloat(i, 3);
+
+		map.addEnemy(new CDoomEnemy(x, y, z));
+	}
 }
