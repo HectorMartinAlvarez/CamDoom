@@ -123,8 +123,8 @@ void displaySlayerGU() {
 	textFont(basicTextFont);
 	fill(255, 255, 255);
 
-	text("Health: " + game.slayer.health, 20, height - 40);
-	text("Shield: " + game.slayer.shield, 20, height - 20);
+	text("Health: " + game.slayer.stats.health.z, 20, height - 40);
+	text("Shield: " + game.slayer.stats.shield.z, 20, height - 20);
 	popStyle();
 
 	pushStyle();
@@ -166,7 +166,7 @@ void displayDeath() {
 
 void displayBloodEffects() {
 	game.slayer.camera.beginHUD();
-	int healthValue = game.slayer.health;
+	int healthValue = (int)game.slayer.stats.health.z;
 
 	if (healthValue > 80 && healthValue <= 90) {
 		bloodEffect.numSprite = 0;

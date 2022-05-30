@@ -88,12 +88,12 @@ class CDoomColumns {
 class CDoomMap {
 	final PShape model;
   PVector[] vertexes;
-  List<CDoomShape> items;
-  List<CDoomCharacter> enemies;
+  List<CDoomItem> items;
+  List<CDoomEnemy> enemies;
 
 	CDoomMap(String mapPath, String collisionPath) {
-    this.items = new ArrayList<CDoomShape>();
-    this.enemies = new ArrayList<CDoomCharacter>();
+    this.items = new ArrayList<CDoomItem>();
+    this.enemies = new ArrayList<CDoomEnemy>();
 		this.model = loadShape(mapPath);
 
     Table tableValue = loadTable(collisionPath);
@@ -106,11 +106,16 @@ class CDoomMap {
 		}
 	}
 
-  void addItem(CDoomShape item) {
+	void reset() {
+		for (CDoomEnemy e : enemies) e.reset();
+		for (CDoomItem i : items) i.setVisible(true);
+	}
+
+  void addItem(CDoomItem item) {
 		this.items.add(item);
   }
 
-  void addEnemy(CDoomCharacter enemy) {
+  void addEnemy(CDoomEnemy enemy) {
     this.enemies.add(enemy);
   }
 
@@ -134,6 +139,10 @@ class CDoomMap {
   }
 
 	void display() {
+		pushMatrix();
 		shape(model, 0, 0);
+		for (CDoomEnemy e : enemies) e.display();
+		for (CDoomItem i : items) i.display();
+		popMatrix();
 	}
 }

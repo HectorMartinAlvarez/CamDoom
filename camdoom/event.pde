@@ -14,24 +14,22 @@
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
 void updateActions() {
-	slayer.isMoving = false;
-
 	for (Character keyValue : actions.keySet()) {
 		if ((Boolean)actions.get(keyValue)) {
 			switch(keyValue) {
 				case 'W': case 'w':
-					game.slayer.moveSlayer();
+					slayer.move();
 					slayer.isMoving = true;
 				break;
 
 				case 'A': case 'a':
-					game.slayer.rotateCamera(2);
-					slayer.isMoving = true;
+					slayer.rotate(2);
+					slayer.isMoving = false;
 				break;
 
 				case 'D': case 'd':
-					game.slayer.rotateCamera(-2);
-					slayer.isMoving = true;
+					slayer.rotate(-2);
+					slayer.isMoving = false;
 				break;
 			}
 		}
@@ -112,7 +110,7 @@ void checkSlayerControls() {
 	// Pause menu
 	if (key != CODED && key == ESC) {
 		key = 0; confirmSound.play();
-		game.slayer.camera.setActive(false);
+		slayer.camera.setActive(false);
 		gameState = 2; selectedOption = 0;
 	}
 }
@@ -251,15 +249,15 @@ void keyReleased() {
 
 void mousePressed() {
 	if (gameState == 0) {
-		if (game.slayer.health > 0) {
+		if (slayer.stats.health.z > 0) {
 			// Shoot action
 			if (mouseButton == LEFT) {
-				game.slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+				slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
 			}
 
 			// Just for testing (temporal)
 			if (mouseButton == RIGHT) {
-				slayer.doDamage();
+				slayer.damageReceived(10);
 			}
 		}
 	}

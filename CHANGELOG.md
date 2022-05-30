@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.6] - 2022-05-30
+
+### Added
+
+- Include utilities to manage health, shield, and damage
+- Include support for enemies and items
+
+### Fixed
+
+- Fix reload time for shotgun, now is not so fast!
+- Fix spawnpoint position for slayer
+
 ## [1.5.5] - 2022-05-30
 
 ### Added
@@ -134,4 +146,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.5.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/158f5198d4f9cbf17492cd1c89e7a42d88929ce1
 [1.5.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/1f8025eed5b6e7f5ba0fad9fd6e5cd768d82417b
 [1.5.3]: https://github.com/HectorMartinAlvarez/CamDoom/tree/d86b8af79930fab8a6a2bccf2a9dbae7c70cf371
-[1.5.4]:
+[1.5.4]: https://github.com/HectorMartinAlvarez/CamDoom/tree/a7a908136bffa6cf9d8571d9b59f7b9166f67fcc
+[1.5.5]: https://github.com/HectorMartinAlvarez/CamDoom/tree/711c7ac5083e3cf5428ad6821b95105abe78641d
+[1.5.6]:

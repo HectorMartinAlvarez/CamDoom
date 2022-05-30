@@ -17,24 +17,26 @@ class CDoomGame {
 	CDoomSlayer slayer;
 	CDoomMap map;
   CDoomStairs stairs;
-  CDoomColumns[] columns = new CDoomColumns[6];
-  boolean reDoCollision = true;
-	CDoomEnemy enemy1;
+  CDoomColumns[] columns;
+  boolean reDoCollision;
 
 	CDoomGame(CDoomMap map, CDoomSlayer slayer, CDoomStairs stairs, CDoomColumns[] columns) {
     this.slayer = slayer;
     this.map = map;
     this.stairs = stairs;
     this.columns = columns.clone();
+		this.reDoCollision = true;
   }
 
 	void reset() {
-		slayer.reset();
+		this.map.reset();
+		this.slayer.reset();
+		this.reDoCollision = true;
 	}
 
 	void update() {
-		//checkSlayerDamage();
-    slayer.setYAxis(slayer.prevPos.y);
+		checkSlayerDamage();
+    slayer.sety(slayer.prevPos.y);
 
     if(!map.mapCollisions(slayer.x(), slayer.z())) slayer.restorePosition();
     else slayer.savePosition();
@@ -64,18 +66,23 @@ class CDoomGame {
   }
 
 	void checkSlayerDamage() {
-    if (this.enemy1.shoot) {
-			if (this.enemy1.inRange(slayer.x(), slayer.z())) {
-				this.slayer.doDamage();
-				this.enemy1.shoot = false;
-				this.enemy1.time = millis() + 4000;
+		for (int i = 0; i < this.map.enemies.size(); i++) {
+			CDoomEnemy enemy = this.map.enemies.get(i);
+
+			if (enemy.shoot) {
+				if (enemy.inRange(slayer.x(), slayer.z())) {
+					this.slayer.damageReceived(enemy.stats.damage);
+					enemy.shoot = false;
+					enemy.time = millis() + 4000;
+				}
+			} else if ((enemy.time - millis()) < 0) {
+				enemy.shoot = true;
 			}
-    } else if ((this.enemy1.time - millis()) < 0)
-			this.enemy1.shoot = true;
+		}
   }
 
 	void display() {
-		map.display();
+		this.map.display();
 		this.slayer.display();
 		this.update();
   	this.updatedColumn();

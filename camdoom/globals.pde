@@ -17,16 +17,27 @@
 // Constants
 // -----------------------------------------------
 
+// ~ Stadistics ~
+static final int CDOOM_MAX_HEALTH_SLAYER = 100;
+static final int CDOOM_MAX_HEALTH_ENEMY = 50;
+static final int CDOOM_MIN_HEALTH = 0;
+
+static final int CDOOM_MAX_SHIELD = 100;
+static final int CDOOM_MIN_SHIELD = 0;
+
+static final int CDOOM_DAMAGE_SLAYER = 30;
+static final int CDOOM_DAMAGE_ENEMY = 10;
+
 // ~ Slayer ~
 static final float CDOOM_SLAYER_X = 113.5;
 static final float CDOOM_SLAYER_Y = -100;
 static final float CDOOM_SLAYER_Z = 762.8;
 
-static final int CDOOM_MAX_HEALTH = 100;
-static final int CDOOM_MIN_HEALTH = 0;
-
-static final int CDOOM_MAX_SHIELD = 100;
-static final int CDOOM_MIN_SHIELD = 0;
+enum CDoomSlayerStatus {
+	SLAYER_NORMAL,			// just holding the shotgun
+	SLAYER_ATTACK,			// attacking whit the shotgun
+	SLAYER_PAIN					// damage received
+};
 
 // ~ Image paths ~
 static final String CDOOM_ICON = "data/images/icon.png";
