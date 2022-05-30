@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.HashMap;
 import processing.sound.*;
 import peasy.*;
+import queasycam.*;
+
+QueasyCam cam;
 
 void settings() {
 	size(700, 700, P3D);
@@ -37,24 +40,36 @@ void setup() {
 	loadSounds(); loadActions();
 
 	map = new CDoomMap(CDOOM_MAP_OBJ, CDOOM_MAP_COLLISIONS);
-	slayer = new CDoomSlayer(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z, this);
 
-	CDoomColumns[] columns = loadColumns();
-	CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
-	game = new CDoomGame(map, slayer, stairs, columns);
+	if (!MOVE_FREE_CAMERA) {
+		slayer = new CDoomSlayer(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z, this);
+
+		CDoomColumns[] columns = loadColumns();
+		CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
+		game = new CDoomGame(map, slayer, stairs, columns);
+	} else {
+		cam = new QueasyCam(this);
+		cam.speed = 5;              // default is 3
+		cam.sensitivity = 0.5;
+	}
 }
 
 void draw() {
 	background(0);
 	updateSize();
-	updateActions();
 
-	switch(gameState) {
-		case 0: game.display(); 	 break;
-		case 1: displayMenu();  	 break;
-		case 2: displayPause(); 	 break;
-		case 3: displaySettings(); break;
-		case 4: displaySettings(); break;
-		case 5: displayDeath(); 	 break;
+	if (!MOVE_FREE_CAMERA) {
+		updateActions();
+
+		switch(gameState) {
+			case 0: game.display(); 	 break;
+			case 1: displayMenu();  	 break;
+			case 2: displayPause(); 	 break;
+			case 3: displaySettings(); break;
+			case 4: displaySettings(); break;
+			case 5: displayDeath(); 	 break;
+		}
+	} else {
+		map.display();
 	}
 }

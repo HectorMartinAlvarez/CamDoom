@@ -140,6 +140,8 @@ class CDoomMap {
 
 	void display() {
 		pushMatrix();
+		textureWrap(REPEAT);
+		lights();
 		shape(model, 0, 0);
 		for (CDoomEnemy e : enemies) e.display();
 		for (CDoomItem i : items) i.display();

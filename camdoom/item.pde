@@ -43,13 +43,13 @@ class MedicalKitCDoomItem extends CDoomItem {
 	}
 
 	void apply() {
-		if ((this.slayer.health.y - this.slayer.health.z) >= CDOOM_HEALTH_ITEM) {
-			this.slayer.health.z += CDOOM_HEALTH_ITEM;
+		if ((this.slayer.stats.health.y - this.slayer.stats.health.z) >= CDOOM_HEALTH_ITEM) {
+			this.slayer.stats.health.z += CDOOM_HEALTH_ITEM;
 			this.setVisible(false);
 			itemTakenSound.play();
 
-			if (this.slayer.health.z > this.slayer.health.y) {
-				this.slayer.health.z = this.slayer.health.y;
+			if (this.slayer.stats.health.z > this.slayer.stats.health.y) {
+				this.slayer.stats.health.z = this.slayer.stats.health.y;
 			}
 		}
 	}
@@ -70,13 +70,13 @@ class BulletproofVestCDoomItem extends CDoomItem {
 	}
 
 	void apply() {
-		if ((this.slayer.shield.y - this.slayer.shield.z) >= CDOOM_SHIELD_ITEM) {
-			this.slayer.shield.z += CDOOM_SHIELD_ITEM;
+		if ((this.slayer.stats.shield.y - this.slayer.stats.shield.z) >= CDOOM_SHIELD_ITEM) {
+			this.slayer.stats.shield.z += CDOOM_SHIELD_ITEM;
 			itemTakenSound.play();
 			this.setVisible(false);
 
-			if (this.slayer.shield.z > this.slayer.shield.y) {
-				this.slayer.shield.z = this.slayer.shield.y;
+			if (this.slayer.stats.shield.z > this.slayer.stats.shield.y) {
+				this.slayer.stats.shield.z = this.slayer.stats.shield.y;
 			}
 		}
 	}

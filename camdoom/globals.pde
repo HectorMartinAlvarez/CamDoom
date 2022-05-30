@@ -17,6 +17,9 @@
 // Constants
 // -----------------------------------------------
 
+// ~ Settings ~
+static final boolean MOVE_FREE_CAMERA = false;
+
 // ~ Stadistics ~
 static final int CDOOM_MAX_HEALTH_SLAYER = 100;
 static final int CDOOM_MAX_HEALTH_ENEMY = 50;
@@ -74,7 +77,7 @@ static final String CDOOM_SHOTGUN_PREPARING = "data/animation/shotgun";
 static final String CDOOM_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_MEDICINE_KIT = "data/images/medicine_kit.png";
-static final String CDOOM_BULLETPROF_VEST = "data/images/bulletprof_vest.png";
+static final String CDOOM_BULLETPROOF_VEST = "data/images/bulletproof_vest.png";
 
 // -----------------------------------------------
 // Variables
@@ -166,7 +169,7 @@ void loadImages() {
 	shotgun.resize(shotgun.width * 3, shotgun.height * 3);
 
 	medicineKit = loadImage(CDOOM_MEDICINE_KIT);
-	bulletproofVest = loadImage(CDOOM_BULLETPROF_VEST);
+	bulletproofVest = loadImage(CDOOM_BULLETPROOF_VEST);
 
 	shotgunShoot = new CDoomAnimation(
 		CDOOM_SHOTGUN_PREPARING,
