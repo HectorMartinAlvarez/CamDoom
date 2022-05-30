@@ -17,6 +17,17 @@
 // Constants
 // -----------------------------------------------
 
+// ~ Slayer ~
+static final float CDOOM_SLAYER_X = 113.5;
+static final float CDOOM_SLAYER_Y = -100;
+static final float CDOOM_SLAYER_Z = 762.8;
+
+static final int CDOOM_MAX_HEALTH = 100;
+static final int CDOOM_MIN_HEALTH = 0;
+
+static final int CDOOM_MAX_SHIELD = 100;
+static final int CDOOM_MIN_SHIELD = 0;
+
 // ~ Image paths ~
 static final String CDOOM_ICON = "data/images/icon.png";
 static final String CDOOM_MAIN_MENU_BACKGROUND = "data/images/main_menu.jpg";

@@ -14,19 +14,24 @@
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
 void updateActions() {
+	slayer.isMoving = false;
+
 	for (Character keyValue : actions.keySet()) {
 		if ((Boolean)actions.get(keyValue)) {
 			switch(keyValue) {
 				case 'W': case 'w':
 					game.slayer.moveSlayer();
+					slayer.isMoving = true;
 				break;
 
 				case 'A': case 'a':
 					game.slayer.rotateCamera(2);
+					slayer.isMoving = true;
 				break;
 
 				case 'D': case 'd':
 					game.slayer.rotateCamera(-2);
+					slayer.isMoving = true;
 				break;
 			}
 		}

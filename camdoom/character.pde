@@ -16,13 +16,21 @@
 enum CDoomSlayerStatus { SLAYER_NORMAL, SLAYER_ATTACK, SLAYER_PAIN };
 
 abstract class CDoomCharacter {
-	float x, y, z;
+	PVector pos;
 	boolean isVisible;
 
 	CDoomCharacter(float x, float y, float z) {
-		this.x = x; this.y = y; this.z = z;
+		this.pos = new PVector(x, y, z);
 		this.isVisible = true;
 	}
+
+	float x() { return this.pos.x; }
+	float y() { return this.pos.y; }
+	float z() { return this.pos.z; }
+
+	void setx(float x) { this.pos.x = x; }
+	void sety(float y) { this.pos.y = y; }
+	void setz(float z) { this.pos.z = z; }
 
 	void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
@@ -36,36 +44,39 @@ abstract class CDoomCharacter {
 // -----------------------------
 
 class CDoomSlayer extends CDoomCharacter {
-	camdoom papplet;
+	final camdoom papplet;
+	PVector prevPos, bounce;
+	boolean[] bounceDirection;
 
-	int health, shield;
+	int health, shield, angle;
 	CDoomSlayerStatus status;
-	boolean spriteFinished;
+	boolean spriteFinished, isMoving;
 
-  PeasyCam camera;
-  float angle, previousX, previousY, previousZ;
-  float[] previousColumnX = new float[6];
-  float[] previousColumnY = new float[6];
-  float[] previousColumnZ = new float[6];
+  final PeasyCam camera;
+  float[][] prevColumn = new float[3][6];
 
-	CDoomSlayer(float x, float y, float z, camdoom t) {
+	CDoomSlayer(float x, float y, float z, camdoom papplet) {
 		super(x, y, z);
 
-		this.papplet = t;
-		this.health = 100; this.shield = 0;
+		this.papplet = papplet;
+		this.prevPos = new PVector(x(), y(), z());
+		this.bounce = new PVector(0, 0);
+		this.bounceDirection = new boolean[2];
+
 		this.status = CDoomSlayerStatus.SLAYER_NORMAL;
+		this.health = CDOOM_MAX_HEALTH;
+		this.shield = CDOOM_MIN_SHIELD;
 		this.spriteFinished = true;
 
-		previousX = x; previousY = y; previousZ = z;
-		camera = new PeasyCam(this.papplet, x, y, z, 50);
-    camera.setDistance(50);
-    camera.setActive(false);
-		camera.setWheelHandler(null);
+		this.camera = new PeasyCam(this.papplet, x(), y(), z(), 50);
+    this.camera.setDistance(50);
+    this.camera.setActive(false);
+		this.camera.setWheelHandler(null);
 
-    for(int i = 0; i < previousColumnX.length; i++) {
-      previousColumnX[i] = x;
-      previousColumnY[i] = y;
-      previousColumnZ[i] = z;
+    for(int i = 0; i < this.prevColumn.length; i++) {
+      this.prevColumn[0][i] = x();
+      this.prevColumn[1][i] = y();
+      this.prevColumn[2][i] = z();
     }
 
     rotateCamera(180);
@@ -73,23 +84,29 @@ class CDoomSlayer extends CDoomCharacter {
 	}
 
 	void reset() {
-		this.x = 113.5; this.y = -100; this.z = 762.8;
-		this.health = 100; this.shield = 0;
+		this.pos = new PVector(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z);
+		this.prevPos = new PVector(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z);
+		this.bounce = new PVector(0, 0);
+		this.bounceDirection = new boolean[2];
+
 		this.status = CDoomSlayerStatus.SLAYER_NORMAL;
+		this.health = CDOOM_MAX_HEALTH;
+		this.shield = CDOOM_MIN_SHIELD;
 		this.spriteFinished = true;
 
-		previousX = x; previousY = y; previousZ = z;
-		camera = new PeasyCam(this.papplet, x, y, z, 50);
-    camera.setDistance(50);
-    camera.setActive(false);
-		camera.setWheelHandler(null);
+		this.camera.reset();
+		this.camera.lookAt(x(), y(), z());
+		this.camera.setDistance(50);
+    this.camera.setActive(false);
+		this.camera.setWheelHandler(null);
 
-    for(int i = 0; i < previousColumnX.length; i++) {
-      previousColumnX[i] = x;
-      previousColumnY[i] = y;
-      previousColumnZ[i] = z;
+    for(int i = 0; i < this.prevColumn.length; i++) {
+      this.prevColumn[0][i] = x();
+      this.prevColumn[1][i] = y();
+      this.prevColumn[2][i] = z();
     }
 
+		this.angle = 0;
     rotateCamera(180);
 		restorePosition();
 	}
@@ -99,6 +116,17 @@ class CDoomSlayer extends CDoomCharacter {
 			if (this.shield < shield) itemTakenSound.play();
 			else this.status = CDoomSlayerStatus.SLAYER_PAIN;
 			this.shield = shield;
+		}
+	}
+
+	void bouncing() {
+		if (this.isMoving) {
+			if (bounceDirection[0]) bounce.x += 0.1; else bounce.x -= 0.1;
+			if (bounceDirection[1]) bounce.y += 0.1; else bounce.y -= 0.1;
+			if (bounce.x > 8 || bounce.x < 0) bounceDirection[0] = !bounceDirection[0];
+			if (bounce.y > 4 || bounce.y < 0) bounceDirection[1] = !bounceDirection[1];
+		} else {
+			bounce = new PVector(0, 0);
 		}
 	}
 
@@ -113,15 +141,17 @@ class CDoomSlayer extends CDoomCharacter {
 
 		switch(this.status) {
 			case SLAYER_NORMAL:
-				image(shotgun, (width - w) / 2 - 40, height - h, w, h);
+				image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
+				this.bouncing();
 			break;
 
 			case SLAYER_ATTACK:
 				// Prepare Sprite
 				if (this.spriteFinished) {
-					shotgunShoot.setPlaying(true, (width - w) / 2 - 40, height - h);
+					shotgunShoot.setPlaying(true, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y);
 					this.spriteFinished = false;
 					shootSound.play();
+					this.bouncing();
 				}
 
 				// Play Sprite
@@ -143,7 +173,8 @@ class CDoomSlayer extends CDoomCharacter {
 			break;
 
 			case SLAYER_PAIN:
-				image(shotgun, (width - w) / 2 - 40, height - h, w, h);
+				image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
+				this.bouncing();
 
 				if (this.health > 0) {
 					if (!painSound.isPlaying()) {
@@ -162,62 +193,52 @@ class CDoomSlayer extends CDoomCharacter {
 		camera.endHUD();
 	}
 
+	void setYAxis(float y) { this.sety(y); }
+
   void restorePosition() {
-    this.x = previousX;
-    this.y = previousY;
-    this.z = previousZ;
-    camera.lookAt(previousX, previousY, previousZ);
+		this.pos = new PVector(this.prevPos.x, this.prevPos.y, this.prevPos.z);
+    camera.lookAt(x(), y(), z());
   }
 
   void savePosition() {
-    float[] pos = camera.getLookAt();
-    previousX = pos[0];
-    previousY = pos[1];
-    previousZ = pos[2];
+    float[] posValues = camera.getLookAt();
+		this.prevPos = new PVector(posValues[0], posValues[1], posValues[2]);
   }
 
   void restoreColumnsPosition(int index) {
-		this.x = previousX;
-    this.y = previousY;
-    this.z = previousZ;
-    camera.lookAt(previousColumnX[index], previousColumnY[index], previousColumnZ[index]);
+		this.pos = new PVector(this.prevPos.x, this.prevPos.y, this.prevPos.z);
+    camera.lookAt(prevColumn[0][index], prevColumn[1][index], prevColumn[2][index]);
   }
 
   void saveColumnsPosition(int index){
-    float[] pos = camera.getLookAt();
-    previousColumnX[index] = pos[0];
-    previousColumnY[index] = pos[1];
-    previousColumnZ[index] = pos[2];
+    float[] posValues = camera.getLookAt();
+		prevColumn[0][index] = posValues[0];
+		prevColumn[1][index] = posValues[1];
+		prevColumn[2][index] = posValues[2];
   }
 
   void rotateCamera(float angle) {
     camera.rotateY(radians(angle));
     this.angle += angle;
 
-    if(this.angle > 360 || this.angle < -360) {
-      this.angle = round(this.angle/360)+(this.angle<0 ? 1 : -1);
+    if (this.angle > 360 || this.angle < -360) {
+      this.angle = round(this.angle / 360) + (this.angle < 0 ? 1 : -1);
     }
-  }
-
-  void setYAxis(float y) {
-		this.y = y;
   }
 
   void moveSlayer() {
-    float c1 = sin(radians(this.angle)) * 5;
-    float c2 = sqrt((25) - (c1 * c1));
+    float c1 = sin(radians(this.angle)) * 10;
+    float c2 = sqrt((25) - (c1 * c1)) * 2;
+		this.setx(x() - c1);
 
-    if(abs(this.angle) <= 90) {
-      this.x -= c1; this.z -= c2;
-    } else if(abs(this.angle) > 90 && abs(this.angle) <= 180) {
-      this.x -= c1; this.z += c2;
-    } else if(abs(this.angle) > 180 && abs(this.angle) <= 270) {
-      this.x -= c1; this.z += c2;
-    } else {
-      this.x -= c1; this.z -= c2;
-    }
+		boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
+		boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
 
-    camera.lookAt(this.x, this.y, this.z);
+		if (cond1 || cond2) this.setz(z() + c2);
+		else this.setz(z() - c2);
+
+    this.camera.lookAt(x(), y(), z());
+		this.savePosition();
   }
 }
 
@@ -236,8 +257,8 @@ class CDoomEnemy extends CDoomCharacter {
 	}
 
 	boolean inRange(float px, float pz) {
-		float distX = px - this.x, distZ = pz - this.z;
-		float distance = sqrt((distX*distX) + (distZ*distZ));
+		float distX = px - this.x(), distZ = pz - this.z();
+		float distance = sqrt((distX * distX) + (distZ * distZ));
 		return distance <= 250;
 	}
 

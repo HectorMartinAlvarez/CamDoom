@@ -34,21 +34,21 @@ class CDoomGame {
 
 	void update() {
 		//checkSlayerDamage();
-    slayer.setYAxis(slayer.previousY);
+    slayer.setYAxis(slayer.prevPos.y);
 
-    if(!map.mapCollisions(slayer.x, slayer.z)) slayer.restorePosition();
+    if(!map.mapCollisions(slayer.x(), slayer.z())) slayer.restorePosition();
     else slayer.savePosition();
 
     for(int i = 0; i < stairs.stairs.length;i++) {
-      if(stairs.stairsCollisions(stairs.stairs[i], slayer.x,slayer.z)) {
-        slayer.previousY = stairs.stairs[i].get(0).y;
+      if(stairs.stairsCollisions(stairs.stairs[i], slayer.x(), slayer.z())) {
+        slayer.prevPos.y = stairs.stairs[i].get(0).y;
 
-        if(slayer.z > 835 && reDoCollision) {
+        if(slayer.z() > 835 && reDoCollision) {
 					reDoCollision = false;
 
-					for(int j = 0, k = map.vertexes.length-1; j < 5; j++, k--) {
-          	map.vertexes[j] = new PVector(188.5,0,835.8);
-          	map.vertexes[k] = new PVector(-60.8,0,835.9);
+					for(int j = 0, k = map.vertexes.length - 1; j < 5; j++, k--) {
+          	map.vertexes[j] = new PVector(188.5, 0, 835.8);
+          	map.vertexes[k] = new PVector(-60.8, 0, 835.9);
          	}
         }
       }
@@ -57,7 +57,7 @@ class CDoomGame {
 
   void updatedColumn() {
     for(int i = 0; i < columns.length; i++) {
-			boolean cond = columns[i].mapCollisions(slayer.x, slayer.z);
+			boolean cond = columns[i].mapCollisions(slayer.x(), slayer.z());
       if(!cond) slayer.saveColumnsPosition(i);
       else slayer.restoreColumnsPosition(i);
     }
@@ -65,7 +65,7 @@ class CDoomGame {
 
 	void checkSlayerDamage() {
     if (this.enemy1.shoot) {
-			if (this.enemy1.inRange(slayer.x, slayer.z)) {
+			if (this.enemy1.inRange(slayer.x(), slayer.z())) {
 				this.slayer.doDamage();
 				this.enemy1.shoot = false;
 				this.enemy1.time = millis() + 4000;

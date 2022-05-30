@@ -37,7 +37,7 @@ void setup() {
 	loadSounds(); loadActions();
 
 	map = new CDoomMap(CDOOM_MAP_OBJ, CDOOM_MAP_COLLISIONS);
-	slayer = new CDoomSlayer(113.5, -100, 762.8, this);
+	slayer = new CDoomSlayer(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z, this);
 
 	CDoomColumns[] columns = loadColumns();
 	CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
