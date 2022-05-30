@@ -28,6 +28,8 @@ static final int CDOOM_MIN_SHIELD = 0;
 static final int CDOOM_DAMAGE_SLAYER = 30;
 static final int CDOOM_DAMAGE_ENEMY = 10;
 
+static final int CDOOM_HEALTH_ITEM = 40;
+static final int CDOOM_SHIELD_ITEM = 50;
 // ~ Slayer ~
 static final float CDOOM_SLAYER_X = 113.5;
 static final float CDOOM_SLAYER_Y = -100;
@@ -62,12 +64,17 @@ static final String CDOOM_PREPARE_AMMO = "data/sounds/sgcock.wav";
 static final String CDOOM_PAIN = "data/sounds/plpain.wav";
 static final String CDOOM_DEATH = "data/sounds/pldeth.wav";
 static final String CDOOM_ITEM_TAKEN = "data/sounds/itemup.wav";
+static final String CDOOM_ENEMY_PAIN = "data/sounds/bgdth1.wav";
+static final String CDOOM_ENEMY_DEATH = "data/sounds/bgdth2.wav";
+static final String CDOOM_ENEMY_NORMAL = "data/sounds/bgact.wav";
 
 // ~ Sprites and Animation files ~
 static final String CDOOM_BLOOD_EFFECT = "data/animation/blood_effect";
 static final String CDOOM_SHOTGUN_PREPARING = "data/animation/shotgun";
 static final String CDOOM_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
+static final String CDOOM_MEDICINE_KIT = "data/images/medicine_kit.png";
+static final String CDOOM_BULLETPROF_VEST = "data/images/bulletprof_vest.png";
 
 // -----------------------------------------------
 // Variables
@@ -82,6 +89,7 @@ SoundFile e1m1Music;
 SoundFile confirmSound, exitSound, selectSound;
 SoundFile shootSound, prepareAmmoSound;
 SoundFile painSound, deathSound;
+SoundFile enemyNormalSound, enemyPainSound, enemyDeathSound;
 SoundFile itemTakenSound;
 
 float volumeEffects = 1.0;		// 0 - mute, 1 - max volume
@@ -94,7 +102,7 @@ PFont titleFont, basicTextFont;
 // ~ Sprites and Animation ~
 CDoomAnimation shotgunShoot;
 CDoomSprite bloodEffect;
-PImage shotgun;
+PImage shotgun, medicineKit, bulletproofVest;
 
 // ~ CDoom ~
 CDoomGame game;
@@ -135,6 +143,9 @@ void loadSounds() {
 	painSound = new SoundFile(this, CDOOM_PAIN);
 	deathSound = new SoundFile(this, CDOOM_DEATH);
 	itemTakenSound = new SoundFile(this, CDOOM_ITEM_TAKEN);
+	enemyNormalSound = new SoundFile(this, CDOOM_ENEMY_NORMAL);
+	enemyPainSound = new SoundFile(this, CDOOM_ENEMY_PAIN);
+	enemyDeathSound = new SoundFile(this, CDOOM_ENEMY_DEATH);
 
 	adjustVolumeForMusic();
 	adjustVolumeForEffects();
@@ -153,6 +164,9 @@ void loadImages() {
 
 	shotgun = loadImage(CDOOM_SHOTGUN);
 	shotgun.resize(shotgun.width * 3, shotgun.height * 3);
+
+	medicineKit = loadImage(CDOOM_MEDICINE_KIT);
+	bulletproofVest = loadImage(CDOOM_BULLETPROF_VEST);
 
 	shotgunShoot = new CDoomAnimation(
 		CDOOM_SHOTGUN_PREPARING,

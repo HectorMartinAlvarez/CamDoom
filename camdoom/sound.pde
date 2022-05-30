@@ -41,5 +41,8 @@ void adjustVolumeForEffects() {
 		painSound.amp(volumeEffects);
 		deathSound.amp(volumeEffects);
 		itemTakenSound.amp(volumeEffects);
+		enemyNormalSound.amp(volumeEffects);
+		enemyPainSound.amp(volumeEffects);
+		enemyDeathSound.amp(volumeEffects);
 	}
 }

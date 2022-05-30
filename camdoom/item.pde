@@ -31,7 +31,6 @@ abstract class CDoomItem {
 	}
 
 	abstract void apply();
-
 	abstract void display();
 }
 
@@ -44,12 +43,47 @@ class MedicalKitCDoomItem extends CDoomItem {
 	}
 
 	void apply() {
+		if ((this.slayer.health.y - this.slayer.health.z) >= CDOOM_HEALTH_ITEM) {
+			this.slayer.health.z += CDOOM_HEALTH_ITEM;
+			this.setVisible(false);
+			itemTakenSound.play();
 
-
-
+			if (this.slayer.health.z > this.slayer.health.y) {
+				this.slayer.health.z = this.slayer.health.y;
+			}
+		}
 	}
 
 	void display() {
+		if (this.isVisible) {
+			image(medicineKit, this.pos.x, this.pos.y);
+		}
+	}
+}
 
+class BulletproofVestCDoomItem extends CDoomItem {
+	CDoomSlayer slayer;
+
+	BulletproofVestCDoomItem(float x, float y, float z, CDoomSlayer slayer) {
+		super(x, y, z);
+		this.slayer = slayer;
+	}
+
+	void apply() {
+		if ((this.slayer.shield.y - this.slayer.shield.z) >= CDOOM_SHIELD_ITEM) {
+			this.slayer.shield.z += CDOOM_SHIELD_ITEM;
+			itemTakenSound.play();
+			this.setVisible(false);
+
+			if (this.slayer.shield.z > this.slayer.shield.y) {
+				this.slayer.shield.z = this.slayer.shield.y;
+			}
+		}
+	}
+
+	void display() {
+		if (this.isVisible) {
+			image(bulletproofVest, this.pos.x, this.pos.y);
+		}
 	}
 }

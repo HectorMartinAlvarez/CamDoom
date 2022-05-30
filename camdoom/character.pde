@@ -123,7 +123,7 @@ class CDoomSlayer extends CDoomCharacter {
 	boolean[] bounceDirection;
 
 	CDoomSlayerStatus status;
-	boolean spriteFinished, isMoving;
+	boolean spriteFinished, isMoving, noEnemy;
 	CDoomTimer timerShotgun;
 
   PeasyCam camera;
@@ -140,6 +140,8 @@ class CDoomSlayer extends CDoomCharacter {
 		super.reset();
 		this.prevPos = new PVector(pos.x, pos.y, pos.z);
 		this.status = CDoomSlayerStatus.SLAYER_NORMAL;
+		this.isMoving = false;
+		this.noEnemy = true;
 
 		this.setStats(new CDoomStadistics(
 			CDOOM_MIN_HEALTH, CDOOM_MAX_HEALTH_SLAYER,
@@ -230,7 +232,7 @@ class CDoomSlayer extends CDoomCharacter {
 						else {
 							this.status = CDoomSlayerStatus.SLAYER_NORMAL;
 							this.spriteFinished = true;
-							this.timerShotgun.setTime(6);
+							this.timerShotgun.setTime(5);
 						}
 					} else {
 						image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
@@ -332,6 +334,22 @@ class CDoomEnemy extends CDoomCharacter {
 		));
 	}
 
+	void doDamage(CDoomCharacter character) {
+		super.doDamage(character);
+		confirmSound.play();
+	}
+
+	void damageReceived(int damage) {
+		super.damageReceived(damage);
+		enemyPainSound.play();
+
+		if (this.stats.health.z <= this.stats.health.x) {
+			enemyPainSound.stop();
+			enemyDeathSound.play();
+			this.setVisible(false);
+		}
+	}
+
 	boolean inRange(float px, float pz) {
 		float distX = px - this.x(), distZ = pz - this.z();
 		float distance = sqrt((distX * distX) + (distZ * distZ));
@@ -340,12 +358,12 @@ class CDoomEnemy extends CDoomCharacter {
 
 	void display() {
 		if (this.isVisible) {
-			// ...
-			// not for now
+			enemyNormalSound.play();
 		}
 	}
 
 	void move(float x, float y, float z) {
+
 
   }
 }

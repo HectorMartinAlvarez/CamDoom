@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.6] - 2022-05-30
+## [1.6.1] - 2022-05-30
+
+### Added
+
+- Include sounds for enemies
+- Include support for health and shield items (not tested)
+
+### Fixed
+
+- Fix damage control for enemies
+- Fix color for crosshair gun when enemy has been detected
+- Reduce delay for shotgun
+
+## [1.6.0] - 2022-05-30
 
 ### Added
 
@@ -148,4 +161,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.5.3]: https://github.com/HectorMartinAlvarez/CamDoom/tree/d86b8af79930fab8a6a2bccf2a9dbae7c70cf371
 [1.5.4]: https://github.com/HectorMartinAlvarez/CamDoom/tree/a7a908136bffa6cf9d8571d9b59f7b9166f67fcc
 [1.5.5]: https://github.com/HectorMartinAlvarez/CamDoom/tree/711c7ac5083e3cf5428ad6821b95105abe78641d
-[1.5.6]:
+[1.6.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/f9c31253ffa512fb84609e3fb500336ae9ce3e8b

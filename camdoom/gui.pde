@@ -123,12 +123,12 @@ void displaySlayerGU() {
 	textFont(basicTextFont);
 	fill(255, 255, 255);
 
-	text("Health: " + game.slayer.stats.health.z, 20, height - 40);
-	text("Shield: " + game.slayer.stats.shield.z, 20, height - 20);
+	text("Health: " + slayer.stats.health.z, 20, height - 60);
+	text("Shield: " + slayer.stats.shield.z, 20, height - 20);
 	popStyle();
 
 	pushStyle();
-	stroke(255, 255, 255);
+	if (slayer.noEnemy) stroke(255, 255, 255); else stroke(184, 9, 9);
 	line(width / 2 - 10, height / 2, width / 2 + 10, height / 2);
 	line(width / 2, height / 2 - 10, width / 2, height / 2 + 10);
 	popStyle();
