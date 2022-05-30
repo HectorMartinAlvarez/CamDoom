@@ -20,6 +20,8 @@ import java.util.HashMap;
 import processing.sound.*;
 import peasy.*;
 import queasycam.*;
+import oscP5.*;
+OscP5 oscP5;
 
 QueasyCam cam;
 
@@ -36,6 +38,8 @@ void setup() {
 	surface.hideCursor();
 	surface.setAlwaysOnTop(true);
 
+  oscP5 = new OscP5(this, 8338);
+
 	loadFonts(); loadImages();
 	loadSounds(); loadActions();
 
@@ -43,10 +47,11 @@ void setup() {
 
 	if (!MOVE_FREE_CAMERA) {
 		slayer = new CDoomSlayer(CDOOM_SLAYER_X, CDOOM_SLAYER_Y, CDOOM_SLAYER_Z, this);
+    face = new Face();
 
 		CDoomColumns[] columns = loadColumns();
 		CDoomStairs stairs = new CDoomStairs(CDOOM_MAP_STAIRS);
-		game = new CDoomGame(map, slayer, stairs, columns);
+		game = new CDoomGame(map, slayer, stairs, columns, face);
 	} else {
 		cam = new QueasyCam(this);
 		cam.speed = 5;              // default is 3

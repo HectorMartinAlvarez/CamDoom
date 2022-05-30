@@ -111,6 +111,7 @@ PImage shotgun, medicineKit, bulletproofVest;
 CDoomGame game;
 CDoomSlayer slayer;
 CDoomMap map;
+Face face;
 
 // ~ States ~
 int selectedOption = 0;		// 0..n options

@@ -18,14 +18,16 @@ class CDoomGame {
 	CDoomMap map;
   CDoomStairs stairs;
   CDoomColumns[] columns;
+  Face face;
   boolean reDoCollision;
 
-	CDoomGame(CDoomMap map, CDoomSlayer slayer, CDoomStairs stairs, CDoomColumns[] columns) {
+	CDoomGame(CDoomMap map, CDoomSlayer slayer, CDoomStairs stairs, CDoomColumns[] columns, Face face) {
     this.slayer = slayer;
     this.map = map;
     this.stairs = stairs;
     this.columns = columns.clone();
 		this.reDoCollision = true;
+    this.face = face;
   }
 
 	void reset() {
@@ -80,11 +82,27 @@ class CDoomGame {
 			}
 		}
   }
+  
+  void slayerActions(){
+    if(this.face.posePosition.x > 0 && this.face.posePosition.x < 200){
+      slayer.rotate(2);
+    }
+    if(this.face.posePosition.x > 500){
+      slayer.rotate(-2);
+    }
+    if(this.face.jaw > 21){
+      slayer.move();
+    }
+    if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8){
+      // metodo de disparar
+    }
+  }
 
 	void display() {
 		this.map.display();
 		this.slayer.display();
 		this.update();
   	this.updatedColumn();
+    slayerActions();
 	}
 }

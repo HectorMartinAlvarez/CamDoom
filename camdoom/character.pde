@@ -295,7 +295,7 @@ class CDoomSlayer extends CDoomCharacter {
   }
 
   void move() {
-    float c1 = sin(radians(this.angle)) * 10;
+    /*float c1 = sin(radians(this.angle)) * 10;
     float c2 = sqrt((25) - (c1 * c1)) * 2;
 		this.setx(x() - c1);
 
@@ -305,7 +305,11 @@ class CDoomSlayer extends CDoomCharacter {
 		if (cond1 || cond2) this.setz(z() + c2);
 		else this.setz(z() - c2);
 
-    this.camera.lookAt(x(), y(), z());
+    
+    this.camera.lookAt(x(), y(), z());*/
+    
+    this.camera.pan(0,0,1);
+    
 		this.savePosition();
   }
 }
