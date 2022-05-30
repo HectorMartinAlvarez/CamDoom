@@ -243,6 +243,8 @@ void keyPressed() {
 }
 
 void keyReleased() {
+	slayer.isMoving = false;
+
 	if (actions.keySet().contains(key))
 		actions.put(key, false);
 }

@@ -21,14 +21,11 @@ import processing.sound.*;
 import peasy.*;
 import queasycam.*;
 import oscP5.*;
-OscP5 oscP5;
-
-QueasyCam cam;
 
 void settings() {
 	size(700, 700, P3D);
 	PJOGL.setIcon(CDOOM_ICON);
-	//fullScreen();
+	if (!DEV_MODE) fullScreen();
 }
 
 void setup() {
@@ -38,11 +35,10 @@ void setup() {
 	surface.hideCursor();
 	surface.setAlwaysOnTop(true);
 
-  oscP5 = new OscP5(this, 8338);
-
 	loadFonts(); loadImages();
 	loadSounds(); loadActions();
 
+	oscP5 = new OscP5(this, 8338);
 	map = new CDoomMap(CDOOM_MAP_OBJ, CDOOM_MAP_COLLISIONS);
 
 	if (!MOVE_FREE_CAMERA) {

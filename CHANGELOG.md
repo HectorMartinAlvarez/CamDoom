@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2022-05-30
+
+### Fixed
+
+- Fix bouncing movement when slayer has stopped
+- Increase velocity for forward movement
+
 ## [1.7.0] - 2022-05-30
 
 ### Added
@@ -177,4 +184,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.6.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/f9c31253ffa512fb84609e3fb500336ae9ce3e8b
 [1.6.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/088f2b28a4b2890a69a90c185f8bdae2899df2c1
 [1.6.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/6e4c65b6e567b915a220577f1738636119fb3e98
-[1.7.0]:
+[1.7.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/241499d0c6e6ebf9ab8731f018f7a57951bcd613
+[1.7.1]:

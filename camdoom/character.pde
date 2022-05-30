@@ -295,21 +295,7 @@ class CDoomSlayer extends CDoomCharacter {
   }
 
   void move() {
-    /*float c1 = sin(radians(this.angle)) * 10;
-    float c2 = sqrt((25) - (c1 * c1)) * 2;
-		this.setx(x() - c1);
-
-		boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
-		boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
-
-		if (cond1 || cond2) this.setz(z() + c2);
-		else this.setz(z() - c2);
-
-    
-    this.camera.lookAt(x(), y(), z());*/
-    
-    this.camera.pan(0,0,1);
-    
+    this.camera.forward(2);
 		this.savePosition();
   }
 }

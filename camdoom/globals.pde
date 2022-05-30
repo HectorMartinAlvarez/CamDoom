@@ -19,6 +19,7 @@
 
 // ~ Settings ~
 static final boolean MOVE_FREE_CAMERA = false;
+static final boolean DEV_MODE = true;
 
 // ~ Stadistics ~
 static final int CDOOM_MAX_HEALTH_SLAYER = 100;
@@ -86,6 +87,10 @@ static final String CDOOM_BULLETPROOF_VEST = "data/images/bulletproof_vest.png";
 // ~ Window ~
 int current_width = width;
 int current_height = height;
+
+// ~ Camera ~
+OscP5 oscP5;
+QueasyCam cam;
 
 // ~ Sounds ~
 SoundFile e1m1Music;

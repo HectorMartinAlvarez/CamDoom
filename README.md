@@ -18,3 +18,6 @@ original Doom, so these is a list with all these mentions:
 * Title Font: https://fontmeme.com/fonts/amazdoom-font/
 * Option Font: https://www.fontspace.com/category/doom
 * Sounds and Sprites: https://github.com/Olde-Skuul/doom3do
+* QueasyCam: https://github.com/jrc03c/queasycam
+* PeasyCam: https://github.com/jdf/peasycam/
+* FaceOSC: https://github.com/kylemcdonald/ofxFaceTracker
