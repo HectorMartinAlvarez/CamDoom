@@ -119,7 +119,7 @@ abstract class CDoomCharacter {
 
 class CDoomSlayer extends CDoomCharacter {
 	final camdoom papplet;
-	PVector prevPos, bounce;
+	PVector bounce;
 	boolean[] bounceDirection;
 
 	CDoomSlayerStatus status;
@@ -127,7 +127,7 @@ class CDoomSlayer extends CDoomCharacter {
 	CDoomTimer timerShotgun;
 
   PeasyCam camera;
-  float[][] prevColumn;
+  //float[][] prevColumn;
 	float angle;
 
 	CDoomSlayer(float x, float y, float z, camdoom papplet) {
@@ -138,7 +138,6 @@ class CDoomSlayer extends CDoomCharacter {
 
 	void reset() {
 		super.reset();
-		this.prevPos = new PVector(pos.x, pos.y, pos.z);
 		this.status = CDoomSlayerStatus.SLAYER_NORMAL;
 		this.isMoving = false;
 		this.noEnemy = true;
@@ -149,7 +148,7 @@ class CDoomSlayer extends CDoomCharacter {
 			CDOOM_DAMAGE_SLAYER
 		));
 
-		this.prevPos = new PVector(pos.x, pos.y, pos.z);
+		//this.prevPos = new PVector(pos.x, pos.y, pos.z);
 		this.bounce = new PVector(0, 0);
 		this.bounceDirection = new boolean[2];
 
@@ -161,16 +160,7 @@ class CDoomSlayer extends CDoomCharacter {
     this.camera.setActive(false);
 		this.camera.setWheelHandler(null);
 
-		this.prevColumn = new float[3][6];
-
-    for(int i = 0; i < this.prevColumn.length; i++) {
-      this.prevColumn[0][i] = pos.x;
-      this.prevColumn[1][i] = pos.y;
-      this.prevColumn[2][i] = pos.z;
-    }
-
-    rotate(180);
-		restorePosition();
+    this.rotate(180);
 	}
 
 	void bouncing() {
@@ -197,7 +187,7 @@ class CDoomSlayer extends CDoomCharacter {
 	void display() {
 		if (this.isVisible) {
 			if (DEV_MODE == true) {
-				println(this.prevPos.x + " | " + this.prevPos.y + " | " + this.prevPos.z);
+				//println(this.prevPos.x + " | " + this.prevPos.y + " | " + this.prevPos.z);
 			}
 
 			displaySlayerGU(); camera.beginHUD();
@@ -266,26 +256,73 @@ class CDoomSlayer extends CDoomCharacter {
 		}
 	}
 
+  boolean aiming(float enemyX, float enemyZ, float enemyW, float enemyD) {
+    
+    float c1 = sin(radians(this.angle)) * 400;
+    float c2 = sqrt((400*400) - (c1 * c1));
+    
+    boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
+    boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
+
+    float rangeX;
+    float rangeZ;
+    if (cond1 || cond2){
+      rangeX = camera.getLookAt()[0] -c1;
+      rangeZ = camera.getLookAt()[2] +c2;
+    }else{
+      rangeX = camera.getLookAt()[0] -c1;
+      rangeZ = camera.getLookAt()[2] -c2;
+    }
+    
+    
+
+    boolean left =   lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ, enemyX, enemyZ+enemyD);
+    boolean right =  lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX+enemyW, enemyZ, enemyX+enemyW, enemyZ+enemyD);
+    boolean top =    lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ, enemyX+enemyW, enemyZ);
+    boolean bottom = lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ+enemyD, enemyX+enemyW, enemyZ+enemyD);
+  
+    if (left || right || top || bottom) {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+  
+    float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+    float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+  
+    if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+  
+      float intersectionX = x1 + (uA * (x2-x1));
+      float intersectionY = y1 + (uA * (y2-y1));
+      fill(255,0,0);
+      noStroke();
+      ellipse(intersectionX, intersectionY, 20, 20);
+  
+      return true;
+    }
+    return false;
+  }
+
   void restorePosition() {
-		this.pos = new PVector(this.prevPos.x, this.prevPos.y, this.prevPos.z);
-    camera.lookAt(x(), y(), z());
+    camera.backward(2);
   }
-
-  void savePosition() {
-    float[] posValues = camera.getLookAt();
-		this.prevPos = new PVector(posValues[0], posValues[1], posValues[2]);
+  
+  float getCurretX(){
+    return camera.getLookAt()[0];
   }
-
-  void restoreColumnsPosition(int index) {
-		this.pos = new PVector(this.prevPos.x, this.prevPos.y, this.prevPos.z);
-    camera.lookAt(prevColumn[0][index], prevColumn[1][index], prevColumn[2][index]);
+  
+  float getCurretY(){
+    return camera.getLookAt()[1];
   }
-
-  void saveColumnsPosition(int index){
-    float[] posValues = camera.getLookAt();
-		prevColumn[0][index] = posValues[0];
-		prevColumn[1][index] = posValues[1];
-		prevColumn[2][index] = posValues[2];
+  
+  float getCurretZ(){
+    return camera.getLookAt()[2];
+  }
+  
+  void moveY(float newY){
+    camera.move(0,newY,0);
   }
 
   void rotate(float angle) {
@@ -301,7 +338,6 @@ class CDoomSlayer extends CDoomCharacter {
   void move(boolean direction) {
 		if (direction == true) this.camera.forward(2);
 		else this.camera.backward(2);
-		this.savePosition();
   }
 }
 

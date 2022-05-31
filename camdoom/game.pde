@@ -38,16 +38,15 @@ class CDoomGame {
 
 	void update() {
 		checkSlayerDamage();
-    slayer.sety(slayer.prevPos.y);
-
-    if(!map.mapCollisions(slayer.x(), slayer.z())) slayer.restorePosition();
-    else slayer.savePosition();
+    if(!map.mapCollisions(slayer.getCurretX(), slayer.getCurretZ())) slayer.restorePosition();
 
     for (int i = 0; i < stairs.stairs.length;i++) {
-      if (stairs.stairsCollisions(stairs.stairs[i], slayer.x(), slayer.z())) {
-        slayer.prevPos.y = stairs.stairs[i].get(0).y;
+      if (stairs.stairsCollisions(stairs.stairs[i], slayer.getCurretX(), slayer.getCurretZ())) {
+        if(round(slayer.getCurretY()) != stairs.stairs[i].get(0).y){
+          slayer.moveY((abs(slayer.getCurretY()) - abs(stairs.stairs[i].get(0).y)));
+        }
 
-        if (slayer.z() > 835 && reDoCollision) {
+        if (slayer.getCurretZ() > 835 && reDoCollision) {
 					reDoCollision = false;
 
 					for (int j = 0, k = map.vertexes.length - 1; j < 5; j++, k--) {
@@ -61,18 +60,25 @@ class CDoomGame {
 		// Check items
 		for (CDoomItem item : map.items) {
 			if (item.isVisible == true) {
-				/*if (round(slayer.x()) == round(item.x()) && round(slayer.z()) == round(item.z())) {
-					item.apply();
-				}*/
+          if(item instanceof MedicalKitCDoomItem){
+            MedicalKitCDoomItem medKit = (MedicalKitCDoomItem) item;
+            medKit.display();
+            //println(medKit.pickUpItem());
+            if(medKit.pickUpItem()){
+                medKit.apply(); 
+            }
+          }else {
+            BulletproofVestCDoomItem vest = (BulletproofVestCDoomItem) item;
+            //println(vest.pickUpItem());
+          }
 			}
 		}
   }
 
   void updatedColumn() {
     for(int i = 0; i < columns.length; i++) {
-			boolean cond = columns[i].mapCollisions(slayer.x(), slayer.z());
-      if(!cond) slayer.saveColumnsPosition(i);
-      else slayer.restoreColumnsPosition(i);
+			boolean cond = columns[i].mapCollisions(slayer.getCurretX(), slayer.getCurretZ());
+      if(cond) slayer.restorePosition(); 
     }
   }
 
@@ -81,7 +87,7 @@ class CDoomGame {
 			CDoomEnemy enemy = this.map.enemies.get(i);
 
 			if (enemy.shoot) {
-				if (enemy.inRange(slayer.x(), slayer.z())) {
+				if (enemy.inRange(slayer.getCurretX(), slayer.getCurretZ())) {
 					this.slayer.damageReceived(enemy.stats.damage);
 					enemy.shoot = false;
 					enemy.time = millis() + 4000;
@@ -93,21 +99,29 @@ class CDoomGame {
   }
 
   void slayerActions(){
-    if(this.face.posePosition.x > 0 && this.face.posePosition.x < 200){
-			slayer.rotate(2);
-    }
-    if(this.face.posePosition.x > 500){
-      slayer.rotate(-2);
-    }
-    if(this.face.jaw > 21){
-      slayer.move(true);
-    }
-    if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8){
-      // metodo de disparar
+    /*if(slayer.aiming(EnemyX,EnemyZ,EnemyWidth,EnemyDepth)){
+      // cambiar color mira
+    }*/
+    if(face.found > 0){
+      if(this.face.posePosition.x > 0 && this.face.posePosition.x < 225){
+        slayer.rotate(2);
+      }
+      if(this.face.posePosition.x > 475){
+        slayer.rotate(-2);
+      }
+      if(this.face.jaw > 21){
+        slayer.move(true);
+      }
+      if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8){
+        /*if(slayer.aiming(EnemyX,EnemyZ,EnemyWidth,EnemyDepth)){
+          // disparar
+        }*/
+      }
     }
   }
 
 	void display() {
+  println("Position:" + slayer.camera.getLookAt()[0], slayer.camera.getLookAt()[1], slayer.camera.getLookAt()[2]);
 		this.map.display();
 		this.slayer.display();
 		this.update();

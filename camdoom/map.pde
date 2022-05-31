@@ -17,10 +17,10 @@ class CDoomStairs {
 	final ArrayList<PVector>[] stairs;
 
 	CDoomStairs(String collisionPath) {
-		this.stairs = new ArrayList[15];
+		this.stairs = new ArrayList[17];
 		Table tabStairs = loadTable(collisionPath);
 
-		for (int i=0, j = 0; i < 15; i++) {
+		for (int i=0, j = 0; i < 17; i++) {
 			stairs[i] = new ArrayList<PVector>();
 			float x, y, z;
 

@@ -59,9 +59,22 @@ class MedicalKitCDoomItem extends CDoomItem {
 
 	void display() {
 		if (this.isVisible) {
-			model.display();
+      model.display();
 		}
 	}
+
+  boolean pickUpItem(){
+    float cornerX = this.pos.x - 5;
+    float cornerZ = this.pos.z - 5;
+    
+    if (this.slayer.getCurretX() >= cornerX && 
+        this.slayer.getCurretX() <= cornerX + 50 &&
+        this.slayer.getCurretZ() >= cornerZ && 
+        this.slayer.getCurretZ() <= cornerZ + 50) {
+          return true;
+    }
+    return false;
+  }
 }
 
 class BulletproofVestCDoomItem extends CDoomItem {
@@ -92,4 +105,17 @@ class BulletproofVestCDoomItem extends CDoomItem {
 			model.display();
 		}
 	}
+
+  boolean pickUpItem(){
+    float cornerX = this.pos.x - 5;
+    float cornerZ = this.pos.z - 5;
+    
+    if (this.slayer.getCurretX() >= cornerX && 
+        this.slayer.getCurretX() <= cornerX + 50 &&
+        this.slayer.getCurretZ() >= cornerZ && 
+        this.slayer.getCurretZ() <= cornerZ + 50) {
+          return true;
+    }
+    return false;
+  }
 }
