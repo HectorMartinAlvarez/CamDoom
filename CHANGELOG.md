@@ -243,4 +243,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.8.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/c4c0004374d2c7bb32e2871d091df23ddd54c848
 [1.8.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/132045cc4837ba9533d858999e8a5df35327c022
 [1.8.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/3a8a37c24dcd0cd6be0b9bbca0ba008450f8ff7d
-[1.8.3]:
+[1.8.3]: https://github.com/HectorMartinAlvarez/CamDoom/tree/76e23d8ed372badd04881ef6ab973a9ae441678d
