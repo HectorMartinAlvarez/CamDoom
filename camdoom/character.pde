@@ -175,10 +175,9 @@ class CDoomSlayer extends CDoomCharacter {
 		this.timerShotgun = new CDoomTimer();
 
 		this.camera = new PeasyCam(this.papplet, pos.x, pos.y, pos.z, 50);
-    this.camera.setDistance(50);
     this.camera.setActive(false);
 		this.camera.setWheelHandler(null);
-
+    
     this.rotate(180);
 	}
 
@@ -359,10 +358,8 @@ class CDoomSlayer extends CDoomCharacter {
   }
   
   void startingPosition(){
-    camera.reset();
-    this.rotate(-this.angle);
-    this.angle = 0;
-    this.rotate(180);
+    slayer.camera.reset(1000);
+    slayer.camera.lookAt(slayer.pos.x,slayer.pos.y,slayer.pos.z,500);
   }
 
   float getCurretX() {

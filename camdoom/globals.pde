@@ -19,7 +19,7 @@
 
 // ~ Settings ~
 static final boolean MOVE_FREE_CAMERA = false;
-static final boolean DEV_MODE = true;
+static final boolean DEV_MODE = false;
 
 // ~ Stadistics ~
 static final int CDOOM_MAX_HEALTH_SLAYER = 100;

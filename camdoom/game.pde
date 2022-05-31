@@ -28,6 +28,7 @@ class CDoomGame {
     this.columns = columns.clone();
 		this.reDoCollision = true;
     this.face = face;
+    slayer.camera.lookAt(slayer.getCurretX(),slayer.getCurretY(),slayer.getCurretZ(),1000);
   }
 
 	void reset() {
@@ -125,10 +126,10 @@ class CDoomGame {
         slayer.move(true);
       }
       for(CDoomEnemy enemy : map.enemies){
-        if(slayer.aiming(enemy.x(),enemy.z()) && enemy.isVisible){
-          slayer.noEnemy = false;
-          if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot){
-            slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+        if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot){
+          slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+          if(slayer.aiming(enemy.x(),enemy.z()) && enemy.isVisible){
+            slayer.noEnemy = false;
             enemy.damageReceived(40);
             slayer.shoot = false;
             slayer.time = millis() + 100;

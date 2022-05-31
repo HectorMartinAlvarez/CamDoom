@@ -59,9 +59,8 @@ abstract class CDoomShape {
 		pushMatrix(); 
     pushStyle();
 		translate(this.x, this.y, this.z);
-		rotateY(radians(slayer.angle));
 		noStroke(); noFill();
-
+    rotateY(radians(slayer.angle));
 		shape(this.shape);
 
 		popStyle(); 
@@ -76,7 +75,7 @@ class ImageCDoomShape extends CDoomShape {
 		super(x, y, z);
 		this.width = width;
 		this.height = height;
-    this.shape = createShape(RECT, x-(this.width/2), 0, this.width, this.height);
+    this.shape = createShape(RECT, 0, 0, this.width, this.height);
 		this.shape.setStroke(color(255, 255, 255, 0));
 	}
 

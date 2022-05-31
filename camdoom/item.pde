@@ -76,12 +76,12 @@ class MedicalKitCDoomItem extends CDoomItem {
 
 class BulletproofVestCDoomItem extends CDoomItem {
 	CDoomSlayer slayer;
-	ImageCDoomShape model;
+	CubeCDoomShape model;
 
 	BulletproofVestCDoomItem(float x, float y, float z, CDoomSlayer slayer) {
 		super(x, y, z);
 		this.slayer = slayer;
-		this.model = new ImageCDoomShape(x, y, z, 50.0, 50.0);
+		this.model = new CubeCDoomShape(x, y, z, 20.0);
 		this.model.setTexture(CDOOM_BULLETPROOF_VEST);
 	}
 
