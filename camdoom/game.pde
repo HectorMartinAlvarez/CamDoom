@@ -85,8 +85,6 @@ class CDoomGame {
 			CDoomEnemy enemy = this.map.enemies.get(i);
 
 			if (enemy.shoot) {
-				enemy.enemyAttack.play();
-
 				if (enemy.inRange(slayer.getCurretX(), slayer.getCurretZ())) {
 					if (!confirmSound.isPlaying()) {
 						confirmSound.play();
@@ -99,8 +97,10 @@ class CDoomGame {
 			} else if ((enemy.time - millis()) < 0) {
 				enemy.shoot = true;
 
-				if (!enemy.enemyAttack.isPlaying)
+				if (!enemy.enemyAttack.isPlaying) {
 					enemy.enemyAttack.setPlaying(true);
+					enemy.enemyWalk.setPlaying(false);
+				}
 			}
 		}
   }

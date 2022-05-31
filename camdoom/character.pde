@@ -358,7 +358,7 @@ class CDoomEnemy extends CDoomCharacter {
 	float time;
   boolean shoot;
 	CDoomTimer timer;
-	ModelCDoomAnimation enemyWalk, enemyAttack;
+	ModelCDoomAnimation enemyWalk, enemyAttack, enemyDie;
 	float angle;
 
 	CDoomEnemy(float x, float y, float z) {
@@ -382,7 +382,11 @@ class CDoomEnemy extends CDoomCharacter {
 		);
 
 		this.enemyAttack = new ModelCDoomAnimation(
-			CDOOM_ENEMY_ATTACK, new ImageCDoomShape(pos.x, pos.y, pos.z, 50, 50), 100
+			CDOOM_ENEMY_ATTACK, new ImageCDoomShape(pos.x, pos.y, pos.z, 50, 50), 10
+		);
+
+		this.enemyDie = new ModelCDoomAnimation(
+			CDOOM_ENEMY_DIE, new ImageCDoomShape(pos.x, pos.y, pos.z, 50, 50), 10
 		);
 
 		this.angle = slayer.angle;
@@ -399,7 +403,7 @@ class CDoomEnemy extends CDoomCharacter {
 		if (this.stats.health.z <= this.stats.health.x) {
 			enemyPainSound.stop();
 			enemyDeathSound.play();
-
+			this.enemyDie.setPlaying(true);
 			this.setVisible(false);
 		}
 	}
@@ -421,21 +425,25 @@ class CDoomEnemy extends CDoomCharacter {
 			this.enemyAttack.model.z = this.pos.z;
 			this.timer.run();
 
-			if (!this.enemyWalk.isPlaying)
-				this.enemyWalk.setPlaying(true);
+			if (!this.enemyAttack.isPlaying)
+				if (!this.enemyWalk.isPlaying)
+					this.enemyWalk.setPlaying(true);
+
+			this.enemyAttack.play();
+			this.enemyWalk.play();
 
 			if (slayer.angle != angle) {
 				this.angle = slayer.angle;
 				this.enemyWalk.model.setAngle(-angle);
 			}
 
-			this.enemyWalk.play();
-
 			if (this.timer.hasFinished) {
 				enemyNormalSound.play();
 				this.timer.setTime(55);
 			}
 		}
+
+		this.enemyDie.play();
 	}
 
 	void move(float x, float y, float z) {

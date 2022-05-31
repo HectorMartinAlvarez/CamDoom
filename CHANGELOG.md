@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.2] - 2022-05-31
+
+### Fixed
+
+- Fix attack and die sprites for enemies
+- Fix shield vest display
+
 ## [1.8.1] - 2022-05-31
 
 ### Added
@@ -226,4 +233,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.7.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/241499d0c6e6ebf9ab8731f018f7a57951bcd613
 [1.7.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/2f94af31ce98a7b7aac3281c9f095b34f7272b87
 [1.7.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/c4c0004374d2c7bb32e2871d091df23ddd54c848
-[1.8.0]:
+[1.8.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/c4c0004374d2c7bb32e2871d091df23ddd54c848
+[1.8.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/132045cc4837ba9533d858999e8a5df35327c022
+[1.8.2]:
