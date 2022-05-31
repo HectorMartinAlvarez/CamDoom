@@ -264,7 +264,7 @@ void mousePressed() {
 		if (slayer.stats.health.z > 0) {
 			// Shoot action
 			if (mouseButton == LEFT) {
-				slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+			//	slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
 			}
 		}
 	}

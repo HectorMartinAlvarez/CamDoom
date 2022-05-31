@@ -60,7 +60,7 @@ void draw() {
 	updateSize();
 
 	if (!MOVE_FREE_CAMERA) {
-		updateActions();
+		//updateActions();
 
 		switch(gameState) {
 			case 0: game.display(); 	 break;
