@@ -28,19 +28,30 @@ class CDoomSprite {
 	void display() {
 		if (this.numSprite >= 0 && this.numSprite < this.images.length) {
 			PImage img = this.images[this.numSprite];
+			pushStyle(); noStroke();
 			image(img, this.pos.x, this.pos.y, this.dim.x, this.dim.y);
+			popStyle();
 		} else this.numSprite = 0;
 	}
 }
 
 PImage[] imagesFromDirectory(String dir) {
 	File directoryPath = new File(dir);
-	File[] filesList = directoryPath.listFiles();
-	PImage[] images = new PImage[filesList.length];
+	PImage[] images = null;
 
-	for(int i = 0; i < images.length; i++) {
-		String filename = filesList[i].getAbsolutePath();
-		images[i] = loadImage(filename);
+	if (directoryPath.exists()) {
+		if (directoryPath.isDirectory()) {
+			File[] filesList = directoryPath.listFiles();
+			images = new PImage[filesList.length];
+
+			for (int i = 0; i < images.length; i++) {
+				String filename = filesList[i].getAbsolutePath();
+				images[i] = loadImage(filename);
+			}
+		} else if (directoryPath.isFile()) {
+			images = new PImage[1];
+			images[0] = loadImage(dir);
+		}
 	}
 
 	return images;

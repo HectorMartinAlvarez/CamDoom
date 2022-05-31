@@ -17,12 +17,23 @@ abstract class CDoomShape {
 	PShape shape;
 	PShader shader;
 	PImage texture;
-	float x, y, z;
+	float x, y, z, angle;
 
 	CDoomShape(float x, float y, float z) {
 		this.shape = createShape();
 		this.x = x; this.y = y; this.z = z;
 		this.shader = null;
+	}
+
+	void setAngle(float angle) {
+		this.angle = angle;
+	}
+
+	void setTexture(PImage textureImage) {
+		if (textureImage != null) {
+			this.texture = textureImage;
+			this.shape.setTexture(this.texture);
+		}
 	}
 
 	void setTexture(String texturePath) {
@@ -47,6 +58,7 @@ abstract class CDoomShape {
 	void display() {
 		pushMatrix(); pushStyle();
 		translate(this.x, this.y, this.z);
+		//rotateY(radians(this.angle));
 		noStroke(); noFill();
 
 		if (this.shader != null) shader(this.shader);
@@ -58,13 +70,30 @@ abstract class CDoomShape {
 }
 
 class ImageCDoomShape extends CDoomShape {
-	float width, height;
+	float width, height, angle;
 
 	ImageCDoomShape(float x, float y, float z, float width, float height) {
 		super(x, y, z);
 		this.width = width;
 		this.height = height;
-    this.shape = createShape(RECT, this.width, this.height, 10, 10);
+    this.shape = createShape(RECT, this.width, this.height, this.width, this.height);
+		this.shape.setStroke(color(255, 255, 255, 0));
+	}
+
+	void setTexture(PImage textureImage) {
+		if (textureImage != null) {
+			this.texture = textureImage;
+			this.texture.resize((int)this.width, (int)this.height);
+			this.shape.setTexture(this.texture);
+		}
+	}
+
+	void setTexture(String texturePath) {
+		if (texturePath != null) {
+			this.texture = loadImage(texturePath);
+			this.texture.resize((int)this.width, (int)this.height);
+			this.shape.setTexture(this.texture);
+		}
 	}
 }
 
@@ -75,6 +104,7 @@ class CubeCDoomShape extends CDoomShape {
 		super(x, y, z);
 		this.slide = slide;
     this.shape = createShape(BOX, this.slide, this.slide, this.slide);
+		this.shape.setStroke(color(255, 255, 255, 0));
 	}
 }
 
@@ -88,5 +118,6 @@ class RectangleCDoomShape extends CDoomShape {
 		this.depthWidth = depthWidth;
 		this.depthHeight = depthHeight;
     this.shape = createShape(RECT, this.width, this.height, this.depthWidth, this.depthHeight);
+		this.shape.setStroke(color(255, 255, 255, 0));
 	}
 }

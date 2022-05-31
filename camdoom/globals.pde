@@ -34,6 +34,7 @@ static final int CDOOM_DAMAGE_ENEMY = 10;
 
 static final int CDOOM_HEALTH_ITEM = 40;
 static final int CDOOM_SHIELD_ITEM = 50;
+
 // ~ Slayer ~
 static final float CDOOM_SLAYER_X = 113.5;
 static final float CDOOM_SLAYER_Y = -100;
@@ -75,6 +76,9 @@ static final String CDOOM_ENEMY_NORMAL = "data/sounds/bgact.wav";
 // ~ Sprites and Animation files ~
 static final String CDOOM_BLOOD_EFFECT = "data/animation/blood_effect";
 static final String CDOOM_SHOTGUN_PREPARING = "data/animation/shotgun";
+static final String CDOOM_ENEMY_WALK = "data/animation/enemy_walk";
+static final String CDOOM_ENEMY_ATTACK = "data/animation/enemy_kill";
+static final String CDOOM_ENEMY_DIE = "data/animation/enemy_die";
 static final String CDOOM_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_SHOOT_SHOTGUN = "data/images/shotgun.png";
 static final String CDOOM_MEDICINE_KIT = "data/images/medicine_kit.png";
@@ -111,11 +115,6 @@ float volumeMusic = 0.2;			// 0 - mute, 1 - max volume
 PImage backgroundImage;
 PFont titleFont, basicTextFont;
 
-// ~ Sprites and Animation ~
-CDoomAnimation shotgunShoot;
-CDoomSprite bloodEffect;
-PImage shotgun, medicineKit, bulletproofVest;
-
 // ~ CDoom ~
 CDoomGame game;
 CDoomSlayer slayer;
@@ -142,7 +141,10 @@ void updateSize() {
 	if (current_width != width || current_height != height) {
 		current_width = width; current_height = height;
 		backgroundImage.resize(width, height);
-		bloodEffect.dim = new PVector(width, height);
+
+		if (slayer != null) {
+			slayer.bloodEffect.dim = new PVector(width, height);
+		}
 	}
 }
 
@@ -160,6 +162,11 @@ void loadSounds() {
 	enemyPainSound = new SoundFile(this, CDOOM_ENEMY_PAIN);
 	enemyDeathSound = new SoundFile(this, CDOOM_ENEMY_DEATH);
 
+	if (DEV_MODE) {
+		volumeEffects = 0.0;
+		volumeMusic = 0.0;
+	}
+
 	adjustVolumeForMusic();
 	adjustVolumeForEffects();
 	e1m1Music.loop();
@@ -174,22 +181,6 @@ void loadImages() {
 	backgroundImage = loadImage(CDOOM_MAIN_MENU_BACKGROUND);
 	backgroundImage.resize(width, height);
 	backgroundImage.filter(BLUR, 2);
-
-	shotgun = loadImage(CDOOM_SHOTGUN);
-	shotgun.resize(shotgun.width * 3, shotgun.height * 3);
-
-	medicineKit = loadImage(CDOOM_MEDICINE_KIT);
-	bulletproofVest = loadImage(CDOOM_BULLETPROOF_VEST);
-
-	shotgunShoot = new CDoomAnimation(
-		CDOOM_SHOTGUN_PREPARING,
-		shotgun.width, shotgun.height, 3
-	);
-
-	bloodEffect = new CDoomSprite(
-		CDOOM_BLOOD_EFFECT,
-		width, height
-	);
 }
 
 CDoomColumns[] loadColumns() {
@@ -275,13 +266,12 @@ void loadItems() {
 }
 
 void loadEnemies() {
-	Table tableValue = loadTable(CDOOM_ITEM_LIST);
+	Table tableValue = loadTable(CDOOM_ENEMY_LIST);
 
 	for (int i=0; i < tableValue.getRowCount(); i++) {
-		String type = tableValue.getString(i, 0);
-		float x = tableValue.getFloat(i, 1);
-		float y = tableValue.getFloat(i, 2);
-		float z = tableValue.getFloat(i, 3);
+		float x = tableValue.getFloat(i, 0);
+		float y = tableValue.getFloat(i, 1);
+		float z = tableValue.getFloat(i, 2);
 
 		map.addEnemy(new CDoomEnemy(x, y, z));
 	}

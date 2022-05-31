@@ -143,6 +143,8 @@ class CDoomMap {
 		textureWrap(REPEAT);
 		lights();
 		shape(model, 0, 0);
+
+		textureWrap(CLAMP);
 		for (CDoomEnemy e : enemies) e.display();
 		for (CDoomItem i : items) i.display();
 		popMatrix();

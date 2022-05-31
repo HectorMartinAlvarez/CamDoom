@@ -169,23 +169,23 @@ void displayBloodEffects() {
 	int healthValue = (int)game.slayer.stats.health.z;
 
 	if (healthValue > 80 && healthValue <= 90) {
-		bloodEffect.numSprite = 0;
-		bloodEffect.display();
+		slayer.bloodEffect.numSprite = 0;
+		slayer.bloodEffect.display();
 	}
 
 	else if (healthValue > 50 && healthValue <= 80) {
-		bloodEffect.numSprite = 1;
-		bloodEffect.display();
+		slayer.bloodEffect.numSprite = 1;
+		slayer.bloodEffect.display();
 	}
 
 	else if (healthValue > 30 && healthValue <= 50) {
-		bloodEffect.numSprite = 2;
-		bloodEffect.display();
+		slayer.bloodEffect.numSprite = 2;
+		slayer.bloodEffect.display();
 	}
 
 	else if (healthValue <= 30) {
-		bloodEffect.numSprite = 3;
-		bloodEffect.display();
+		slayer.bloodEffect.numSprite = 3;
+		slayer.bloodEffect.display();
 	}
 
 	game.slayer.camera.endHUD();

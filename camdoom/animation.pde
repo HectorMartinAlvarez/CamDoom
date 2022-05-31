@@ -13,33 +13,87 @@
 // You should have received a copy of the GNU General Public License
 // along with CamDoom. If not, see <http://www.gnu.org/licenses/>.
 
-class CDoomAnimation {
+interface CDoomAnimation {
+	void setPlaying(boolean isPlaying);
+	void play();
+}
+
+class ModelCDoomAnimation implements CDoomAnimation {
 	final PImage[] images;
-	CDoomTimer delayTimer;
-	int numFrame, delayValue;
-	PVector pos, dim;
+	CDoomShape model;
+	CDoomTimer timer;
 	boolean isPlaying;
+	int numFrame, delay;
 
-	CDoomAnimation(String spriteDir, float w, float h, int delayValue) {
-		this.images = imagesFromDirectory(sketchPath() + "/" + spriteDir);
-		this.pos = new PVector(0, 0);
-		this.dim = new PVector(w, h);
+	ModelCDoomAnimation(String dir, CDoomShape model, int delay) {
+		dir = sketchPath() + "/" + dir;
+		this.images = imagesFromDirectory(dir);
+		this.timer = new CDoomTimer();
+		this.model = model;
 		this.isPlaying = false;
+		this.delay = delay;
 		this.numFrame = 0;
-
-		this.delayValue = delayValue;
-		this.delayTimer = new CDoomTimer();
-		this.delayTimer.setTime(this.delayValue);
 	}
 
-	void setPlaying(boolean isPlaying, float x, float y) {
-		if (isPlaying == false) {
+	void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+
+		if (isPlaying) {
 			this.numFrame = 0;
-			this.pos = new PVector(0, 0);
-		} else {
-			this.isPlaying = isPlaying;
-			this.pos = new PVector(x, y);
-			this.delayTimer.setTime(this.delayValue);
+			this.model.setTexture(images[0]);
+			this.timer.setTime(this.delay);
+		}
+	}
+
+	void play() {
+		if (this.isPlaying == true) {
+			this.model.setTexture(images[this.numFrame]);
+			this.model.display();
+			this.timer.run();
+
+			if (this.timer.hasFinished) {
+				this.numFrame = this.numFrame + 1;
+				this.timer.setTime(this.delay);
+			}
+
+			if (this.numFrame >= this.images.length) {
+				this.timer.stop();
+				this.isPlaying = false;
+				this.numFrame = 0;
+			}
+		}
+	}
+}
+
+class ImageCDoomAnimation implements CDoomAnimation {
+	final PImage[] images;
+	CDoomTimer timer;
+	boolean isPlaying;
+	int numFrame, delay;
+	PVector pos, dim;
+
+	ImageCDoomAnimation(String dir, float w, float h, int delay) {
+		this.pos = new PVector(0, 0);
+		this.dim = new PVector(w, h);
+
+		dir = sketchPath() + "/" + dir;
+		this.images = imagesFromDirectory(dir);
+		this.timer = new CDoomTimer();
+		this.isPlaying = false;
+		this.delay = delay;
+		this.numFrame = 0;
+	}
+
+	void setLocation(float x, float y) {
+		this.pos = new PVector(x, y);
+	}
+
+	void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+
+		if (isPlaying) {
+			this.numFrame = 0;
+			this.timer.setTime(this.delay);
 		}
 	}
 
@@ -47,15 +101,15 @@ class CDoomAnimation {
 		if (this.isPlaying == true) {
 			PImage img = this.images[this.numFrame];
 			image(img, this.pos.x, this.pos.y, this.dim.x, this.dim.y);
-			this.delayTimer.run();
+			this.timer.run();
 
-			if (this.delayTimer.hasFinished) {
+			if (this.timer.hasFinished) {
 				this.numFrame = this.numFrame + 1;
-				this.delayTimer.setTime(this.delayValue);
+				this.timer.setTime(this.delay);
 			}
 
 			if (this.numFrame >= this.images.length) {
-				this.delayTimer.stop();
+				this.timer.stop();
 				this.isPlaying = false;
 				this.pos = new PVector(0, 0);
 				this.numFrame = 0;

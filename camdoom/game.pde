@@ -60,17 +60,15 @@ class CDoomGame {
 		// Check items
 		for (CDoomItem item : map.items) {
 			if (item.isVisible == true) {
-          if(item instanceof MedicalKitCDoomItem){
-            MedicalKitCDoomItem medKit = (MedicalKitCDoomItem) item;
-            medKit.display();
-            //println(medKit.pickUpItem());
-            if(medKit.pickUpItem()){
-                medKit.apply(); 
-            }
-          }else {
-            BulletproofVestCDoomItem vest = (BulletproofVestCDoomItem) item;
-            //println(vest.pickUpItem());
-          }
+				if (item instanceof MedicalKitCDoomItem) {
+					MedicalKitCDoomItem medKit = (MedicalKitCDoomItem) item;
+					medKit.display();
+					if(medKit.pickUpItem()) medKit.apply();
+				} else if (item instanceof BulletproofVestCDoomItem) {
+					BulletproofVestCDoomItem vest = (BulletproofVestCDoomItem) item;
+					vest.display();
+					if(vest.pickUpItem()) vest.apply();
+				}
 			}
 		}
   }
@@ -78,7 +76,7 @@ class CDoomGame {
   void updatedColumn() {
     for(int i = 0; i < columns.length; i++) {
 			boolean cond = columns[i].mapCollisions(slayer.getCurretX(), slayer.getCurretZ());
-      if(cond) slayer.restorePosition(); 
+      if(cond) slayer.restorePosition();
     }
   }
 
@@ -87,13 +85,22 @@ class CDoomGame {
 			CDoomEnemy enemy = this.map.enemies.get(i);
 
 			if (enemy.shoot) {
+				enemy.enemyAttack.play();
+
 				if (enemy.inRange(slayer.getCurretX(), slayer.getCurretZ())) {
+					if (!confirmSound.isPlaying()) {
+						confirmSound.play();
+					}
+
 					this.slayer.damageReceived(enemy.stats.damage);
 					enemy.shoot = false;
 					enemy.time = millis() + 4000;
 				}
 			} else if ((enemy.time - millis()) < 0) {
 				enemy.shoot = true;
+
+				if (!enemy.enemyAttack.isPlaying)
+					enemy.enemyAttack.setPlaying(true);
 			}
 		}
   }
@@ -102,7 +109,7 @@ class CDoomGame {
     /*if(slayer.aiming(EnemyX,EnemyZ,EnemyWidth,EnemyDepth)){
       // cambiar color mira
     }*/
-    if(face.found > 0){
+    if(face.found > 0) {
       if(this.face.posePosition.x > 0 && this.face.posePosition.x < 225){
         slayer.rotate(2);
       }
@@ -121,7 +128,13 @@ class CDoomGame {
   }
 
 	void display() {
-  println("Position:" + slayer.camera.getLookAt()[0], slayer.camera.getLookAt()[1], slayer.camera.getLookAt()[2]);
+  	if (DEV_MODE) {
+			float x = slayer.camera.getLookAt()[0];
+			float y = slayer.camera.getLookAt()[1];
+			float z = slayer.camera.getLookAt()[2];
+			println("Position: " + x, y, z);
+		}
+
 		this.map.display();
 		this.slayer.display();
 		this.update();

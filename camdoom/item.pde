@@ -36,12 +36,12 @@ abstract class CDoomItem {
 
 class MedicalKitCDoomItem extends CDoomItem {
 	CDoomSlayer slayer;
-	ImageCDoomShape model;
+	CubeCDoomShape model;
 
 	MedicalKitCDoomItem(float x, float y, float z, CDoomSlayer slayer) {
 		super(x, y, z);
 		this.slayer = slayer;
-		this.model = new ImageCDoomShape(x, y, z, 10.0, 10.0);
+		this.model = new CubeCDoomShape(x, y, z, 10.0);
 		this.model.setTexture(CDOOM_MEDICINE_KIT);
 	}
 
@@ -66,14 +66,11 @@ class MedicalKitCDoomItem extends CDoomItem {
   boolean pickUpItem(){
     float cornerX = this.pos.x - 5;
     float cornerZ = this.pos.z - 5;
-    
-    if (this.slayer.getCurretX() >= cornerX && 
-        this.slayer.getCurretX() <= cornerX + 50 &&
-        this.slayer.getCurretZ() >= cornerZ && 
-        this.slayer.getCurretZ() <= cornerZ + 50) {
-          return true;
-    }
-    return false;
+		float slayerX = this.slayer.getCurretX();
+		float slayerZ = this.slayer.getCurretZ();
+
+		boolean cond = slayerX >= cornerX && slayerX <= cornerX + 50;
+    return cond && slayerZ >= cornerZ && slayerZ <= cornerZ + 50;
   }
 }
 
@@ -109,13 +106,10 @@ class BulletproofVestCDoomItem extends CDoomItem {
   boolean pickUpItem(){
     float cornerX = this.pos.x - 5;
     float cornerZ = this.pos.z - 5;
-    
-    if (this.slayer.getCurretX() >= cornerX && 
-        this.slayer.getCurretX() <= cornerX + 50 &&
-        this.slayer.getCurretZ() >= cornerZ && 
-        this.slayer.getCurretZ() <= cornerZ + 50) {
-          return true;
-    }
-    return false;
+		float slayerX = this.slayer.getCurretX();
+		float slayerZ = this.slayer.getCurretZ();
+
+		boolean cond = slayerX >= cornerX && slayerX <= cornerX + 50;
+    return cond && slayerZ >= cornerZ && slayerZ <= cornerZ + 50;
   }
 }

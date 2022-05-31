@@ -127,8 +127,10 @@ class CDoomSlayer extends CDoomCharacter {
 	CDoomTimer timerShotgun;
 
   PeasyCam camera;
-  //float[][] prevColumn;
 	float angle;
+
+	ImageCDoomAnimation shotgunShoot;
+	CDoomSprite bloodEffect, shotgun;
 
 	CDoomSlayer(float x, float y, float z, camdoom papplet) {
 		super(x, y, z);
@@ -148,7 +150,22 @@ class CDoomSlayer extends CDoomCharacter {
 			CDOOM_DAMAGE_SLAYER
 		));
 
-		//this.prevPos = new PVector(pos.x, pos.y, pos.z);
+		PImage tempShotgun = loadImage(CDOOM_SHOTGUN);
+		this.shotgun = new CDoomSprite(
+			CDOOM_SHOTGUN, tempShotgun.width * 3,
+			tempShotgun.height * 3
+		);
+
+		this.bloodEffect = new CDoomSprite(
+			CDOOM_BLOOD_EFFECT,
+			width, height
+		);
+
+		this.shotgunShoot = new ImageCDoomAnimation(
+			CDOOM_SHOTGUN_PREPARING,
+			shotgun.dim.x, shotgun.dim.y, 3
+		);
+
 		this.bounce = new PVector(0, 0);
 		this.bounceDirection = new boolean[2];
 
@@ -186,16 +203,14 @@ class CDoomSlayer extends CDoomCharacter {
 
 	void display() {
 		if (this.isVisible) {
-			if (DEV_MODE == true) {
-				//println(this.prevPos.x + " | " + this.prevPos.y + " | " + this.prevPos.z);
-			}
-
 			displaySlayerGU(); camera.beginHUD();
-			float w = shotgun.width, h = shotgun.height;
+			float w = shotgun.dim.x, h = shotgun.dim.y;
 
 			switch(this.status) {
 				case SLAYER_NORMAL:
-					image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
+					shotgun.pos.x = (width - w) / 2 - 40 + bounce.x;
+					shotgun.pos.y = height - h + bounce.y;
+					shotgun.display();
 					this.bouncing();
 				break;
 
@@ -205,7 +220,8 @@ class CDoomSlayer extends CDoomCharacter {
 					if (this.timerShotgun.hasFinished) {
 						// Prepare Sprite
 						if (this.spriteFinished) {
-							shotgunShoot.setPlaying(true, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y);
+							shotgunShoot.setLocation((width - w) / 2 - 40 + bounce.x, height - h + bounce.y);
+							shotgunShoot.setPlaying(true);
 							this.spriteFinished = false;
 							shootSound.play();
 							this.bouncing();
@@ -229,13 +245,17 @@ class CDoomSlayer extends CDoomCharacter {
 							this.timerShotgun.setTime(5);
 						}
 					} else {
-						image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
+						shotgun.pos.x = (width - w) / 2 - 40 + bounce.x;
+						shotgun.pos.y = height - h + bounce.y;
+						shotgun.display();
 						this.bouncing();
 					}
 				break;
 
 				case SLAYER_PAIN:
-					image(shotgun, (width - w) / 2 - 40 + bounce.x, height - h + bounce.y, w, h);
+					shotgun.pos.x = (width - w) / 2 - 40 + bounce.x;
+					shotgun.pos.y = height - h + bounce.y;
+					shotgun.display();
 					this.bouncing();
 
 					if (this.stats.health.z > 0) {
@@ -257,70 +277,59 @@ class CDoomSlayer extends CDoomCharacter {
 	}
 
   boolean aiming(float enemyX, float enemyZ, float enemyW, float enemyD) {
-    
     float c1 = sin(radians(this.angle)) * 400;
     float c2 = sqrt((400*400) - (c1 * c1));
-    
+
     boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
     boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
+    float rangeX, rangeZ;
 
-    float rangeX;
-    float rangeZ;
-    if (cond1 || cond2){
-      rangeX = camera.getLookAt()[0] -c1;
-      rangeZ = camera.getLookAt()[2] +c2;
-    }else{
-      rangeX = camera.getLookAt()[0] -c1;
-      rangeZ = camera.getLookAt()[2] -c2;
+    if (cond1 || cond2) {
+      rangeX = camera.getLookAt()[0] - c1;
+      rangeZ = camera.getLookAt()[2] + c2;
+    } else {
+      rangeX = camera.getLookAt()[0] - c1;
+      rangeZ = camera.getLookAt()[2] - c2;
     }
-    
-    
 
-    boolean left =   lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ, enemyX, enemyZ+enemyD);
-    boolean right =  lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX+enemyW, enemyZ, enemyX+enemyW, enemyZ+enemyD);
-    boolean top =    lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ, enemyX+enemyW, enemyZ);
-    boolean bottom = lineLine(pos.x,pos.z,rangeX,rangeZ, enemyX, enemyZ+enemyD, enemyX+enemyW, enemyZ+enemyD);
-  
-    if (left || right || top || bottom) {
-      return true;
-    }
-    return false;
+    boolean left = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ, enemyX, enemyZ + enemyD);
+    boolean right = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX + enemyW, enemyZ, enemyX + enemyW, enemyZ + enemyD);
+    boolean top = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ, enemyX + enemyW, enemyZ);
+    boolean bottom = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ + enemyD, enemyX + enemyW, enemyZ + enemyD);
+    return left || right || top || bottom;
   }
 
   private boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-  
     float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
     float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-  
+
     if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-  
       float intersectionX = x1 + (uA * (x2-x1));
       float intersectionY = y1 + (uA * (y2-y1));
-      fill(255,0,0);
-      noStroke();
+      fill(255,0,0); noStroke();
       ellipse(intersectionX, intersectionY, 20, 20);
-  
       return true;
     }
+
     return false;
   }
 
   void restorePosition() {
     camera.backward(2);
   }
-  
-  float getCurretX(){
+
+  float getCurretX() {
     return camera.getLookAt()[0];
   }
-  
-  float getCurretY(){
+
+  float getCurretY() {
     return camera.getLookAt()[1];
   }
-  
-  float getCurretZ(){
+
+  float getCurretZ() {
     return camera.getLookAt()[2];
   }
-  
+
   void moveY(float newY){
     camera.move(0,newY,0);
   }
@@ -349,6 +358,8 @@ class CDoomEnemy extends CDoomCharacter {
 	float time;
   boolean shoot;
 	CDoomTimer timer;
+	ModelCDoomAnimation enemyWalk, enemyAttack;
+	float angle;
 
 	CDoomEnemy(float x, float y, float z) {
 		super(x, y, z);
@@ -365,11 +376,20 @@ class CDoomEnemy extends CDoomCharacter {
 			CDOOM_MIN_HEALTH, CDOOM_MAX_HEALTH_ENEMY,
 			CDOOM_DAMAGE_ENEMY
 		));
+
+		this.enemyWalk = new ModelCDoomAnimation(
+			CDOOM_ENEMY_WALK, new ImageCDoomShape(pos.x, pos.y, pos.z, 50, 50), 4
+		);
+
+		this.enemyAttack = new ModelCDoomAnimation(
+			CDOOM_ENEMY_ATTACK, new ImageCDoomShape(pos.x, pos.y, pos.z, 50, 50), 100
+		);
+
+		this.angle = slayer.angle;
 	}
 
 	void doDamage(CDoomCharacter character) {
 		super.doDamage(character);
-		confirmSound.play();
 	}
 
 	void damageReceived(int damage) {
@@ -379,6 +399,7 @@ class CDoomEnemy extends CDoomCharacter {
 		if (this.stats.health.z <= this.stats.health.x) {
 			enemyPainSound.stop();
 			enemyDeathSound.play();
+
 			this.setVisible(false);
 		}
 	}
@@ -391,7 +412,24 @@ class CDoomEnemy extends CDoomCharacter {
 
 	void display() {
 		if (this.isVisible) {
+			this.enemyWalk.model.x = this.pos.x;
+			this.enemyWalk.model.y = this.pos.y;
+			this.enemyWalk.model.z = this.pos.z;
+
+			this.enemyAttack.model.x = this.pos.x;
+			this.enemyAttack.model.y = this.pos.y;
+			this.enemyAttack.model.z = this.pos.z;
 			this.timer.run();
+
+			if (!this.enemyWalk.isPlaying)
+				this.enemyWalk.setPlaying(true);
+
+			if (slayer.angle != angle) {
+				this.angle = slayer.angle;
+				this.enemyWalk.model.setAngle(-angle);
+			}
+
+			this.enemyWalk.play();
 
 			if (this.timer.hasFinished) {
 				enemyNormalSound.play();

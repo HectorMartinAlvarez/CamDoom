@@ -194,7 +194,7 @@ void checkDeath() {
 	// Choose an option
 	if (key == CODED) {
 		switch (keyCode) {
-			case DOWN: if (selectedOption < 2) { selectSound.play(); selectedOption++; } break;
+			case DOWN: if (selectedOption < 1) { selectSound.play(); selectedOption++; } break;
 			case UP: if (selectedOption > 0) { selectSound.play(); selectedOption--; } break;
 		}
 	}
@@ -248,7 +248,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
-	slayer.isMoving = false;
+	if (slayer != null) slayer.isMoving = false;
 
 	if (actions.keySet().contains(key))
 		actions.put(key, false);
@@ -260,11 +260,6 @@ void mousePressed() {
 			// Shoot action
 			if (mouseButton == LEFT) {
 				slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
-			}
-
-			// Just for testing (temporal)
-			if (mouseButton == RIGHT) {
-				slayer.damageReceived(10);
 			}
 		}
 	}
