@@ -9,9 +9,6 @@ original Doom, so these is a list with all these mentions:
 ### Licenses
 
 * Copyright (C) 1993-1996 id Software, Inc.
-* Copyright (C) 2010-2013 Victor Epitropou
-* Copyright (C) 2016-2017 Alexandre-Xavier Labonté-Lamoureux
-* Copyright (C) 2017 Good Sign
 
 ### Referencies
 
