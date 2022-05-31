@@ -64,6 +64,11 @@ and assure that you have met the requirements.
         For Windows: https://github.com/kylemcdonald/ofxFaceTracker/releases/download/v1.2/FaceOSC-v1.11-win.zip
         For OSX: https://github.com/kylemcdonald/ofxFaceTracker/releases/download/v1.2/FaceOSC-v1.2-osx.zip
 
+    1.5 Text Fonts
+
+    CamDoom uses customized fonts that could not be on your machine. To install them, go to
+    "camdoom/data/fonts" section and open each ttf to then install it.
+
 2. Preparation
 
 If you are at this section, it means that you have installed all the necessary software,

@@ -1,0 +1,140 @@
+\documentclass{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        {\bfseries\LARGE \myuniversity \par}
+        \vspace{0.5cm}
+        {\scshape\Large \mydegree \par}
+        \vspace{3cm}
+        {\scshape\Huge \mytitle \par}
+        \vspace{2cm}
+        \vfill
+        {\Large Asignatura: \par}
+        {\Large \mysubject \par}
+        \vspace{2cm}
+        {\Large Autores: \par}
+        {\Large \myauthorone \par}
+        \vspace{0.2cm}
+        {\Large \myauthortwo \par}
+        \vspace{0.5cm}
+        \vspace{1cm}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Motivación/argumentación de la propuesta}
+
+CamDoom es un videjuego de ordenador que es una versión muy reducida del clásico Doom
+pero que utiliza la cámara web y la detección facial para la gestión del movimiento del
+jugador. La motivación de este proyecto es la de desarrollar en Processing un videojuego
+3D que utilice como controlador un dispositivo diferente al habitual teclado y ratón.
+
+\section{Descripción técnica del trabajo realizado}
+
+CamDoom utiliza las utilidades de Processing para la representación de modelos en 3D
+que están definidos mediante ficheros OBJ, con figuras PShape, y también con imágenes
+que simulan objetos tridimensionales. La implementación del videojuego utiliza un motor
+primitivo que ofrece un sistema de colisiones, detección facial, animaciones, gestión
+del sonido, entre otras características. Es importante recalcar que este motor no está
+pensando como para ser fácilmente escalable, sino que fue diseñado con el objetivo de
+ofrecer lo mínimo como para que CamDoom pueda ser jugable.
+
+\section{Fuentes y tecnologías utilizadas}
+
+En este listado se muestran todas las tecnologías empleadas:
+
+\begin{itemize}
+    \item Sonidos del DOOM: \url{https://github.com/Olde-Skuul/doom3do}
+    \item Fuente de texto del Título: \url{https://fontmeme.com/fonts/amazdoom-font/}
+    \item Fuente de texto de las Opciones: \url{https://www.fontspace.com/category/doom}
+    \item Librería Sounds de Processing: \url{https://github.com/processing/processing-sound}
+    \item OSCP5: \url{https://github.com/sojamo/oscp5}
+    \item QueasyCam: \url{https://github.com/jrc03c/queasycam}
+    \item PeasyCam: \url{https://github.com/jdf/peasycam/}
+    \item Guía para Detección de Figuras: \url{https://www.jeffreythompson.org/collision-detection/}
+\end{itemize}
+
+\section{Diario de actividades semanales}
+
+El proyecto se llevó a cabo en una semana y en tres iteraciones. A continuación se explicará
+con mayor detalle cada una de estas fases:
+
+En la primera iteración se celebró una videollamada en la que los integrantes discutieron
+acerca de la idea principal del proyecto, las características y restricciones del programa,
+y las tareas a las que se iba a ocupar cada uno de ellos.
+
+La segunda iteración consistió en otra videollamada en la que cada integrante comentó el
+estado de sus tareas para así poder planificar y distribuir las siguientes tareas que se
+encargaría cada integrante del proyecto.
+
+Finalmente, en la tercera iteración todas las tareas ya estaban hechas y lo que se hizo
+fue preparar los ficheros INSTALL, el README, y este mismo documento.
+
+\section{Tareas realizadas y porcentaje de participación}
+
+Al estar formando el grupo por dos personas, cada integrante se aplicó al completo en cada una de sus
+tareas, contribuyendo en el desarrollo de la otra siempre que era necesario. En este listado se indica
+cada una de las tareas realizadas por cada uno de los miembros.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Héctor} & \textbf{David} \\
+        \hline
+        Búsqueda de librerías empleadas & Redacción de la memoria \\
+        \hline
+        Implementación del mapa & Control básico del GUI y del juego \\
+        \hline
+        Detección facial del jugador & Implementación del daño, salud, y escudo \\
+        \hline
+        Control del jugador con detección facial & Control con teclado y ratón \\
+        \hline
+        Localización de objetos y enemigos & Fichero AUTHORS e INSTALL \\
+        \hline
+        Implementación de la IA & Edición del CHANGELOG \\
+        \hline
+        Sistema de Colisiones & Búsqueda de imágenes, sonidos \\
+        \hline
+        Detección de enemigos & Implementación del mapa \\
+        \hline
+        Gestión del daño & Animaciones, sprites, fuentes \\
+        \hline
+        Edición del CHANGELOG & Gestión del Sonido \\
+        \hline
+        Edición del Vídeo Teaser & Diseño del GUI \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Enlace al código}
+
+Repositorio Github: \url{https://github.com/HectorMartinAlvarez/CamDoom}
+Vídeo Teaser: \url{https://github.com/HectorMartinAlvarez/CamDoom}
+
+\section{Conclusiones y propuesta de ampliación}
+
+CamDoom es un proyecto que tiene potencial pero que requiere de mucho
+más tiempo como para ofrecer un producto con más contenido y mucho más
+optimizado. Sin embargo, el videojuego proporciona una buena experiencia
+de usuario con la que probar la interacción de un juego como Doom con los
+gestos que se pueden hacer con la cara.
+
+Respecto a la ampliación, se tiene pensado para un futuro que CamDoom
+esté desarrollado con un motor que ofrezca más facilidades para escalar
+e integrar nuevas mecánicas, animaciones, enemigos, entre otros. También
+se quiere modificar las texturas originales del Doom para que el juego
+tenga un aspecto que no se aleje del actual pero que sea diferente.
+
+\section{Créditos materiales no originales del grupo}
+
+Principalmente, el trabajo externo empleado para el diseño del juego
+se obtuvo de los ficheros originales de la empresa id Software, Inc. aunque
+el código fuente es totalmente original y no está basado en el motor de Doom.
+
+\end{document}
