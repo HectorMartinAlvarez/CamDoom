@@ -121,6 +121,8 @@ class CDoomSlayer extends CDoomCharacter {
 	final camdoom papplet;
 	PVector bounce;
 	boolean[] bounceDirection;
+  float time;
+  boolean shoot;
 
 	CDoomSlayerStatus status;
 	boolean spriteFinished, isMoving, noEnemy;
@@ -276,46 +278,91 @@ class CDoomSlayer extends CDoomCharacter {
 		}
 	}
 
-  boolean aiming(float enemyX, float enemyZ, float enemyW, float enemyD) {
-    float c1 = sin(radians(this.angle)) * 400;
-    float c2 = sqrt((400*400) - (c1 * c1));
-
-    boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
-    boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
-    float rangeX, rangeZ;
-
-    if (cond1 || cond2) {
-      rangeX = camera.getLookAt()[0] - c1;
-      rangeZ = camera.getLookAt()[2] + c2;
-    } else {
-      rangeX = camera.getLookAt()[0] - c1;
-      rangeZ = camera.getLookAt()[2] - c2;
+    boolean aiming(float cx, float cy) {
+  
+      float c1 = sin(radians(this.angle)) * 400;
+      float c2 = sqrt((400*400) - (c1 * c1));
+      
+      boolean cond1 = (abs(this.angle) > 90 && abs(this.angle) <= 180);
+      boolean cond2 = (abs(this.angle) > 180 && abs(this.angle) <= 270);
+  
+      float rangeX;
+      float rangeZ;
+      if (cond1 || cond2){
+        rangeX = camera.getLookAt()[0] -c1;
+        rangeZ = camera.getLookAt()[2] +c2;
+      }else {
+        rangeX = camera.getLookAt()[0] -c1;
+        rangeZ = camera.getLookAt()[2] -c2;
+      }
+      
+      boolean inside1 = pointCircle(camera.getLookAt()[0],camera.getLookAt()[2], cx,cy,30);
+      boolean inside2 = pointCircle(rangeX,rangeZ, cx,cy,30);
+      if (inside1 || inside2) return true;
+    
+      float distX = camera.getLookAt()[0] - rangeX;
+      float distY = camera.getLookAt()[2] - rangeZ;
+      float len = sqrt( (distX*distX) + (distY*distY) );
+    
+      float dot = ( ((cx-camera.getLookAt()[0])*(rangeX-camera.getLookAt()[0])) + ((cy-camera.getLookAt()[2])*(rangeZ-camera.getLookAt()[2])) ) / pow(len,2);
+    
+      float closestX = camera.getLookAt()[0] + (dot * (rangeX-camera.getLookAt()[0]));
+      float closestY = camera.getLookAt()[2] + (dot * (rangeZ-camera.getLookAt()[2]));
+    
+      boolean onSegment = linePoint(camera.getLookAt()[0],camera.getLookAt()[2],rangeX,rangeZ, closestX,closestY);
+      if (!onSegment) return false;
+    
+      fill(255,0,0);
+      noStroke();
+      ellipse(closestX, closestY, 20, 20);
+    
+      distX = closestX - cx;
+      distY = closestY - cy;
+      float distance = sqrt( (distX*distX) + (distY*distY) );
+    
+      if (distance <= 30) {
+        return true;
+      }
+      return false;
     }
-
-    boolean left = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ, enemyX, enemyZ + enemyD);
-    boolean right = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX + enemyW, enemyZ, enemyX + enemyW, enemyZ + enemyD);
-    boolean top = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ, enemyX + enemyW, enemyZ);
-    boolean bottom = lineLine(pos.x, pos.z, rangeX, rangeZ, enemyX, enemyZ + enemyD, enemyX + enemyW, enemyZ + enemyD);
-    return left || right || top || bottom;
-  }
-
-  private boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-    float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-    float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-    if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-      float intersectionX = x1 + (uA * (x2-x1));
-      float intersectionY = y1 + (uA * (y2-y1));
-      fill(255,0,0); noStroke();
-      ellipse(intersectionX, intersectionY, 20, 20);
-      return true;
+    
+    
+    private boolean pointCircle(float px, float py, float cx, float cy, float r) {
+    
+      float distX = px - cx;
+      float distY = py - cy;
+      float distance = sqrt( (distX*distX) + (distY*distY) );
+    
+      if (distance <= r) {
+        return true;
+      }
+      return false;
     }
-
-    return false;
-  }
+    
+    private boolean linePoint(float x1, float y1, float x2, float y2, float px, float py) {
+    
+      float d1 = dist(px,py, x1,y1);
+      float d2 = dist(px,py, x2,y2);
+    
+      float lineLen = dist(x1,y1, x2,y2);
+    
+      float buffer = 0.1; 
+    
+      if (d1+d2 >= lineLen-buffer && d1+d2 <= lineLen+buffer) {
+        return true;
+      }
+      return false;
+    }
 
   void restorePosition() {
     camera.backward(2);
+  }
+  
+  void startingPosition(){
+    camera.reset();
+    this.rotate(-this.angle);
+    this.angle = 0;
+    this.rotate(180);
   }
 
   float getCurretX() {
@@ -432,11 +479,6 @@ class CDoomEnemy extends CDoomCharacter {
 			this.enemyAttack.play();
 			this.enemyWalk.play();
 
-			if (slayer.angle != angle) {
-				this.angle = slayer.angle;
-				this.enemyWalk.model.setAngle(-angle);
-			}
-
 			if (this.timer.hasFinished) {
 				enemyNormalSound.play();
 				this.timer.setTime(55);
@@ -447,7 +489,5 @@ class CDoomEnemy extends CDoomCharacter {
 	}
 
 	void move(float x, float y, float z) {
-
-
   }
 }

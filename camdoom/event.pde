@@ -219,6 +219,10 @@ void checkDeath() {
 	}
 }
 
+void oscEvent(OscMessage m) {
+  face.parseOSC(m);
+}
+
 void keyTyped() {
 	if (actions.keySet().contains(key))
 		actions.put(key, true);

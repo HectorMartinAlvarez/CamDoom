@@ -120,6 +120,7 @@ CDoomGame game;
 CDoomSlayer slayer;
 CDoomMap map;
 Face face;
+float preJaw;
 
 // ~ States ~
 int selectedOption = 0;		// 0..n options

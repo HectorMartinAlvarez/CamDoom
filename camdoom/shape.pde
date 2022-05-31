@@ -56,16 +56,16 @@ abstract class CDoomShape {
 	}
 
 	void display() {
-		pushMatrix(); pushStyle();
+		pushMatrix(); 
+    pushStyle();
 		translate(this.x, this.y, this.z);
-		//rotateY(radians(this.angle));
+		rotateY(radians(slayer.angle));
 		noStroke(); noFill();
 
-		if (this.shader != null) shader(this.shader);
 		shape(this.shape);
-		if (this.shader != null) resetShader();
 
-		popStyle(); popMatrix();
+		popStyle(); 
+    popMatrix();
 	}
 }
 
@@ -76,7 +76,7 @@ class ImageCDoomShape extends CDoomShape {
 		super(x, y, z);
 		this.width = width;
 		this.height = height;
-    this.shape = createShape(RECT, this.width, this.height, this.width, this.height);
+    this.shape = createShape(RECT, x-(this.width/2), 0, this.width, this.height);
 		this.shape.setStroke(color(255, 255, 255, 0));
 	}
 

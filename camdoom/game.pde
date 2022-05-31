@@ -71,6 +71,13 @@ class CDoomGame {
 				}
 			}
 		}
+
+    if(map.mapEnd(slayer.getCurretX(),slayer.getCurretZ())){
+      slayer.startingPosition();
+      map.loadMapCollision(CDOOM_MAP_COLLISIONS);
+      gameState = 1;
+    }
+
   }
 
   void updatedColumn() {
@@ -84,7 +91,7 @@ class CDoomGame {
 		for (int i = 0; i < this.map.enemies.size(); i++) {
 			CDoomEnemy enemy = this.map.enemies.get(i);
 
-			if (enemy.shoot) {
+			if (enemy.shoot && enemy.isVisible) {
 				if (enemy.inRange(slayer.getCurretX(), slayer.getCurretZ())) {
 					if (!confirmSound.isPlaying()) {
 						confirmSound.play();
@@ -106,24 +113,41 @@ class CDoomGame {
   }
 
   void slayerActions(){
-    /*if(slayer.aiming(EnemyX,EnemyZ,EnemyWidth,EnemyDepth)){
-      // cambiar color mira
-    }*/
-    if(face.found > 0) {
-      if(this.face.posePosition.x > 0 && this.face.posePosition.x < 225){
-        slayer.rotate(2);
+    if(preJaw == 0) preJaw = 20;
+    if(face.found > 0){
+      if(this.face.posePosition.x > 0 && this.face.posePosition.x < 250){
+        slayer.rotate(0.8);
       }
-      if(this.face.posePosition.x > 475){
-        slayer.rotate(-2);
+      if(this.face.posePosition.x > 450){
+        slayer.rotate(-0.8);
       }
-      if(this.face.jaw > 21){
+      if(this.face.jaw > preJaw+3){
         slayer.move(true);
       }
-      if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8){
-        /*if(slayer.aiming(EnemyX,EnemyZ,EnemyWidth,EnemyDepth)){
-          // disparar
-        }*/
+      for(CDoomEnemy enemy : map.enemies){
+        if(slayer.aiming(enemy.x(),enemy.z()) && enemy.isVisible){
+          slayer.noEnemy = false;
+          if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot){
+            slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+            enemy.damageReceived(40);
+            slayer.shoot = false;
+            slayer.time = millis() + 100;
+          } else if ((enemy.time - millis()) < 0) {
+            slayer.shoot = true;
+          }
+        }else {
+         slayer.noEnemy = true; 
+        }
       }
+    }else {
+     slayer.camera.beginHUD();
+     pushStyle();
+     textSize(50);
+     textAlign(CENTER);
+     stroke(255,255,255);
+     text("No Face Detected", width/2, height/2);
+     popStyle();
+     slayer.camera.endHUD();
     }
   }
 
