@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2022-05-31
+
+### Added
+
+- Added Items into the map
+- Added Enemies into the map
+
+### Fixed
+
+- Restore position when restarting the game
+
 ## [1.8.3] - 2022-05-31
 
 ### Fixed
@@ -244,3 +255,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.8.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/132045cc4837ba9533d858999e8a5df35327c022
 [1.8.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/3a8a37c24dcd0cd6be0b9bbca0ba008450f8ff7d
 [1.8.3]: https://github.com/HectorMartinAlvarez/CamDoom/tree/76e23d8ed372badd04881ef6ab973a9ae441678d
+[2.0.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/dbe844385b90e6fd0b53f765e52597fc98d81b11
