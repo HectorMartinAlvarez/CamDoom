@@ -1,17 +1,28 @@
-# CamDoom
-A Doom fan game with Webcam control
+# CamDoom - Webcam Doom
 
-## Mentions
+A Doom fan game with Webcam control implemented using Processing and GLSL
 
-Since CamDoom is a basic fan game, most of the textures, sounds, and models were extracted from the
-original Doom, so these is a list with all these mentions:
+![CamDoomGIF](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/animation.gif)
 
-### Licenses
+## Authors
+
+For a complete list of authors, see [AUTHORS](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/AUTHORS) file
+
+- Hector Miguel Martín Álvarez: https://github.com/HectorMartinAlvarez
+- David Parreño Barbuzano: https://github.com/losedavidpb
+
+## Installation
+
+See [INSTALL](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/INSTALL) file
+for more information about the installation.
+
+## Troubleshooting
+
+If you're having trouble, please contact losedavidpb@gmail.com
+
+## Referencies
 
 * Copyright (C) 1993-1996 id Software, Inc.
-
-### Referencies
-
 * Title Font: https://fontmeme.com/fonts/amazdoom-font/
 * Option Font: https://www.fontspace.com/category/doom
 * Sounds and Sprites: https://github.com/Olde-Skuul/doom3do

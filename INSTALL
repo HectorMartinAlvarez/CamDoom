@@ -1,0 +1,79 @@
+INSTALL GUIDE FOR CAMDOOM
+========================================
+
+0. Introduction
+
+This brief guide explains how to download, install, and prepare CamDoom
+on your machine. The following sections contain enough information to
+know how to play this game, but you can contact losedavidpb@gmail.com
+if you have any questions or issues! :)
+
+1. Requirements
+
+This section contains a complete list of the requirements that are
+necessary to execute and play CamDoom. Please read carefully
+and assure that you have met the requirements.
+
+    1.1 Webcam
+
+    CamDoom won't be playable if you don't have a webcam!
+
+    1.2 Processing
+
+    Before installing CamDoom, you should check that you have installed
+    Processing 3.5.4 (https://processing.org/download) and the following
+    libraries on your current machine:
+
+    - Processing Sound library: https://github.com/processing/processing-sound
+    - OSCP5: https://github.com/sojamo/oscp5
+    - QueasyCam: https://github.com/jrc03c/queasycam
+    - PeasyCam: https://github.com/jdf/peasycam/
+
+    To know more information on how to install these libraries to Processing,
+    please go to https://processing.org/environment/#adding-libraries-tools-and-modes
+
+    1.3 Binaries
+
+    Since PeasyCam does not include some utilities that are used at CamDoom, you must
+    prepare the library with an updated version. To do that, go to the binary folder
+    of this repository and move the JAR files to the library directory of PeasyCam.
+    It is important to take into account that changes won't be applied until you
+    restarted Processing IDE.
+
+    To know the location of the folder on which you must move the JAR files, you
+    need first to know the Processing sketchbook path.
+
+    To know what is your Processing sketchbook location, open the Preferences
+    window from the Processing application (PDE) and look for the "Sketchbook
+    location" item at the top.
+
+    By default the following locations are used for your sketchbook folder:
+
+        For Mac users, the sketchbook folder is located inside ~/Documents/Processing
+        For Windows users, the sketchbook folder is located inside My Documents/Processing
+
+    When you have found the Processing sketchbook location, go to that path and then to
+    "libraries/peasycam/library". The location in which you are in the place in which
+    JAR files must be moved!
+
+    1.4 Face Tracker
+
+    Since CamDoom uses your face to know how to move the player, it is important to get
+    the open framework ofxFaceTracker. Please download it using one of the following links:
+
+        For Windows: https://github.com/kylemcdonald/ofxFaceTracker/releases/download/v1.2/FaceOSC-v1.11-win.zip
+        For OSX: https://github.com/kylemcdonald/ofxFaceTracker/releases/download/v1.2/FaceOSC-v1.2-osx.zip
+
+2. Preparation
+
+If you are at this section, it means that you have installed all the necessary software,
+since here you would prepare the videogame to then play it!
+
+    - Connect your webcam on your machine and check that it is active
+    - Execute FaceOSC.exe which is in the bin folder of oofxFaceTracker zip file
+    - Open Processing IDE and open the CamDoom sketchbook (see https://processing.org/environment/#overview)
+
+3. Gaming
+
+If you have installed all the requirements, and you have also followed the steps explained
+in the preparation section, it means that you should simply click the play button and play!
