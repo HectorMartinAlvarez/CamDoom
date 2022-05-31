@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2022-05-31
+
+### Added
+
+- Item detection
+- Aiming at enemy in range detection
+
+### Fixed
+
+- Collision detection
+- Stairs detection
+
 ## [1.7.2] - 2022-05-30
 
 ### Added
@@ -202,4 +214,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.6.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/6e4c65b6e567b915a220577f1738636119fb3e98
 [1.7.0]: https://github.com/HectorMartinAlvarez/CamDoom/tree/241499d0c6e6ebf9ab8731f018f7a57951bcd613
 [1.7.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/2f94af31ce98a7b7aac3281c9f095b34f7272b87
-[1.7.2]:
+[1.7.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/c4c0004374d2c7bb32e2871d091df23ddd54c848
+[1.8.0]:
