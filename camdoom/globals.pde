@@ -56,7 +56,7 @@ static final String CDOOM_MAP_COLLISIONS = "data/map/e1m1/doom2_e1m1_collisions.
 static final String CDOOM_MAP_STAIRS = "data/map/e1m1/doom2_e1m1_stairs.csv";
 
 // ~ Font paths ~
-static final String CDOOM_FONT_TITLE = "data/fonts/amazdoomleft.ttf";
+static final String CDOOM_FONT_TITLE = "data/fonts/AmazDooMLeft.ttf";
 static final String CDOOM_FONT_TEXT = "data/fonts/doom2016text_golbq.ttf";
 
 // ~ Sounds/Music files ~

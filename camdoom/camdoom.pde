@@ -25,7 +25,6 @@ import oscP5.*;
 void settings() {
 	size(700, 700, P3D);
 	PJOGL.setIcon(CDOOM_ICON);
-	if (!DEV_MODE) fullScreen();
 }
 
 void setup() {

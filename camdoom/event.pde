@@ -182,6 +182,7 @@ void checkSettingsFromPause() {
 
 					case 2:	// Go back
 						confirmSound.play();
+						game.reset();
 						gameState = 2; selectedOption = 0;
 					break;
 				}
@@ -263,7 +264,7 @@ void mousePressed() {
 		if (slayer.stats.health.z > 0) {
 			// Shoot action
 			if (mouseButton == LEFT) {
-//				slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
+				slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
 			}
 		}
 	}

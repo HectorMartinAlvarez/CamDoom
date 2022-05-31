@@ -96,7 +96,6 @@ class CDoomMap {
     this.items = new ArrayList<CDoomItem>();
     this.enemies = new ArrayList<CDoomEnemy>();
 		this.model = loadShape(mapPath);
-
     loadMapCollision(collisionPath);
 
     vertexes_end[0] = new PVector(-903.7,0,1102.6);
@@ -105,7 +104,7 @@ class CDoomMap {
     vertexes_end[3] = new PVector(-935.1,0,1183.5);
 	}
 
-  void loadMapCollision(String collisionPath){
+  void loadMapCollision(String collisionPath) {
     Table tableValue = loadTable(collisionPath);
     vertexes = new PVector[tableValue.getRowCount()];
 
@@ -117,6 +116,7 @@ class CDoomMap {
   }
 
 	void reset() {
+		this.loadMapCollision(CDOOM_MAP_COLLISIONS);
 		for (CDoomEnemy e : enemies) e.reset();
 		for (CDoomItem i : items) i.setVisible(true);
 	}
@@ -147,7 +147,7 @@ class CDoomMap {
 
     return collision;
   }
-  
+
   boolean mapEnd(float px, float py) {
     boolean collision = false;
     int next = 0;

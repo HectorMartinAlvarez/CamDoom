@@ -73,9 +73,8 @@ class CDoomGame {
 			}
 		}
 
-    if(map.mapEnd(slayer.getCurretX(),slayer.getCurretZ())){
-      slayer.startingPosition();
-      map.loadMapCollision(CDOOM_MAP_COLLISIONS);
+    if (map.mapEnd(slayer.getCurretX(),slayer.getCurretZ())) {
+			game.reset();
       gameState = 1;
     }
 
@@ -89,10 +88,16 @@ class CDoomGame {
   }
 
 	void checkSlayerDamage() {
+		slayer.noEnemy = true;
+
 		for (int i = 0; i < this.map.enemies.size(); i++) {
 			CDoomEnemy enemy = this.map.enemies.get(i);
 
 			if (enemy.shoot && enemy.isVisible) {
+				if (slayer.aiming(enemy.x(), enemy.z()) && enemy.isVisible) {
+					slayer.noEnemy = false;
+				}
+
 				if (enemy.inRange(slayer.getCurretX(), slayer.getCurretZ())) {
 					if (!confirmSound.isPlaying()) {
 						confirmSound.play();
@@ -113,42 +118,35 @@ class CDoomGame {
 		}
   }
 
-  void slayerActions(){
-    if(preJaw == 0) preJaw = 20;
-    if(face.found > 0){
-      if(this.face.posePosition.x > 0 && this.face.posePosition.x < 250){
-        slayer.rotate(0.8);
-      }
-      if(this.face.posePosition.x > 450){
-        slayer.rotate(-0.8);
-      }
-      if(this.face.jaw > preJaw+3){
-        slayer.move(true);
-      }
-      for(CDoomEnemy enemy : map.enemies){
-        if(this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot){
+  void slayerActions() {
+    if (preJaw == 0) preJaw = 20;
+    if (face.found > 0) {
+      if (this.face.posePosition.x > 0 && this.face.posePosition.x < 250) slayer.rotate(0.8);
+      if (this.face.posePosition.x > 450) slayer.rotate(-0.8);
+      if (this.face.jaw > preJaw + 3) slayer.move(true);
+
+      for (CDoomEnemy enemy : map.enemies) {
+        if (this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot) {
           slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
-          if(slayer.aiming(enemy.x(),enemy.z()) && enemy.isVisible){
-            slayer.noEnemy = false;
+
+          if (slayer.aiming(enemy.x(), enemy.z()) && enemy.isVisible) {
             enemy.damageReceived(40);
             slayer.shoot = false;
             slayer.time = millis() + 100;
-          } else if ((enemy.time - millis()) < 0) {
-            slayer.shoot = true;
           }
-        }else {
-         slayer.noEnemy = true; 
+        } else if ((enemy.time - millis()) < 0) {
+          slayer.shoot = true;
         }
       }
-    }else {
-     slayer.camera.beginHUD();
-     pushStyle();
-     textSize(50);
-     textAlign(CENTER);
-     stroke(255,255,255);
-     text("No Face Detected", width/2, height/2);
-     popStyle();
-     slayer.camera.endHUD();
+    } else {
+    	slayer.camera.beginHUD();
+     	pushStyle();
+     	textSize(50);
+     	textAlign(CENTER);
+     	stroke(255, 255, 255);
+     	text("No Face Detected", width / 2, height / 2);
+     	popStyle();
+     	slayer.camera.endHUD();
     }
   }
 
