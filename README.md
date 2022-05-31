@@ -4,6 +4,11 @@ A Doom fan game with Webcam control implemented using Processing and GLSL
 
 ![CamDoomGIF](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/animation.gif)
 
+- Open the mouth: go forward
+- Move to right: rotate to right
+- Move to left: rotate to left
+- Raise the eyebrows: shoot if there is an enemy
+
 ## Authors
 
 For a complete list of authors, see [AUTHORS](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/AUTHORS) file
