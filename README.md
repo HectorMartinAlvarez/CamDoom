@@ -21,3 +21,4 @@ original Doom, so these is a list with all these mentions:
 * QueasyCam: https://github.com/jrc03c/queasycam
 * PeasyCam: https://github.com/jdf/peasycam/
 * FaceOSC: https://github.com/kylemcdonald/ofxFaceTracker
+* Collision Detection: https://www.jeffreythompson.org/collision-detection/
