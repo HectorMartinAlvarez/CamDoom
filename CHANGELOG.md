@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.4] - 2002-06-01
+
+### Changed
+
+- Adjustment in the trigger parameters of the player actions
+
 ## [2.0.3] - 2002-06-01
 
 ### Changed
@@ -279,3 +285,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.0.1]: https://github.com/HectorMartinAlvarez/CamDoom/tree/d0353f130f30e9efa31690963ba9bc98c761ba32
 [2.0.2]: https://github.com/HectorMartinAlvarez/CamDoom/tree/69b64e854d15a467dd8e66b550b9cefe32fc9b1e
 [2.0.3]: https://github.com/HectorMartinAlvarez/CamDoom/tree/ee355a121886b7afd0ea33781ee7953749149fc1
+[2.0.4]: https://github.com/HectorMartinAlvarez/CamDoom/tree/cc99a2afb9a85f6d3014cafaa61322def48e201d
