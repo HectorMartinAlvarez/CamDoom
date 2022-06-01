@@ -11,8 +11,41 @@ class Face {
   float eyebrowLeft, eyebrowRight;
   float jaw;
   float nostrils;
+  int i;
+  int j;
+  float[] cejas = new float[20];
+  float[] boca = new float[20];
 
-  Face() {}
+  Face() {
+    i = 0;
+    j = 0;
+    for(int i = 0; i < cejas.length; i++){
+     cejas[i] = 8.8; 
+     boca[i] = 21;
+    }
+  }
+  
+  float meanCejas(){
+    float mean = 0.0;
+    for(int i = 0; i < cejas.length; i++){
+      mean += cejas[i];
+    }
+    return (mean/cejas.length);
+  }
+  
+  float meanBoca(){
+    float mean = 0.0;
+    for(int i = 0; i < boca.length; i++){
+      mean += boca[i];
+    }
+    return (mean/boca.length);
+  }
+  
+  void saveBoca(float value){
+      boca[j] = value;
+      j++;
+      if(j >= boca.length) j = 0; 
+  }
 
   boolean parseOSC(OscMessage m) {
 
@@ -27,6 +60,9 @@ class Face {
     }
     else if(m.checkAddrPattern("/gesture/eyebrow/left")) {
         eyebrowLeft = m.get(0).floatValue();
+        cejas[i] = m.get(0).floatValue();
+        i++;
+        if(i >= cejas.length) i = 0;
         return true;
     }
     else if(m.checkAddrPattern("/gesture/eyebrow/right")) {
