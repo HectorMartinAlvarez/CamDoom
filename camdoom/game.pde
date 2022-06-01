@@ -119,14 +119,14 @@ class CDoomGame {
   }
 
   void slayerActions() {
-    if (preJaw == 0) preJaw = 20;
+    if (preJaw == 0 || preJaw < 21) preJaw = 22;
     if (face.found > 0) {
-      if (this.face.posePosition.x > 0 && this.face.posePosition.x < 250) slayer.rotate(0.8);
-      if (this.face.posePosition.x > 450) slayer.rotate(-0.8);
+      if (this.face.posePosition.x > 0 && this.face.posePosition.x < 275) slayer.rotate(0.7);
+      if (this.face.posePosition.x > 425) slayer.rotate(-0.7);
       if (this.face.jaw > preJaw + 3) slayer.move(true);
 
       for (CDoomEnemy enemy : map.enemies) {
-        if (this.face.eyebrowLeft > 8 && this.face.eyebrowRight > 8 && slayer.shoot) {
+        if (this.face.eyebrowLeft > 8.8 && this.face.eyebrowRight > 8.8 && slayer.shoot) {
           slayer.status = CDoomSlayerStatus.SLAYER_ATTACK;
 
           if (slayer.aiming(enemy.x(), enemy.z()) && enemy.isVisible) {
