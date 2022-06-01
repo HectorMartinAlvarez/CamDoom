@@ -1,6 +1,6 @@
 # CamDoom - Webcam Doom
 
-A Doom fan game with Webcam control implemented using Processing and GLSL
+A Doom fan game with Webcam control implemented using Processing
 
 ![CamDoomGIF](https://github.com/HectorMartinAlvarez/CamDoom/blob/main/animation.gif)
 
