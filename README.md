@@ -35,3 +35,4 @@ If you're having trouble, please contact losedavidpb@gmail.com
 * PeasyCam: https://github.com/jdf/peasycam/
 * FaceOSC: https://github.com/kylemcdonald/ofxFaceTracker
 * Collision Detection: https://www.jeffreythompson.org/collision-detection/
+* Modelo 3D: "Doom II - MAP01: Entryway" (https://skfb.ly/6B6zu) by vrchris is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
